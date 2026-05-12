@@ -281,7 +281,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
 .brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
 .brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
-.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 28s linear infinite; width: max-content; min-width: max-content; padding: 8px 0; will-change: transform; animation-fill-mode: none; }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 28s linear infinite -14s; width: max-content; min-width: max-content; padding: 8px 0; will-change: transform; animation-fill-mode: none; }
 .brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
 .brands-ticker-track img:hover { filter: none; opacity: 1; }
 .brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
@@ -351,12 +351,15 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* ============================================ MOBILE ============================================ */
 @media (max-width: 768px) {
+  .hero-vertical { display: none; }
+  .scroll-cue { display: none; }
+
   .meet-grid { grid-template-columns: 1fr; gap: 32px; }
   .meet-pinned { padding: 80px var(--gutter) 32px; align-items: flex-start; }
   .meet-right { aspect-ratio: 3/4; max-width: 100%; }
-  .meet-pin-wrap { height: 200vh; }
+  .meet-pin-wrap { height: 280vh; }
 
-  .move-pin-wrap { height: 180vh; }
+  .move-pin-wrap { height: 220vh; }
   .move-pin { height: 100vh; }
   .move-headline { font-size: clamp(56px, 15vw, 88px); }
   .move-frame-counter { min-width: 60px; font-size: 10px; }
@@ -364,10 +367,13 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   .more-grid { grid-template-columns: 1fr; gap: 32px; }
   .more-pinned { padding: 80px var(--gutter) 32px; align-items: flex-start; }
   .more-right { aspect-ratio: 3/4; max-width: 100%; }
-  .more-pin-wrap { height: 220vh; }
+  .more-pin-wrap { height: 300vh; }
 
-  .eq-bars { height: 100px; }
+  .eq-bars { height: 80px; }
   .more-actions { flex-direction: column; }
+  .more-desc { opacity: 1; text-shadow: 0 1px 16px rgba(4,17,28,0.95), 0 0 40px rgba(4,17,28,0.8); }
+  .more-name { text-shadow: 0 2px 20px rgba(4,17,28,0.9); }
+  .more-left { background: rgba(4,17,28,0.45); padding: 20px 18px; border-radius: 14px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 }
 
 
@@ -461,6 +467,24 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="nav-mobile-inner">
+    <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
+    <div>
+      <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
+      <div class="nav-mobile-sub">
+        <a class="nav-mobile-sublink" href="for-brands.html">For Brands</a>
+        <a class="nav-mobile-sublink" href="for-communities.html">For Communities</a>
+        <a class="nav-mobile-sublink" href="for-creators.html">For Creators</a>
+      </div>
+    </div>
+    <a class="nav-mobile-link" href="about.html">About</a>
+    <div class="nav-mobile-cta-wrap">
+      <a class="nav-mobile-cta" href="mailto:info@movemorecollective.com">Work With Us &rarr;</a>
+    </div>
+  </div>
+</div>
 
 <!-- ============================================ HERO ============================================ -->
 <section class="hero" id="top">
@@ -1010,6 +1034,19 @@ window.addEventListener('load', () => {
   btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
   document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* Hamburger nav */
+(function() {
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navMobileDrawer');
+  if (!nav || !btn || !drawer) return;
+  function openNav()  { nav.classList.add('mobile-open'); drawer.classList.add('open'); btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeNav() { nav.classList.remove('mobile-open'); drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.contains('mobile-open') ? closeNav() : openNav(); });
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeNav));
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
 </script>
 

@@ -154,14 +154,20 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .difference-stat-pill .lab { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.95; vertical-align: middle; }
 
 /* ============================================ BRAND PARTNERS STRIP ============================================ */
-.brands-strip { background: var(--black); padding: 64px var(--gutter); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.brands-strip-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: center; }
-@media (max-width: 768px) { .brands-strip-inner { grid-template-columns: 1fr; gap: 24px; } }
-.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
-.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 28px; text-transform: uppercase; line-height: 0.95; }
-.brands-strip-logos { display: flex; align-items: center; gap: 56px; flex-wrap: wrap; }
-.brands-strip-logos img { height: 34px; opacity: 0.55; transition: opacity 0.2s; filter: brightness(1.8); }
-.brands-strip-logos img:hover { opacity: 1; }
+.brands-strip { background: var(--deep-blue); padding: 72px 0; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.brands-strip::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 70%; height: 200%; background: radial-gradient(ellipse, rgba(61,142,207,0.08) 0%, transparent 65%); pointer-events: none; }
+.brands-strip-header { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: baseline; gap: 24px; margin-bottom: 44px; }
+.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); }
+.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; color: var(--white); }
+.brands-ticker-wrap { position: relative; overflow: hidden; opacity: 1 !important; }
+.brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
+.brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
+.brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 28s linear infinite -14s; width: max-content; min-width: max-content; padding: 8px 0; will-change: transform; animation-fill-mode: none; }
+.brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
+.brands-ticker-track img:hover { filter: none; opacity: 1; }
+.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ============================================ CTA SECTION ============================================ */
 .cta-section { padding: 140px var(--gutter); background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); position: relative; overflow: hidden; text-align: center; }
@@ -274,6 +280,24 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="nav-mobile-inner">
+    <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
+    <div>
+      <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
+      <div class="nav-mobile-sub">
+        <a class="nav-mobile-sublink" href="for-brands.html">For Brands</a>
+        <a class="nav-mobile-sublink" href="for-communities.html">For Communities</a>
+        <a class="nav-mobile-sublink" href="for-creators.html">For Creators</a>
+      </div>
+    </div>
+    <a class="nav-mobile-link" href="about.html">About</a>
+    <div class="nav-mobile-cta-wrap">
+      <a class="nav-mobile-cta" href="mailto:info@movemorecollective.com">Work With Us &rarr;</a>
+    </div>
+  </div>
+</div>
 
 <!-- PAGE HERO -->
 <section class="page-hero">
@@ -420,19 +444,30 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 <!-- BRAND PARTNERS STRIP -->
 <section class="brands-strip">
-  <div class="brands-strip-inner">
-    <div>
-      <div class="brands-strip-label">Work With</div>
-      <h3 class="brands-strip-h">Brands that<br>move.</h3>
-    </div>
-    <div class="brands-strip-logos">
+  <div class="brands-strip-header">
+    <div class="brands-strip-label">Partners</div>
+    <h3 class="brands-strip-h">Brands that move.</h3>
+  </div>
+  <div class="brands-ticker-wrap">
+    <div class="brands-ticker-track">
       <img src="assets/partner-athletic.png" alt="Athletic Brewing">
       <img src="assets/partner-brez.png" alt="Brez">
-      <img src="assets/partner-koia.png" alt="Koia">
-      <img src="assets/partner-kenetik.png" alt="Kenetik">
-      <img src="assets/partner-hiyo.png" alt="Hiyo">
-      <img src="assets/partner-offfield.png" alt="Offfield">
       <img src="assets/partner-chaser.png" alt="Chaser">
+      <img src="assets/partner-hiyo.png" alt="Hiyo">
+      <img src="assets/partner-kenetik.png" alt="Kenetik">
+      <img src="assets/partner-koia.png" alt="Koia">
+      <img src="assets/partner-offfield.png" alt="Offfield">
+      <img src="assets/partner-wip.png" alt="Wip">
+      <img src="assets/partner-bang.png" alt="Bang">
+      <img src="assets/partner-athletic.png" alt="" aria-hidden="true">
+      <img src="assets/partner-brez.png" alt="" aria-hidden="true">
+      <img src="assets/partner-chaser.png" alt="" aria-hidden="true">
+      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true">
+      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true">
+      <img src="assets/partner-koia.png" alt="" aria-hidden="true">
+      <img src="assets/partner-offfield.png" alt="" aria-hidden="true">
+      <img src="assets/partner-wip.png" alt="" aria-hidden="true">
+      <img src="assets/partner-bang.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -541,6 +576,19 @@ window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 
   btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
   document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* Hamburger nav */
+(function() {
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navMobileDrawer');
+  if (!nav || !btn || !drawer) return;
+  function openNav()  { nav.classList.add('mobile-open'); drawer.classList.add('open'); btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeNav() { nav.classList.remove('mobile-open'); drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.contains('mobile-open') ? closeNav() : openNav(); });
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeNav));
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
 </script>
 </body>
