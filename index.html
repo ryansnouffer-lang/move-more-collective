@@ -135,6 +135,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .hero-ticker::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: 0.3; transform: scale(1.5); } }
 .scroll-cue { position: absolute; bottom: 32px; right: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.25em; opacity: 0.6; display: flex; align-items: center; gap: 10px; z-index: 4; }
+@media (max-width: 768px) { .scroll-cue { display: none; } }
 .scroll-cue::after { content: ""; width: 1px; height: 28px; background: rgba(255,255,255,0.5); animation: slideDown 1.8s ease-in-out infinite; }
 @keyframes slideDown { 0%, 100% { opacity: 0.2; transform: scaleY(0.3); } 50% { opacity: 1; transform: scaleY(1); } }
 
@@ -319,6 +320,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .footer-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 6vw, 88px); text-transform: uppercase; line-height: 0.95; max-width: 800px; margin-bottom: 28px; }
 .footer-h .blue { color: var(--blue-glow); }
 .footer-cta-row { display: flex; gap: 12px; margin-bottom: 56px; flex-wrap: wrap; }
+@media (max-width: 768px) { .footer-cta-row { display: none; } }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.1); }
 @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 .footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; font-weight: 500; }
@@ -415,6 +417,24 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   </button>
 </nav>
 
+<div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="nav-mobile-inner">
+    <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
+    <div>
+      <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
+      <div class="nav-mobile-sub">
+        <a class="nav-mobile-sublink" href="for-brands.html">For Brands</a>
+        <a class="nav-mobile-sublink" href="for-communities.html">For Communities</a>
+        <a class="nav-mobile-sublink" href="for-creators.html">For Creators</a>
+      </div>
+    </div>
+    <a class="nav-mobile-link" href="about.html">About</a>
+    <div class="nav-mobile-cta-wrap">
+      <a class="nav-mobile-cta" href="mailto:info@movemorecollective.com">Work With Us →</a>
+    </div>
+  </div>
+</div>
+
 <!-- ============================================ HERO ============================================ -->
 <section class="hero" id="top">
   <video class="hero-video" autoplay muted loop playsinline poster="">
@@ -432,7 +452,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
     </div>
   </div>
-  <div class="hero-ticker">NEXT EVENT — MIDNIGHT MOVES · JUNE 12 · WEST PALM BEACH · 10 EVENTS THIS SEASON</div>
+  <div class="hero-ticker">NEXT EVENT — MIDNIGHT MOVES · MAY 15 · WEST PALM BEACH · 10 EVENTS THIS SEASON</div>
   <div class="scroll-cue mono">SCROLL</div>
 </section>
 
@@ -957,7 +977,10 @@ reveal('.door', { trigger: '.paths-doors', stagger: 0.12, y: 40 });
 
 reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
 
-/* Stat counter spin-up */
+/* Stat counter spin-up — zero out immediately so users never see final number before animation */
+document.querySelectorAll('.eco-stat-num[data-target]').forEach(el => {
+  el.textContent = '0' + (el.dataset.suffix || '');
+});
 function countUp(el, target, suffix, duration) {
   const start = performance.now();
   const tick = (now) => {
@@ -979,6 +1002,19 @@ ScrollTrigger.create({
 
 /* Refresh on full load */
 window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
+
+/* Hamburger nav */
+(function() {
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navMobileDrawer');
+  if (!nav || !btn || !drawer) return;
+  function openNav()  { nav.classList.add('mobile-open'); drawer.classList.add('open'); btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeNav() { nav.classList.remove('mobile-open'); drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.contains('mobile-open') ? closeNav() : openNav(); });
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeNav));
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
+})();
 </script>
 
 </body>
