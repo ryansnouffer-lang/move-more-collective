@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Move More Collective</title>
+<meta name="description" content="Get in touch with Move More Collective. Whether you're a brand, community, or creator — let's build something worth moving for.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+
+:root {
+  --black: #050505; --ink: #0a0a0e; --midnight: #04111c; --deep-blue: #051826;
+  --blue: #3d8ecf; --blue-glow: #6cb3e8; --blue-deep: #2a6ea5;
+  --white: #ffffff; --muted: rgba(255,255,255,0.6); --line: rgba(255,255,255,0.08);
+  --gutter: clamp(24px, 4vw, 64px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html { background: var(--black); }
+body { background: var(--black); color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; line-height: 1.5; overflow-x: clip; }
+.display { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; }
+.display .blue { color: var(--blue); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 22px var(--gutter); display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, backdrop-filter 0.3s; background: rgba(5,5,5,0.78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.nav-brand { display: inline-flex; align-items: center; gap: 10px; height: 40px; text-decoration: none; color: var(--white); }
+.nav-brand img { height: 38px; width: auto; display: block; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-link { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-link:hover, .nav-link.active { color: var(--blue-glow); }
+.nav-cta { background: var(--white); color: var(--black); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-cta:hover { background: var(--blue); color: var(--white); }
+@media (max-width: 900px) { .nav-links .nav-link { display: none; } }
+
+@keyframes pulse { 50% { opacity: 0.3; transform: scale(1.5); } }
+.nav-events-wrap { position: relative; }
+.nav-events-btn { background: none; border: none; font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-events-btn:hover, .nav-events-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-chevron { font-size: 11px; display: inline-block; transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); line-height: 1; margin-top: 1px; }
+.nav-events-wrap.open .nav-chevron { transform: rotate(180deg); }
+.nav-events-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.events-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 460px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 200; }
+.nav-events-wrap:hover .events-dropdown, .nav-events-wrap.open .events-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.events-dropdown-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(108,179,232,0.55); padding: 0 6px; margin-bottom: 10px; }
+.event-card { display: grid; grid-template-columns: 148px 1fr; gap: 0; border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--white); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); transition: border-color 0.2s, background 0.2s; }
+.event-card:hover { border-color: rgba(108,179,232,0.45); background: rgba(61,142,207,0.07); }
+.event-card-photo { position: relative; overflow: hidden; }
+.event-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; filter: brightness(0.88); transition: filter 0.3s, transform 0.4s; }
+.event-card:hover .event-card-photo img { filter: brightness(1); transform: scale(1.04); }
+.event-card-photo-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(6,8,12,0.5) 100%); }
+.event-card-info { padding: 20px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.event-card-series { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.event-card-series::before { content: ""; width: 5px; height: 5px; background: var(--blue-glow); border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s ease-in-out infinite; }
+.event-card-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 8px; }
+.event-card-desc { font-size: 11.5px; line-height: 1.55; opacity: 0.62; margin-bottom: 14px; flex: 1; }
+.event-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--blue-glow); text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: gap 0.2s; }
+.event-card:hover .event-card-cta { gap: 12px; }
+.events-more { margin-top: 10px; padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+.events-more-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+.events-more-cities { display: flex; gap: 6px; flex-wrap: wrap; }
+.events-more-city { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(108,179,232,0.45); padding: 3px 8px; border: 1px solid rgba(108,179,232,0.18); border-radius: 99px; }
+.nav-partner-wrap { position: relative; }
+.nav-partner-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.nav-partner-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-partner-wrap.open .nav-chevron { transform: rotate(180deg); }
+.partner-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 290px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 200; }
+.nav-partner-wrap:hover .partner-dropdown, .nav-partner-wrap.open .partner-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.partner-link { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; border-radius: 10px; text-decoration: none; color: var(--white); transition: background 0.15s; }
+.partner-link:hover { background: rgba(108,179,232,0.09); }
+.partner-link-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.partner-link-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+
+/* CTA */
+.cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
+.cta-primary { background: var(--blue); color: var(--white); }
+.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
+.cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+
+/* FOOTER */
+.footer { padding: 96px var(--gutter) 48px; background: linear-gradient(180deg, var(--midnight) 0%, var(--deep-blue) 100%); position: relative; overflow: hidden; }
+.footer-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.footer-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 6vw, 88px); text-transform: uppercase; line-height: 0.95; max-width: 800px; margin-bottom: 28px; }
+.footer-h .blue { color: var(--blue-glow); }
+.footer-cta-row { display: flex; gap: 12px; margin-bottom: 56px; flex-wrap: wrap; }
+@media (max-width: 768px) { .footer-cta-row { display: none; } }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.1); }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; font-weight: 500; }
+.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; padding: 6px 0; transition: color 0.15s; }
+.footer-col a:hover { color: var(--blue-glow); }
+.footer-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.4; margin-top: 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; letter-spacing: 0.05em; }
+
+/* MOBILE NAV */
+.nav-hamburger { display: none; flex-direction: column; justify-content: space-between; width: 24px; height: 16px; background: none; border: none; cursor: pointer; padding: 0; z-index: 310; flex-shrink: 0; }
+.nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.28s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
+.nav.mobile-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav.mobile-open .nav-hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav.mobile-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-mobile-drawer { position: fixed; inset: 0; z-index: 299; background: rgba(4,4,6,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.22s ease; }
+.nav-mobile-drawer.open { opacity: 1; pointer-events: auto; }
+.nav-mobile-inner { position: relative; padding: 88px 28px 48px; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+.nav-mobile-link { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 34px; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.05; color: var(--white); text-decoration: none; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: block; transition: color 0.15s; }
+.nav-mobile-link:hover, .nav-mobile-link.active { color: var(--blue-glow); }
+.nav-mobile-sub { display: flex; flex-direction: column; padding: 6px 0 10px 16px; }
+.nav-mobile-sublink { font-family: 'Satoshi', system-ui, sans-serif; font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.55); text-decoration: none; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.04em; }
+.nav-mobile-sublink:hover { color: var(--white); }
+.nav-mobile-cta-wrap { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+.nav-mobile-cta { display: inline-flex; background: var(--blue); color: var(--white); padding: 14px 30px; border-radius: 999px; font-weight: 700; font-size: 15px; text-transform: uppercase; text-decoration: none; letter-spacing: 0.03em; transition: background 0.15s; }
+.nav-mobile-cta:hover { background: var(--blue-glow); }
+.nav-mobile-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white); font-size: 26px; cursor: pointer; padding: 8px; line-height: 1; opacity: 0.75; transition: opacity 0.15s; z-index: 1; }
+.nav-mobile-close:hover { opacity: 1; }
+@media (max-width: 768px) {
+  .nav-links { display: none !important; }
+  .nav-hamburger { display: flex; }
+}
+
+/* ============================================ CONTACT PAGE ============================================ */
+
+.contact-hero { position: relative; padding: 160px var(--gutter) 80px; background: var(--black); overflow: hidden; }
+.contact-hero::before { content: ""; position: absolute; left: 60%; top: -10%; width: 70%; height: 120%; background: url('assets/bg-midnight-hero.jpg') center/cover no-repeat; opacity: 0.18; filter: brightness(0.6); mask-image: linear-gradient(90deg, transparent 0%, black 40%, black 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 40%, black 100%); }
+.contact-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 30% 60%, rgba(61,142,207,0.15), transparent 70%); pointer-events: none; }
+.contact-hero-inner { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; }
+.contact-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 20px; }
+.contact-h1 { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(56px, 9vw, 128px); text-transform: uppercase; line-height: 0.92; letter-spacing: -0.01em; margin-bottom: 28px; max-width: 800px; }
+.contact-h1 .blue { color: var(--blue-glow); }
+.contact-hero-sub { font-size: 18px; line-height: 1.55; opacity: 0.72; max-width: 520px; }
+
+/* CONTACT BODY */
+.contact-body { background: var(--black); padding: 80px var(--gutter) 120px; }
+.contact-body-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+@media (max-width: 900px) { .contact-body-inner { grid-template-columns: 1fr; gap: 56px; } }
+
+/* Info column */
+.contact-info-col { position: sticky; top: 120px; }
+.contact-info-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 12px; }
+.contact-info-email { display: inline-flex; align-items: center; gap: 10px; font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: clamp(18px, 2.2vw, 24px); color: var(--white); text-decoration: none; margin-bottom: 36px; transition: color 0.15s; }
+.contact-info-email:hover { color: var(--blue-glow); }
+.contact-info-email::before { content: ""; width: 8px; height: 8px; background: var(--blue-glow); border-radius: 50%; flex-shrink: 0; }
+
+.contact-interest-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.contact-interest-item { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 14px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.72); }
+.contact-interest-item:last-child { border-bottom: none; }
+.contact-interest-item::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
+.contact-socials { display: flex; gap: 16px; }
+.contact-social-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; transition: all 0.15s; }
+.contact-social-link:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+.contact-location { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-top: 24px; }
+
+/* Form column */
+.contact-form-card { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 48px; }
+@media (max-width: 768px) { .contact-form-card { padding: 28px 24px; } }
+
+.contact-form-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(24px, 3vw, 36px); text-transform: uppercase; line-height: 0.95; margin-bottom: 8px; }
+.contact-form-sub { font-size: 14px; line-height: 1.5; opacity: 0.55; margin-bottom: 36px; }
+
+.form-row { margin-bottom: 20px; }
+.form-row label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+.form-field { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 18px; color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; font-size: 15px; font-weight: 400; outline: none; transition: border-color 0.18s, background 0.18s; -webkit-appearance: none; appearance: none; }
+.form-field::placeholder { color: rgba(255,255,255,0.3); }
+.form-field:focus { border-color: var(--blue); background: rgba(61,142,207,0.07); }
+select.form-field { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 44px; cursor: pointer; }
+select.form-field option { background: #0a0a14; color: var(--white); }
+textarea.form-field { resize: vertical; min-height: 130px; }
+
+.form-row-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .form-row-two { grid-template-columns: 1fr; } }
+
+.form-submit { width: 100%; padding: 16px 32px; background: var(--blue); color: var(--white); border: none; border-radius: 999px; font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.18s; margin-top: 8px; letter-spacing: 0.01em; }
+.form-submit:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.form-submit:active { transform: translateY(0); }
+
+.form-success { display: none; text-align: center; padding: 40px 24px; }
+.form-success-icon { font-size: 48px; margin-bottom: 16px; }
+.form-success-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 28px; text-transform: uppercase; margin-bottom: 10px; }
+.form-success-p { font-size: 15px; opacity: 0.65; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="index.html" aria-label="Move More Collective"><img src="assets/logos/mmc-logo-horizontal-white.png" alt="Move More Collective"></a>
+  <div class="nav-links">
+    <div class="nav-events-wrap" id="navEventsWrap">
+      <button class="nav-events-btn" id="navEventsBtn" aria-expanded="false" aria-haspopup="true">
+        Events <span class="nav-chevron">&#9662;</span>
+      </button>
+      <div class="events-dropdown" id="eventsDropdown" role="menu">
+        <div class="events-dropdown-label">Current Events</div>
+        <a class="event-card" href="midnight-moves.html" role="menuitem">
+          <div class="event-card-photo">
+            <img src="assets/bg-midnight-hero.jpg" alt="Midnight Moves">
+            <div class="event-card-photo-overlay"></div>
+          </div>
+          <div class="event-card-info">
+            <div>
+              <div class="event-card-series">Flagship Series · South Florida</div>
+              <div class="event-card-name">Midnight<br>Moves.</div>
+              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required. Next: May 15, West Palm Beach.</p>
+            </div>
+            <span class="event-card-cta">See the Series &rarr;</span>
+          </div>
+        </a>
+        <div class="events-more">
+          <div class="events-more-text">Expanding to</div>
+          <div class="events-more-cities">
+            <span class="events-more-city">NYC</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Boston</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-partner-wrap" id="navPartnerWrap">
+      <button class="nav-events-btn" id="navPartnerBtn" aria-expanded="false" aria-haspopup="true">
+        Partnerships <span class="nav-chevron">&#9662;</span>
+      </button>
+      <div class="partner-dropdown" id="partnerDropdown" role="menu">
+        <a class="partner-link" href="for-brands.html" role="menuitem">
+          <span class="partner-link-name">For Brands</span>
+          <span class="partner-link-desc">Activate through events &amp; media</span>
+        </a>
+        <a class="partner-link" href="for-communities.html" role="menuitem">
+          <span class="partner-link-name">For Communities</span>
+          <span class="partner-link-desc">Co-host and scale your club</span>
+        </a>
+        <a class="partner-link" href="for-creators.html" role="menuitem">
+          <span class="partner-link-name">For Creators</span>
+          <span class="partner-link-desc">Get paid to create</span>
+        </a>
+      </div>
+    </div>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-cta active" href="contact.html">Work With Us</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="nav-mobile-inner">
+    <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+    <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
+    <div>
+      <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
+      <div class="nav-mobile-sub">
+        <a class="nav-mobile-sublink" href="for-brands.html">For Brands</a>
+        <a class="nav-mobile-sublink" href="for-communities.html">For Communities</a>
+        <a class="nav-mobile-sublink" href="for-creators.html">For Creators</a>
+      </div>
+    </div>
+    <a class="nav-mobile-link" href="about.html">About</a>
+    <div class="nav-mobile-cta-wrap">
+      <a class="nav-mobile-cta" href="contact.html">Work With Us &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <div class="contact-hero-inner">
+    <div class="contact-eyebrow">Get In Touch</div>
+    <h1 class="contact-h1">Let's build<br>something <span class="blue">worth</span><br>moving for.</h1>
+    <p class="contact-hero-sub">Whether you're a brand, a community, or a creator — we want to hear from you. Fill out the form or reach us directly below.</p>
+  </div>
+</section>
+
+<!-- CONTACT BODY -->
+<section class="contact-body">
+  <div class="contact-body-inner">
+
+    <!-- LEFT: Info -->
+    <div class="contact-info-col">
+      <div class="contact-info-label">Direct Email</div>
+      <a class="contact-info-email" href="mailto:info@movemorecollective.com">info@movemorecollective.com</a>
+
+      <div class="contact-info-label" style="margin-bottom: 12px;">We work with</div>
+      <div class="contact-interest-list">
+        <div class="contact-interest-item">Brands &amp; Product Companies</div>
+        <div class="contact-interest-item">Fitness Studios &amp; Run Clubs</div>
+        <div class="contact-interest-item">Content Creators &amp; Athletes</div>
+        <div class="contact-interest-item">Event Co-Hosts &amp; Venues</div>
+        <div class="contact-interest-item">Press &amp; Media</div>
+      </div>
+
+      <div class="contact-info-label" style="margin-bottom: 12px;">Follow Along</div>
+      <div class="contact-socials">
+        <a class="contact-social-link" href="https://instagram.com/movemorecollective" target="_blank" rel="noopener">Instagram</a>
+        <a class="contact-social-link" href="https://tiktok.com/@movemorecollective" target="_blank" rel="noopener">TikTok</a>
+      </div>
+
+      <div class="contact-location" style="margin-top: 28px;">West Palm Beach, FL — expanding nationally</div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="contact-form-card">
+      <h2 class="contact-form-title">Send us a message</h2>
+      <p class="contact-form-sub">We respond within 1–2 business days.</p>
+
+      <form id="contactForm" novalidate>
+        <div class="form-row-two">
+          <div class="form-row" style="margin-bottom:0;">
+            <label for="contactName">Your Name</label>
+            <input class="form-field" type="text" id="contactName" name="name" placeholder="First &amp; Last" required>
+          </div>
+          <div class="form-row" style="margin-bottom:0;">
+            <label for="contactEmail">Email Address</label>
+            <input class="form-field" type="email" id="contactEmail" name="email" placeholder="you@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-row" style="margin-top:20px;">
+          <label for="contactInterest">What brings you here?</label>
+          <select class="form-field" id="contactInterest" name="interest">
+            <option value="">Select one…</option>
+            <option value="brand">Brand Partnership</option>
+            <option value="community">Community / Event Co-Host</option>
+            <option value="creator">Creator Program</option>
+            <option value="press">Press &amp; Media</option>
+            <option value="general">General Inquiry</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="contactMessage">Tell Us About Yourself</label>
+          <textarea class="form-field" id="contactMessage" name="message" placeholder="Tell us who you are and what you have in mind…" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Send Message &rarr;</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">&#x2713;</div>
+        <div class="form-success-h">Message Sent!</div>
+        <p class="form-success-p">Thanks for reaching out. We'll be in touch within 1–2 business days at the email you provided.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
+    <div class="footer-cta-row">
+      <a class="cta cta-primary" href="contact.html">Work With Us &rarr;</a>
+      <a class="cta cta-ghost" href="midnight-moves.html">See Events</a>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Move More Collective</h4>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.55;">A mission-driven experiential wellness &amp; media platform. West Palm Beach, FL — expanding nationally.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="midnight-moves.html">Midnight Moves</a>
+        <a href="for-brands.html">For Brands</a>
+        <a href="for-communities.html">For Communities</a>
+        <a href="for-creators.html">For Creators</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/movemorecollective" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@movemorecollective" target="_blank" rel="noopener">TikTok</a>
+        <a href="mailto:info@movemorecollective.com">Email</a>
+      </div>
+      <div class="footer-col">
+        <h4>Work With Us</h4>
+        <a href="for-brands.html">Partner</a>
+        <a href="for-communities.html">Co-Host</a>
+        <a href="for-creators.html">Create</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>&copy; 2026 MOVE MORE COLLECTIVE &mdash; WEST PALM BEACH, FL</span>
+      <span>WELLNESS &times; CULTURE</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+function reveal(selector, opts = {}) {
+  const { trigger = selector, start = 'top 80%', y = 30, duration = 0.85, stagger = 0.08, ease = 'power3.out' } = opts;
+  const els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  els.forEach(el => { el.style.opacity = 0; el.style.transform = `translate(0, ${y}px)`; el.style.willChange = 'opacity, transform'; });
+  ScrollTrigger.create({ trigger, start, once: true,
+    onEnter: () => gsap.to(els, { opacity: 1, y: 0, duration, stagger, ease, onComplete: () => els.forEach(el => { el.style.willChange = 'auto'; }) })
+  });
+}
+
+reveal('.contact-eyebrow, .contact-h1, .contact-hero-sub', { trigger: '.contact-hero', start: 'top 90%', stagger: 0.1 });
+reveal('.contact-info-col > *', { trigger: '.contact-body', start: 'top 75%', stagger: 0.08 });
+reveal('.contact-form-card', { trigger: '.contact-body', start: 'top 75%', y: 40 });
+reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
+
+/* Nav dropdowns */
+(function() {
+  const eventsWrap = document.getElementById('navEventsWrap');
+  const eventsBtn = document.getElementById('navEventsBtn');
+  const partnerWrap = document.getElementById('navPartnerWrap');
+  const partnerBtn = document.getElementById('navPartnerBtn');
+  function toggleDropdown(wrap, btn) {
+    const open = wrap.classList.contains('open');
+    [eventsWrap, partnerWrap].forEach(w => { if (w) w.classList.remove('open'); });
+    [eventsBtn, partnerBtn].forEach(b => { if (b) b.setAttribute('aria-expanded', 'false'); });
+    if (!open) { wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  }
+  if (eventsBtn) eventsBtn.addEventListener('click', e => { e.stopPropagation(); toggleDropdown(eventsWrap, eventsBtn); });
+  if (partnerBtn) partnerBtn.addEventListener('click', e => { e.stopPropagation(); toggleDropdown(partnerWrap, partnerBtn); });
+  document.addEventListener('click', () => { [eventsWrap, partnerWrap].forEach(w => { if (w) w.classList.remove('open'); }); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { [eventsWrap, partnerWrap].forEach(w => { if (w) w.classList.remove('open'); }); } });
+})();
+
+/* Mobile nav */
+(function() {
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navMobileDrawer');
+  if (!nav || !btn || !drawer) return;
+  function openNav()  { nav.classList.add('mobile-open'); drawer.classList.add('open'); btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeNav() { nav.classList.remove('mobile-open'); drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.contains('mobile-open') ? closeNav() : openNav(); });
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeNav));
+  const closeBtn = document.getElementById('navMobileClose'); if (closeBtn) closeBtn.addEventListener('click', closeNav);
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
+})();
+
+/* Contact form */
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const message = document.getElementById('contactMessage').value.trim();
+  if (!name || !email || !message) return;
+  const interest = document.getElementById('contactInterest').value;
+  const subject = encodeURIComponent('MMC Inquiry' + (interest ? ' — ' + interest : ''));
+  const body = encodeURIComponent(
+    'Name: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Interest: ' + (interest || 'General') + '\n\n' +
+    'Message:\n' + message
+  );
+  window.location.href = 'mailto:info@movemorecollective.com?subject=' + subject + '&body=' + body;
+  this.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+});
+</script>
+</body>
+</html>
