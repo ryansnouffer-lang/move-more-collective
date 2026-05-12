@@ -167,7 +167,11 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .partnership-h .blue { color: var(--blue-glow); }
 .partnership-desc { font-size: 16px; line-height: 1.65; opacity: 0.82; max-width: 720px; margin-bottom: 24px; }
 .partnership-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 28px 0 36px; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
-@media (max-width: 600px) { .partnership-stats { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) {
+  .partnership-stats { grid-template-columns: 1fr 1fr; }
+  .partnership-logo img { margin: 0 auto; }
+  .partnership-actions { justify-content: center; }
+}
 .partnership-stat-num { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 4vw, 48px); color: var(--blue-glow); line-height: 1; letter-spacing: -0.02em; }
 .partnership-stat-label { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 6px; line-height: 1.4; }
 .partnership-video { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; margin: 0 0 36px; border: 1px solid rgba(108,179,232,0.2); }
