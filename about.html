@@ -160,10 +160,18 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .partnership::before { content: ""; position: absolute; left: 50%; top: 10%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.32) 0%, transparent 65%); filter: blur(100px); pointer-events: none; }
 .partnership-card { max-width: 1100px; margin: 0 auto; background: linear-gradient(135deg, rgba(61,142,207,0.10), rgba(61,142,207,0.02)); border: 1px solid rgba(108,179,232,0.32); border-radius: 24px; padding: 56px 64px; position: relative; }
 @media (max-width: 768px) { .partnership-card { padding: 36px; } }
-.partnership-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 12px; }
+.partnership-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 20px; }
+.partnership-logo { margin-bottom: 28px; }
+.partnership-logo img { height: 52px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.92; }
 .partnership-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); text-transform: uppercase; line-height: 0.95; margin-bottom: 24px; }
 .partnership-h .blue { color: var(--blue-glow); }
-.partnership-desc { font-size: 16px; line-height: 1.65; opacity: 0.82; max-width: 720px; margin-bottom: 28px; }
+.partnership-desc { font-size: 16px; line-height: 1.65; opacity: 0.82; max-width: 720px; margin-bottom: 24px; }
+.partnership-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 28px 0 36px; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
+@media (max-width: 600px) { .partnership-stats { grid-template-columns: 1fr 1fr; } }
+.partnership-stat-num { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 4vw, 48px); color: var(--blue-glow); line-height: 1; letter-spacing: -0.02em; }
+.partnership-stat-label { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 6px; line-height: 1.4; }
+.partnership-video { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; margin: 0 0 36px; border: 1px solid rgba(108,179,232,0.2); }
+.partnership-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .partnership-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* CTA SECTION */
@@ -451,9 +459,32 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <section class="partnership">
   <div class="partnership-card">
     <div class="partnership-label">Strategic Nonprofit Partner</div>
+    <div class="partnership-logo">
+      <img src="https://activeminds.org/wp-content/uploads/2025/03/active_minds-logo-stacked-single_color_WHITE.png" alt="Active Minds" loading="lazy">
+    </div>
     <h2 class="partnership-h">Active Minds <span class="blue">×</span> MMC.</h2>
-    <p class="partnership-desc">Active Minds is the largest U.S. mental health advocacy nonprofit — partnering with MMC to amplify mental wellness conversations beyond South Florida. The forthcoming <strong>MMC × Active Minds College Tour</strong> brings Midnight Moves to campuses nationwide, meeting the next generation where they already are.</p>
-    <p class="partnership-desc" style="opacity: 0.7;">Together we'll bring sustainable culture norms to the conversations that need them most.</p>
+    <p class="partnership-desc">Active Minds is the largest nonprofit in the United States mobilizing youth and young adults to transform mental health norms across society. Together with MMC, the forthcoming <strong>MMC × Active Minds College Tour</strong> brings Midnight Moves to campuses nationwide — meeting the next generation where they already are.</p>
+    <p class="partnership-desc" style="opacity: 0.65; margin-bottom: 0;">"If we as young adults speak openly about our mental health, we can save lives."</p>
+
+    <div class="partnership-stats">
+      <div>
+        <div class="partnership-stat-num">500+</div>
+        <div class="partnership-stat-label">Chapters at high schools &amp; colleges</div>
+      </div>
+      <div>
+        <div class="partnership-stat-num">8M+</div>
+        <div class="partnership-stat-label">Young adults reached annually</div>
+      </div>
+      <div>
+        <div class="partnership-stat-num">20+</div>
+        <div class="partnership-stat-label">Years transforming mental health culture</div>
+      </div>
+    </div>
+
+    <div class="partnership-video">
+      <iframe src="https://www.youtube.com/embed/gHtYyPgyJBQ" title="Active Minds" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+
     <div class="partnership-actions">
       <a class="cta cta-primary" href="https://activeminds.org" target="_blank" rel="noopener">Visit Active Minds &rarr;</a>
       <a class="cta cta-ghost" href="contact.html">Partner With Us</a>
