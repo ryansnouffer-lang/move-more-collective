@@ -1043,10 +1043,10 @@ function countUp(el, target, suffix, duration) {
   requestAnimationFrame(tick);
 }
 ScrollTrigger.create({
-  trigger: '.eco-stat-row', start: 'top 82%', once: true,
+  trigger: '.eco-stat-row', start: 'top 98%', once: true,
   onEnter: () => {
     document.querySelectorAll('.eco-stat-num[data-target]').forEach(el => {
-      countUp(el, +el.dataset.target, el.dataset.suffix || '', 1400);
+      countUp(el, +el.dataset.target, el.dataset.suffix || '', 1200);
     });
   }
 });
