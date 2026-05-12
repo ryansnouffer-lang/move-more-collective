@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Move More Collective — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Satoshi — self-hosted from client-provided OTFs ===== */
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-LightItalic.otf') format('opentype'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-MediumItalic.otf') format('opentype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-BoldItalic.otf') format('opentype'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-BlackItalic.otf') format('opentype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+:root {
+  --black: #050505;
+  --ink: #0a0a0e;
+  --midnight: #04111c;
+  --deep-blue: #051826;
+  --blue: #3d8ecf;        /* canonical brand blue per founder */
+  --blue-glow: #6cb3e8;   /* lighter highlight for atmospheres + text-shadow glow */
+  --blue-deep: #2a6ea5;   /* deeper variant for hover/pressed states */
+  --white: #ffffff;
+  --paper: #f5f3ed;
+  --gutter: clamp(24px, 4vw, 64px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html { background: var(--black); }
+/* IMPORTANT: never use overflow-x: hidden on html/body — it breaks position: sticky.
+   Use overflow-x: clip instead (clipping without creating a scroll container). */
+body { background: var(--black); color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; line-height: 1.5; overflow-x: clip; }
+
+.anton { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; line-height: 0.86; letter-spacing: -0.005em; text-transform: uppercase; }
+.anton .stroke { color: transparent; -webkit-text-stroke: 2.5px currentColor; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ============================================ NAV ============================================ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px var(--gutter); display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, backdrop-filter 0.3s; }
+.nav.scrolled { background: rgba(5,5,5,0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.nav-brand { display: inline-flex; align-items: center; gap: 10px; height: 40px; text-decoration: none; color: var(--white); }
+.nav-brand img { height: 38px; width: auto; display: block; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-link { font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-link:hover { color: var(--blue-glow); }
+.nav-cta { background: var(--white); color: var(--black); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-cta:hover { background: var(--blue); color: var(--white); }
+@media (max-width: 768px) { .nav-links .nav-link:not(:last-child) { display: none; } }
+
+/* Events dropdown */
+.nav-events-wrap { position: relative; }
+.nav-events-btn { background: none; border: none; font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-events-btn:hover, .nav-events-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-chevron { font-size: 11px; display: inline-block; transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); line-height: 1; margin-top: 1px; }
+.nav-events-wrap.open .nav-chevron { transform: rotate(180deg); }
+.nav-events-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.events-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 460px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(108,179,232,0.06) inset; z-index: 200; }
+.nav-events-wrap:hover .events-dropdown, .nav-events-wrap.open .events-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.events-dropdown-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(108,179,232,0.55); padding: 0 6px; margin-bottom: 10px; }
+.event-card { display: grid; grid-template-columns: 148px 1fr; gap: 0; border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--white); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); transition: border-color 0.2s, background 0.2s; }
+.event-card:hover { border-color: rgba(108,179,232,0.45); background: rgba(61,142,207,0.07); }
+.event-card-photo { position: relative; overflow: hidden; }
+.event-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; filter: brightness(0.88); transition: filter 0.3s, transform 0.4s; }
+.event-card:hover .event-card-photo img { filter: brightness(1); transform: scale(1.04); }
+.event-card-photo-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(6,8,12,0.5) 100%); }
+.event-card-info { padding: 20px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.event-card-series { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.event-card-series::before { content: ""; width: 5px; height: 5px; background: var(--blue-glow); border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s ease-in-out infinite; }
+.event-card-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 8px; }
+.event-card-desc { font-size: 11.5px; line-height: 1.55; opacity: 0.62; margin-bottom: 14px; flex: 1; }
+.event-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--blue-glow); text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: gap 0.2s; }
+.event-card:hover .event-card-cta { gap: 12px; }
+.events-more { margin-top: 10px; padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+.events-more-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+.events-more-cities { display: flex; gap: 6px; flex-wrap: wrap; }
+.events-more-city { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(108,179,232,0.45); padding: 3px 8px; border: 1px solid rgba(108,179,232,0.18); border-radius: 99px; }
+
+/* Partnerships dropdown */
+.nav-partner-wrap { position: relative; }
+.nav-partner-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.nav-partner-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-partner-wrap.open .nav-chevron { transform: rotate(180deg); }
+.partner-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 290px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 200; }
+.nav-partner-wrap:hover .partner-dropdown, .nav-partner-wrap.open .partner-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.partner-link { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; border-radius: 10px; text-decoration: none; color: var(--white); transition: background 0.15s; }
+.partner-link:hover { background: rgba(108,179,232,0.09); }
+.partner-link.active .partner-link-name { color: var(--blue-glow); }
+.partner-link-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.partner-link-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+
+
+/* ============================================ HERO ============================================ */
+.hero { position: relative; height: 100vh; min-height: 720px; width: 100%; overflow: hidden; background: var(--black); }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.hero-overlay { position: absolute; inset: 0; z-index: 2; background:
+  linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.75) 100%),
+  radial-gradient(ellipse 80% 50% at 30% 60%, rgba(0,0,0,0.4), transparent 70%);
+}
+.hero-content { position: relative; z-index: 3; height: 100%; padding: 0 var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 110px; }
+.hero-headline { font-size: clamp(52px, 8.2vw, 124px); max-width: 1400px; }
+.hero-headline .blue { color: var(--blue-glow); }
+.hero-headline .stroke { color: transparent; -webkit-text-stroke: 2.5px #fff; }
+.hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 28px; gap: 32px; flex-wrap: wrap; }
+.hero-sub { max-width: 460px; font-size: 14px; line-height: 1.55; opacity: 0.82; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.cta { display: inline-flex; align-items: center; gap: 10px; font-family: 'Satoshi', system-ui, sans-serif; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; }
+.cta-primary { background: var(--blue); color: var(--white); }
+.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
+.cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+.cta-white { background: var(--white); color: var(--midnight); }
+.cta-white:hover { background: var(--blue-glow); }
+
+/* Vertical brand mark up the right side */
+.hero-vertical { position: absolute; right: 24px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5em; color: rgba(255,255,255,0.5); white-space: nowrap; z-index: 3; }
+.hero-vertical::before, .hero-vertical::after { content: ""; display: inline-block; width: 32px; height: 1px; background: rgba(255,255,255,0.5); vertical-align: middle; }
+.hero-vertical::before { margin-right: 12px; }
+.hero-vertical::after { margin-left: 12px; }
+
+/* Live ticker */
+.hero-ticker { position: absolute; bottom: 28px; left: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; display: flex; align-items: center; gap: 12px; z-index: 4; }
+.hero-ticker::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.3; transform: scale(1.5); } }
+
+/* Scroll cue */
+.scroll-cue { position: absolute; bottom: 28px; right: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.25em; opacity: 0.6; display: flex; align-items: center; gap: 10px; z-index: 4; }
+.scroll-cue::after { content: ""; width: 1px; height: 28px; background: rgba(255,255,255,0.5); animation: slideDown 1.8s ease-in-out infinite; }
+@keyframes slideDown { 0%, 100% { opacity: 0.2; transform: scaleY(0.3); } 50% { opacity: 1; transform: scaleY(1); } }
+
+/* ============================================ CHAPTER SHARED ============================================ */
+.chapter { position: relative; min-height: 100vh; padding: 100px var(--gutter); overflow: hidden; }
+
+/* Thin horizontal rule at the top of each chapter — subtle section delimiter */
+.chapter-divider { position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: rgba(255,255,255,0.06); z-index: 5; }
+.chapter-divider.on-blue { background: rgba(108,179,232,0.18); }
+.chapter-divider.on-light { background: rgba(0,0,0,0.1); }
+
+.chapter-tag { position: absolute; top: 24px; left: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.55; z-index: 5; display: flex; align-items: center; gap: 12px; }
+.chapter-tag::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.5; }
+.chapter-time-mark { position: absolute; top: 24px; right: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; opacity: 0.45; z-index: 5; }
+
+/* ============================================ ATMOSPHERE LAYER ============================================ */
+/* This layer covers the whole scrolling area and gets driven by ScrollTrigger to fade between black → dusk → midnight blue */
+#atmosphere {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--black);
+  transition: none;
+}
+#atmosphere-glow {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 40% 40%, var(--blue) 0%, transparent 60%);
+  opacity: 0;
+  filter: blur(60px);
+}
+
+/* ============================================ MEET (CH02) — pinned + scrub ============================================ */
+.meet-pin-wrap { height: 250vh; position: relative; }
+.meet-pinned { position: sticky; top: 0; height: 100vh; padding: 120px var(--gutter); display: flex; align-items: center; }
+.meet { color: var(--white); }
+.meet-grid { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+.meet-left { display: flex; flex-direction: column; gap: 24px; }
+.meet-time { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(96px, 13vw, 192px); line-height: 0.84; color: var(--white); letter-spacing: -0.005em; display: flex; align-items: baseline; gap: 0.04em; }
+.meet-time .colon { color: var(--blue-glow); font-size: 0.4em; line-height: 1; position: relative; top: -0.55em; letter-spacing: 0.05em; font-weight: normal; }
+.meet-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 68px); text-transform: uppercase; line-height: 0.95; opacity: 0.92; }
+.meet-name .accent { color: var(--blue-glow); }
+.meet-rule { width: 64px; height: 3px; background: var(--blue-glow); }
+.meet-desc { font-size: 15px; line-height: 1.6; max-width: 440px; opacity: 0.72; }
+.meet-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.meet-list-item { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: 0.7; letter-spacing: 0.05em; display: flex; align-items: center; gap: 12px; }
+.meet-list-item::before { content: ""; width: 8px; height: 8px; background: var(--blue-glow); border-radius: 50%; }
+.meet-right { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a24 0%, #050714 100%) url('assets/bg-nightrun.jpg') center/cover no-repeat; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid rgba(108,179,232,0.2); box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+.meet-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.92) contrast(1.05); }
+.meet-img-tag { position: absolute; bottom: 16px; left: 16px; right: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.9); letter-spacing: 0.15em; padding: 8px 12px; background: rgba(5,7,32,0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 4px; border: 1px solid rgba(108,179,232,0.25); z-index: 2; }
+.meet-progress-mini { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.08); z-index: 3; }
+.meet-progress-fill { height: 100%; background: var(--blue-glow); width: 0%; }
+
+/* ============================================ MOVE (CH03) — pinned with frame-scrub, the peak ============================================ */
+.move-pin-wrap { height: 160vh; position: relative; }
+.move-pin { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
+.move-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.move-overlay { position: absolute; inset: 0; z-index: 2; background:
+  radial-gradient(ellipse 70% 60% at 50% 50%, rgba(61,142,207,0.35) 0%, rgba(5,7,32,0.7) 70%, rgba(2,3,13,0.95) 100%);
+}
+.move-content { position: relative; z-index: 3; height: 100%; padding: 0 var(--gutter); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.move-meta-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.move-meta-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; background: rgba(108,179,232,0.12); border: 1px solid rgba(108,179,232,0.4); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.15em; text-transform: uppercase; }
+.move-meta-pill::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+.move-headline { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(80px, 11.5vw, 168px); line-height: 0.84; text-transform: uppercase; letter-spacing: -0.005em; }
+.move-headline .glow { color: var(--blue-glow); text-shadow: 0 0 50px rgba(108,179,232,0.5); }
+.move-headline .stroke { color: transparent; -webkit-text-stroke: 2.5px var(--blue-glow); }
+.move-sub { font-size: 15px; line-height: 1.6; max-width: 500px; margin-top: 24px; opacity: 0.85; }
+.move-progress { position: absolute; bottom: 40px; left: var(--gutter); right: var(--gutter); display: flex; align-items: center; gap: 16px; z-index: 4; }
+.move-progress-track { flex: 1; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
+.move-progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--blue-glow); width: 0%; }
+.move-frame-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.05em; min-width: 100px; text-align: right; }
+
+/* ============================================ MORE (CH04) — pinned + scrub ============================================ */
+.more-pin-wrap { height: 280vh; position: relative; }
+.more-pinned { position: sticky; top: 0; height: 100vh; padding: 120px var(--gutter); display: flex; align-items: center; background: linear-gradient(180deg, var(--deep-blue) 0%, var(--black) 100%); }
+.more-pinned::before { content: ""; position: absolute; right: -10%; top: 20%; width: 50%; height: 60%; background: radial-gradient(circle, var(--blue) 0%, transparent 65%); filter: blur(100px); opacity: 0.4; pointer-events: none; }
+.more { color: var(--white); }
+.more-grid { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
+.more-left { display: flex; flex-direction: column; gap: 24px; }
+.more-time { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(96px, 13vw, 192px); line-height: 0.84; color: var(--white); letter-spacing: -0.005em; display: flex; align-items: baseline; gap: 0.04em; }
+.more-time .colon { color: var(--blue-glow); font-size: 0.4em; line-height: 1; position: relative; top: -0.55em; letter-spacing: 0.05em; font-weight: normal; }
+.more-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 68px); text-transform: uppercase; line-height: 0.95; opacity: 0.92; }
+.more-name .accent { color: var(--blue-glow); text-shadow: 0 0 50px rgba(108,179,232,0.5); }
+.more-rule { width: 64px; height: 3px; background: var(--blue-glow); }
+.more-desc { font-size: 15px; line-height: 1.6; max-width: 440px; opacity: 0.85; }
+.more-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+/* EQ-bar geometric design element — sound waves */
+.eq-bars { display: flex; align-items: flex-end; gap: 6px; height: 200px; margin-top: 12px; }
+.eq-bar { width: 8px; background: var(--blue-glow); border-radius: 2px; opacity: 0.9; box-shadow: 0 0 12px rgba(108,179,232,0.4); }
+
+.more-right { aspect-ratio: 4/5; background: url('assets/bg-midnight-hero.jpg') center/cover no-repeat; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid rgba(108,179,232,0.3); box-shadow: 0 24px 80px rgba(5,7,32,0.65); display: flex; align-items: center; justify-content: center; }
+.more-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+.more-img-overlay { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(5,7,32,0.65) 100%); z-index: 1; pointer-events: none; }
+.more-img-tag { position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.9); letter-spacing: 0.15em; padding: 8px 12px; background: rgba(5,7,32,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 4px; border: 1px solid rgba(108,179,232,0.3); z-index: 2; }
+.more-progress-mini { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.08); z-index: 3; }
+.more-progress-fill { height: 100%; background: var(--blue-glow); width: 0%; }
+
+/* ============================================ FORMATS ============================================ */
+.formats { background: var(--midnight); padding: 120px var(--gutter); position: relative; }
+.formats::before { content: ""; position: absolute; left: 50%; top: 0; width: 60%; height: 100%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 60%, rgba(61,142,207,0.10), transparent 65%); pointer-events: none; }
+.formats-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.formats-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
+.formats-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 68px); text-transform: uppercase; line-height: 0.95; }
+.formats-h .blue { color: var(--blue-glow); }
+.formats-sub { font-size: 14px; line-height: 1.6; opacity: 0.65; max-width: 340px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-align: right; }
+.formats-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .formats-grid { grid-template-columns: 1fr; } }
+.format-card { border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 36px 32px; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 340px; transition: border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.format-card:hover { border-color: rgba(108,179,232,0.4); transform: translateY(-6px); }
+.format-card.featured { background: linear-gradient(145deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); border-color: rgba(108,179,232,0.38); }
+.format-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(108,179,232,0), transparent); transition: background 0.3s; }
+.format-card:hover::before, .format-card.featured::before { background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
+.format-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em; color: var(--blue-glow); margin-bottom: 32px; }
+.format-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(24px, 2.8vw, 36px); text-transform: uppercase; line-height: 1; margin-bottom: 16px; }
+.format-desc { font-size: 14px; line-height: 1.65; opacity: 0.7; flex: 1; }
+.format-badge { margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--blue-glow); text-transform: uppercase; }
+.format-badge::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; }
+
+/* ============================================ WHERE NEXT (CH05) ============================================ */
+.next { background: var(--black); color: var(--white); padding: 120px var(--gutter); position: relative; }
+.next-header { max-width: 1400px; margin: 0 auto 56px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.next-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6.8vw, 100px); text-transform: uppercase; line-height: 0.92; max-width: 760px; }
+.next-h .blue { color: var(--blue-glow); }
+.next-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.55; letter-spacing: 0.18em; text-align: right; line-height: 1.7; }
+.next-doors { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .next-doors { grid-template-columns: 1fr; } }
+.door { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 36px 32px; position: relative; cursor: pointer; transition: all 0.22s ease-out; overflow: hidden; display: flex; flex-direction: column; min-height: 380px; color: var(--white); text-decoration: none; }
+.door:hover { background: linear-gradient(180deg, rgba(61,142,207,0.10) 0%, rgba(61,142,207,0.03) 100%); border-color: rgba(108,179,232,0.55); transform: translateY(-6px); }
+.door-primary { background: linear-gradient(180deg, rgba(61,142,207,0.14) 0%, rgba(61,142,207,0.04) 100%); border-color: rgba(108,179,232,0.45); }
+.door-primary:hover { background: linear-gradient(180deg, rgba(61,142,207,0.22) 0%, rgba(61,142,207,0.08) 100%); }
+.door-meta { display: flex; justify-content: space-between; align-items: flex-start; }
+.door-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.22em; text-transform: uppercase; }
+.door-arrow { width: 36px; height: 36px; border: 1px solid rgba(108,179,232,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--blue-glow); transition: all 0.2s; }
+.door:hover .door-arrow { background: var(--blue); color: var(--white); border-color: var(--blue); transform: rotate(-45deg); }
+.door-body { margin-top: auto; }
+.door-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(34px, 3.8vw, 56px); line-height: 0.95; text-transform: uppercase; margin-bottom: 14px; }
+.door-primary .door-h { font-size: clamp(42px, 4.8vw, 72px); }
+.door-desc { font-family: 'Satoshi', system-ui, sans-serif; font-size: 14px; line-height: 1.55; opacity: 0.7; max-width: 360px; }
+.door-cta { font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; color: var(--blue-glow); margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+
+/* ============================================ BRAND PARTNERS TICKER ============================================ */
+.brands-strip { background: var(--deep-blue); padding: 72px 0; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.brands-strip::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%; height: 200%; background: radial-gradient(ellipse, rgba(61,142,207,0.08) 0%, transparent 65%); pointer-events: none; }
+.brands-strip-header { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: baseline; gap: 24px; margin-bottom: 44px; }
+.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); }
+.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; color: var(--white); }
+.brands-ticker-wrap { position: relative; overflow: hidden; }
+.brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
+.brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
+.brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 36s linear infinite; width: max-content; padding: 8px 0; }
+.brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
+.brands-ticker-track img:hover { filter: none; opacity: 1; }
+.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================================ UPCOMING EVENTS ============================================ */
+.upcoming { background: var(--black); padding: 120px var(--gutter); position: relative; }
+.upcoming::before { content: ""; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 60% 50% at 20% 60%, rgba(61,142,207,0.10), transparent 65%); pointer-events: none; }
+.upcoming-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.upcoming-head { margin-bottom: 56px; }
+.upcoming-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; }
+.upcoming-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 96px); text-transform: uppercase; line-height: 0.92; }
+.upcoming-h .blue { color: var(--blue-glow); }
+.upcoming-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 960px) { .upcoming-grid { grid-template-columns: 1fr; } }
+.next-event-card { background: linear-gradient(145deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); border: 1px solid rgba(108,179,232,0.38); border-radius: 20px; padding: 44px 40px; display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden; }
+.next-event-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
+.next-event-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); background: rgba(108,179,232,0.12); border: 1px solid rgba(108,179,232,0.3); border-radius: 4px; padding: 5px 10px; width: fit-content; }
+.next-event-badge::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+.next-event-city { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
+.next-event-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 4.8vw, 64px); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; }
+.next-event-details { display: flex; gap: 24px; flex-wrap: wrap; }
+.next-event-detail { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; opacity: 0.65; display: flex; align-items: center; gap: 8px; }
+.next-event-detail::before { content: ""; width: 4px; height: 4px; background: var(--blue-glow); border-radius: 50%; opacity: 0.7; }
+.city-card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s, background 0.2s; cursor: default; }
+.city-card:hover { border-color: rgba(108,179,232,0.35); background: linear-gradient(180deg, rgba(61,142,207,0.07), rgba(61,142,207,0.02)); }
+.city-dot-row { display: flex; align-items: center; gap: 10px; }
+.city-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(108,179,232,0.35); border: 1px solid rgba(108,179,232,0.5); flex-shrink: 0; }
+.city-dot.live { background: var(--blue-glow); animation: pulse 2s ease-in-out infinite; }
+.city-dot-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(108,179,232,0.55); }
+.city-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(26px, 2.8vw, 36px); text-transform: uppercase; line-height: 0.95; }
+.city-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.upcoming-cities-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+@media (max-width: 960px) { .upcoming-cities-row { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================ RSVP / SWEATPALS ============================================ */
+.rsvp-section { background: var(--midnight); padding: 120px var(--gutter); position: relative; overflow: hidden; }
+.rsvp-section::before { content: ""; position: absolute; left: 50%; top: 10%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.25) 0%, transparent 65%); filter: blur(80px); pointer-events: none; }
+.rsvp-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.rsvp-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+@media (max-width: 900px) { .rsvp-layout { grid-template-columns: 1fr; gap: 40px; } }
+.rsvp-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; }
+.rsvp-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6vw, 80px); text-transform: uppercase; line-height: 0.92; margin-bottom: 20px; }
+.rsvp-h .blue { color: var(--blue-glow); }
+.rsvp-sub { font-size: 15px; line-height: 1.65; opacity: 0.72; margin-bottom: 32px; max-width: 380px; }
+.rsvp-direct { display: flex; gap: 10px; flex-wrap: wrap; }
+.rsvp-embed-wrap { background: rgba(4,17,28,0.8); border: 1px solid rgba(108,179,232,0.25); border-radius: 20px; overflow: hidden; }
+.rsvp-embed-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(108,179,232,0.15); background: rgba(61,142,207,0.06); }
+.rsvp-embed-brand { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-glow); }
+.rsvp-embed-brand::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+.rsvp-embed-open { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.rsvp-embed-open:hover { color: var(--blue-glow); }
+.rsvp-embed-frame { position: relative; min-height: 480px; background: rgba(5,5,5,0.6); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+.rsvp-embed-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; border-radius: 0 0 20px 20px; }
+.rsvp-embed-placeholder { text-align: center; opacity: 0.4; pointer-events: none; }
+.rsvp-embed-placeholder .ph-icon { font-size: 32px; margin-bottom: 10px; }
+.rsvp-embed-placeholder p { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.8; }
+
+/* ============================================ FOOTER ============================================ */
+.footer { padding: 64px var(--gutter); background: var(--deep-blue); color: var(--white); position: relative; overflow: hidden; }
+.footer::before { content: ""; position: absolute; left: 50%; top: -20%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, var(--blue) 0%, transparent 65%); filter: blur(100px); opacity: 0.25; pointer-events: none; }
+.footer-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.footer-top { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 7vw, 96px); text-transform: uppercase; line-height: 0.92; max-width: 800px; margin-bottom: 32px; }
+.footer-top .glow { color: var(--blue-glow); }
+.footer-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 56px; font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.65; letter-spacing: 0.05em; }
+.footer-cta-row { display: flex; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+
+/* ============================================ MOBILE ============================================ */
+@media (max-width: 768px) {
+  .meet-grid { grid-template-columns: 1fr; gap: 40px; }
+  .meet-pinned { padding: 80px var(--gutter) 48px; }
+  .meet-right { aspect-ratio: 3/4; max-width: 100%; }
+
+  .move-pin-wrap { height: 100vh; }
+  .move-pin { height: 100vh; }
+  .move-headline { font-size: clamp(60px, 16vw, 96px); }
+  .move-frame-counter { min-width: 60px; font-size: 10px; }
+
+  .more-grid { grid-template-columns: 1fr; gap: 40px; }
+  .more-pinned { padding: 80px var(--gutter) 48px; }
+  .more-right { aspect-ratio: 3/4; max-width: 100%; }
+
+  .eq-bars { height: 120px; }
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="atmosphere"></div>
+<div id="atmosphere-glow"></div>
+
+<!-- ============================================ NAV ============================================ -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="index.html" aria-label="Move More Collective"><img src="assets/logos/mmc-logo-horizontal-white.png" alt="Move More Collective"></a>
+  <div class="nav-links">
+    <div class="nav-events-wrap" id="navEventsWrap">
+      <button class="nav-events-btn" id="navEventsBtn" aria-expanded="false" aria-haspopup="true" style="color: var(--blue-glow); font-weight: 700;">
+        Events <span class="nav-chevron">▾</span>
+      </button>
+      <div class="events-dropdown" id="eventsDropdown" role="menu">
+        <div class="events-dropdown-label">Current Events</div>
+        <a class="event-card" href="midnight-moves.html" role="menuitem">
+          <div class="event-card-photo">
+            <img src="assets/bg-midnight-hero.jpg" alt="Midnight Moves">
+            <div class="event-card-photo-overlay"></div>
+          </div>
+          <div class="event-card-info">
+            <div>
+              <div class="event-card-series">Flagship Series · South Florida</div>
+              <div class="event-card-name">Midnight<br>Moves.</div>
+              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required. Next: May 15, West Palm Beach.</p>
+            </div>
+            <span class="event-card-cta">See the Series →</span>
+          </div>
+        </a>
+        <div class="events-more">
+          <div class="events-more-text">Expanding to</div>
+          <div class="events-more-cities">
+            <span class="events-more-city">NYC</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Boston</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-partner-wrap" id="navPartnerWrap">
+      <button class="nav-events-btn" id="navPartnerBtn" aria-expanded="false" aria-haspopup="true">
+        Partnerships <span class="nav-chevron">&#9662;</span>
+      </button>
+      <div class="partner-dropdown" id="partnerDropdown" role="menu">
+        <a class="partner-link" href="for-brands.html" role="menuitem">
+          <span class="partner-link-name">For Brands</span>
+          <span class="partner-link-desc">Activate through events &amp; media</span>
+        </a>
+        <a class="partner-link" href="for-communities.html" role="menuitem">
+          <span class="partner-link-name">For Communities</span>
+          <span class="partner-link-desc">Co-host and scale your club</span>
+        </a>
+        <a class="partner-link" href="for-creators.html" role="menuitem">
+          <span class="partner-link-name">For Creators</span>
+          <span class="partner-link-desc">Get paid to create</span>
+        </a>
+      </div>
+    </div>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-cta" href="mailto:info@movemorecollective.com">Work With Us</a>
+  </div>
+</nav>
+
+<!-- ============================================ HERO ============================================ -->
+<section class="hero" id="top">
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/bg-midnight-hero.jpg">
+    <source src="assets/hero-mm-loop.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-vertical mono">MMC · WEST PALM BEACH · EST. 2024</div>
+  <div class="hero-ticker">NEXT EVENT — MIDNIGHT MOVES · FRI MAY 15 · WEST PALM BEACH · DOORS 8PM</div>
+
+  <div class="hero-content">
+    <h1 class="anton hero-headline">Nightlife that<br><span class="blue">moves</span><br><span class="stroke">you.</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">South Florida's movement-driven night out. Doors at 8 — run a 5K, dance to a boilerroom DJ set, zero-proof bar. The night you'll actually feel good about the next morning.</p>
+      <div class="hero-actions">
+        <a class="cta cta-primary" href="#rsvp">Get on the List &rarr;</a>
+        <a class="cta cta-ghost" href="#upcoming">Upcoming Events</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue mono">SCROLL</div>
+</section>
+
+<!-- ============================================ MEET (8:00) — pinned + frame-scrub ============================================ -->
+<div class="meet-pin-wrap" id="meet-pin-wrap">
+  <section class="chapter meet meet-pinned" id="meet" data-atmosphere="dusk">
+    <div class="chapter-tag">Chapter 01 / Meet</div>
+    <div class="chapter-time-mark">8:00pm · the arrival</div>
+
+    <div class="meet-grid">
+      <div class="meet-left">
+        <h2 class="meet-time anton"><span>8</span><span class="colon">:</span><span>00</span></h2>
+        <div class="meet-rule" data-rule></div>
+        <h3 class="meet-name anton">Meet<span class="accent">.</span></h3>
+        <p class="meet-desc">Doors open. Samples flow. The first faces arrive — runners stretching, partners setting up, the night still bright at the edges.</p>
+        <div class="meet-list">
+          <div class="meet-list-item">Brand sampling &amp; warm-up</div>
+          <div class="meet-list-item">Pre-movement social hour</div>
+          <div class="meet-list-item">Coaches + community greeters on deck</div>
+        </div>
+      </div>
+      <div class="meet-right">
+        <img class="meet-scrub-video" id="meetScrubImg" src="assets/frames-meet/001.jpg" alt="">
+        <div class="meet-img-tag">▌ Live frame · West Palm Beach · <span id="meetFrameCounter">FRAME 001 / 072</span></div>
+        <div class="meet-progress-mini"><div class="meet-progress-fill" id="meetProgressFill"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================ MOVE (8:30) — pinned + frame-scrub ============================================ -->
+<div class="move-pin-wrap" id="move-pin-wrap">
+  <section class="chapter move-pin" id="move" data-atmosphere="midnight">
+    <img class="move-scrub-video" id="moveScrubImg" src="assets/frames-move/001.jpg" alt="">
+    <div class="move-overlay"></div>
+
+    <div class="chapter-tag" style="color: rgba(108,179,232,0.7);">Chapter 02 / Move</div>
+    <div class="chapter-time-mark" style="color: rgba(108,179,232,0.6);">8:30pm · the run</div>
+
+    <div class="move-content">
+      <div class="move-meta-row">
+        <span class="move-meta-pill">5K glow run · guided workout · walking group</span>
+      </div>
+      <h2 class="move-headline">
+        <span class="glow">Move</span><br>
+        <span class="stroke">more.</span>
+      </h2>
+      <p class="move-sub">The horn sounds. Three hundred lights take off down Clematis Street. Some sprint. Some stroll. Everyone moves. As you scroll, the video tracks the run — frame by frame.</p>
+    </div>
+
+    <div class="move-progress">
+      <span class="mono" style="font-size: 11px; color: var(--blue-glow); letter-spacing: 0.18em;">▌ SCRUB</span>
+      <div class="move-progress-track"><div class="move-progress-fill" id="moveProgressFill"></div></div>
+      <span class="move-frame-counter mono" id="moveFrameCounter">FRAME 001 / 072</span>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================ MORE (9:30) — pinned + frame-scrub ============================================ -->
+<div class="more-pin-wrap" id="more-pin-wrap">
+  <section class="chapter more more-pinned" id="more" data-atmosphere="deep">
+    <div class="chapter-tag" style="color: rgba(108,179,232,0.7);">Chapter 03 / More</div>
+    <div class="chapter-time-mark" style="color: rgba(108,179,232,0.6);">9:30pm · the afterparty</div>
+
+    <div class="more-grid">
+      <div class="more-left">
+        <h2 class="more-time anton"><span>9</span><span class="colon">:</span><span>30</span></h2>
+        <div class="more-rule"></div>
+        <h3 class="more-name anton">More<span class="accent">.</span></h3>
+        <p class="more-desc">Boilerroom-style DJ set. Zero-proof bar. The people who just ran 5K together, dancing, talking, finding each other for real.</p>
+        <div class="eq-bars" id="eqBars"></div>
+      </div>
+      <div class="more-right">
+        <img class="more-scrub-video" id="moreScrubImg" src="assets/frames-more/001.jpg" alt="">
+        <div class="more-img-overlay"></div>
+        <div class="more-img-tag">
+          <span>▌ ZERO PROOF · DOPAMINE · CONNECTION · <span id="moreFrameCounter">FRAME 001 / 104</span></span>
+          <span>↗</span>
+        </div>
+        <div class="more-progress-mini"><div class="more-progress-fill" id="moreProgressFill"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================ UPCOMING EVENTS ============================================ -->
+<section class="upcoming" id="upcoming">
+  <div class="upcoming-inner">
+    <div class="upcoming-head">
+      <div class="upcoming-eyebrow">What's Next</div>
+      <h2 class="upcoming-h">The movement,<br>coming to <span class="blue">you.</span></h2>
+    </div>
+
+    <div class="upcoming-grid">
+      <!-- Featured next event -->
+      <div class="next-event-card">
+        <div class="next-event-badge">This Friday</div>
+        <div class="next-event-city">West Palm Beach, FL</div>
+        <h3 class="next-event-title">Midnight<br>Moves.</h3>
+        <div class="next-event-details">
+          <span class="next-event-detail">Friday, May 15</span>
+          <span class="next-event-detail">Doors 8PM</span>
+          <span class="next-event-detail">Zero-proof bar · DJ set · 5K run</span>
+        </div>
+        <div style="margin-top:8px;">
+          <a class="cta cta-primary" href="#rsvp">RSVP on SweatPals &rarr;</a>
+        </div>
+      </div>
+
+      <!-- College tour teaser -->
+      <div class="city-card" style="justify-content: space-between; min-height: 280px;">
+        <div>
+          <div class="city-dot-row">
+            <div class="city-dot"></div>
+            <div class="city-dot-label">Coming Soon</div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-glow);margin-top:20px;margin-bottom:10px;">Active Minds × MMC</div>
+          <div class="city-name" style="font-size:clamp(22px,2.4vw,30px);">College<br>Tour.</div>
+        </div>
+        <p style="font-size:13px;line-height:1.6;opacity:0.6;margin-top:16px;">Movement-led nightlife coming to campuses nationwide. Get your school on the list.</p>
+        <a href="about.html" class="cta cta-ghost" style="margin-top:20px;font-size:13px;padding:10px 18px;">Learn More &rarr;</a>
+      </div>
+
+      <!-- Expanding cities -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(108,179,232,0.45);margin-bottom:4px;">Expanding To</div>
+        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
+          <div class="city-dot"></div>
+          <div>
+            <div class="city-name" style="font-size:22px;">New York</div>
+            <div class="city-status">Interest list open</div>
+          </div>
+        </div>
+        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
+          <div class="city-dot"></div>
+          <div>
+            <div class="city-name" style="font-size:22px;">Austin</div>
+            <div class="city-status">Coming 2026</div>
+          </div>
+        </div>
+        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
+          <div class="city-dot"></div>
+          <div>
+            <div class="city-name" style="font-size:22px;">Atlanta</div>
+            <div class="city-status">Coming 2026</div>
+          </div>
+        </div>
+        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
+          <div class="city-dot"></div>
+          <div>
+            <div class="city-name" style="font-size:22px;">Boston</div>
+            <div class="city-status">Coming 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ BRAND PARTNERS TICKER ============================================ -->
+<section class="brands-strip">
+  <div class="brands-strip-header">
+    <div class="brands-strip-label">Trusted By</div>
+    <h3 class="brands-strip-h">Brands that move.</h3>
+  </div>
+  <div class="brands-ticker-wrap">
+    <div class="brands-ticker-track">
+      <img src="assets/partner-athletic.png" alt="Athletic Brewing">
+      <img src="assets/partner-brez.png" alt="Brez">
+      <img src="assets/partner-chaser.png" alt="Chaser">
+      <img src="assets/partner-hiyo.png" alt="Hiyo">
+      <img src="assets/partner-kenetik.png" alt="Kenetik">
+      <img src="assets/partner-koia.png" alt="Koia">
+      <img src="assets/partner-offfield.png" alt="Offfield">
+      <img src="assets/partner-wip.png" alt="Wip">
+      <img src="assets/partner-bang.png" alt="Bang">
+      <!-- duplicate for seamless loop -->
+      <img src="assets/partner-athletic.png" alt="" aria-hidden="true">
+      <img src="assets/partner-brez.png" alt="" aria-hidden="true">
+      <img src="assets/partner-chaser.png" alt="" aria-hidden="true">
+      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true">
+      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true">
+      <img src="assets/partner-koia.png" alt="" aria-hidden="true">
+      <img src="assets/partner-offfield.png" alt="" aria-hidden="true">
+      <img src="assets/partner-wip.png" alt="" aria-hidden="true">
+      <img src="assets/partner-bang.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ RSVP / SWEATPALS ============================================ -->
+<section class="rsvp-section" id="rsvp">
+  <div class="rsvp-inner">
+    <div class="rsvp-layout">
+      <div>
+        <div class="rsvp-eyebrow">Reserve Your Spot</div>
+        <h2 class="rsvp-h">Get on<br>the <span class="blue">list.</span></h2>
+        <p class="rsvp-sub">Midnight Moves runs through SweatPals — the community app for people who show up. Find the event, RSVP, and get ready to move.</p>
+        <div class="rsvp-direct">
+          <a class="cta cta-primary" href="https://sweatpals.com" target="_blank" rel="noopener">Open SweatPals &rarr;</a>
+          <a class="cta cta-ghost" href="mailto:info@movemorecollective.com">Ask a Question</a>
+        </div>
+      </div>
+      <div class="rsvp-embed-wrap">
+        <div class="rsvp-embed-topbar">
+          <span class="rsvp-embed-brand">SweatPals · Midnight Moves</span>
+          <a class="rsvp-embed-open" href="https://sweatpals.com" target="_blank" rel="noopener">Open in app ↗</a>
+        </div>
+        <div class="rsvp-embed-frame">
+          <!-- Replace src with actual SweatPals embed URL -->
+          <!-- <iframe src="https://sweatpals.com/embed/midnight-moves" title="RSVP for Midnight Moves on SweatPals" loading="lazy"></iframe> -->
+          <div class="rsvp-embed-placeholder">
+            <div class="ph-icon">🏃</div>
+            <p>SweatPals event embed<br>goes here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ WHERE NEXT ============================================ -->
+<section class="next" id="next">
+  <div class="chapter-tag">Chapter 04 / Choose your path</div>
+
+  <div class="next-header">
+    <h2 class="next-h">Ready to<br>move <span class="blue">more?</span></h2>
+    <div class="next-meta">
+      Three paths<br>
+      One movement<br>
+      Pick a door
+    </div>
+  </div>
+
+  <div class="next-doors">
+    <a class="door door-primary" href="#rsvp">
+      <div class="door-meta">
+        <div class="door-tag">01 / Attend</div>
+        <div class="door-arrow">↗</div>
+      </div>
+      <div class="door-body">
+        <h3 class="door-h anton">Find your<br>next move.</h3>
+        <p class="door-desc">Show up. Sweat. Connect. The next Midnight Moves is closer than you think — RSVP through SweatPals.</p>
+        <span class="door-cta">RSVP now &rarr;</span>
+      </div>
+    </a>
+    <a class="door" href="for-communities.html">
+      <div class="door-meta">
+        <div class="door-tag">02 / Communities</div>
+        <div class="door-arrow">↗</div>
+      </div>
+      <div class="door-body">
+        <h3 class="door-h anton">Grow with<br>us.</h3>
+        <p class="door-desc">Co-host events, plug into the Skool community, scale your club or studio.</p>
+        <span class="door-cta">Build &rarr;</span>
+      </div>
+    </a>
+    <a class="door" href="about.html">
+      <div class="door-meta">
+        <div class="door-tag">03 / About</div>
+        <div class="door-arrow">↗</div>
+      </div>
+      <div class="door-body">
+        <h3 class="door-h anton">Meet the<br>collective.</h3>
+        <p class="door-desc">Mission, team, and the Active Minds partnership behind every event.</p>
+        <span class="door-cta">About Us &rarr;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================ FOOTER ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <h3 class="footer-top anton">See you<br><span class="glow">Friday.</span></h3>
+    <div class="footer-cta-row">
+      <a class="cta cta-primary" href="#rsvp">RSVP for May 15 &rarr;</a>
+      <a class="cta cta-ghost" href="mailto:info@movemorecollective.com">info@movemorecollective.com</a>
+    </div>
+    <div class="footer-row">
+      <span>© 2026 MOVE MORE COLLECTIVE — WEST PALM BEACH, FL</span>
+      <span>BUILT BY LYFEWORK · PROTOTYPE v0.1</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================ MOTION ============================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============ NAV scroll state ============ */
+const nav = document.getElementById('nav');
+ScrollTrigger.create({
+  start: 50, end: 99999,
+  toggleClass: { className: 'scrolled', targets: '#nav' }
+});
+
+/* ============ ATMOSPHERE — color of the world shifts with scroll ============
+ * Hero (black) → Meet (dusk: deep ink) → Move (midnight blue) → More (deep blue) → Next (black)
+ */
+const atmosphere = document.getElementById('atmosphere');
+const atmosphereGlow = document.getElementById('atmosphere-glow');
+
+// Define color stops along scroll — recalibrated for 3 pinned chapters
+const stops = [
+  { at: 0.00, bg: '#050505', glow: 0 },       // Hero (pure black)
+  { at: 0.09, bg: '#070712', glow: 0.10 },    // Entering Meet (dusk begins)
+  { at: 0.20, bg: '#0a0e22', glow: 0.28 },    // Mid Meet
+  { at: 0.29, bg: '#0a1230', glow: 0.42 },    // Entering Move
+  { at: 0.43, bg: '#050928', glow: 0.72 },    // Move peak (deepest immersion)
+  { at: 0.57, bg: '#070b25', glow: 0.55 },    // Entering More
+  { at: 0.72, bg: '#080d28', glow: 0.50 },    // Mid More
+  { at: 0.83, bg: '#0a0a18', glow: 0.25 },    // After More (partners)
+  { at: 0.88, bg: '#050505', glow: 0.10 },    // Next (back to black)
+  { at: 0.96, bg: '#050505', glow: 0.05 },    // End of Next
+  { at: 1.00, bg: '#02030d', glow: 0.30 }     // Footer (deep midnight close)
+];
+
+function lerpColor(a, b, t) {
+  const ah = parseInt(a.slice(1), 16), bh = parseInt(b.slice(1), 16);
+  const ar = ah >> 16, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+  const br = bh >> 16, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+  const rr = Math.round(ar + (br - ar) * t);
+  const rg = Math.round(ag + (bg - ag) * t);
+  const rb = Math.round(ab + (bb - ab) * t);
+  return `rgb(${rr}, ${rg}, ${rb})`;
+}
+
+ScrollTrigger.create({
+  trigger: 'body',
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: (self) => {
+    const p = self.progress;
+    let i = 0;
+    while (i < stops.length - 1 && stops[i + 1].at < p) i++;
+    const a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
+    const span = b.at - a.at || 1;
+    const t = (p - a.at) / span;
+    atmosphere.style.background = lerpColor(a.bg, b.bg, t);
+    atmosphereGlow.style.opacity = a.glow + (b.glow - a.glow) * t;
+  }
+});
+
+/* ============================================
+   REVEAL HELPER — explicit onEnter pattern (avoids gsap.from + stagger + scrollTrigger bugs)
+   ============================================ */
+function reveal(selector, opts = {}) {
+  const {
+    trigger = selector,
+    start = 'top 78%',
+    y = 30,
+    x = 0,
+    duration = 0.85,
+    stagger = 0.08,
+    ease = 'power3.out',
+    fromOpacity = 0
+  } = opts;
+  const els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  // Set initial state via inline style — no gsap.set so we don't fight ScrollTrigger refreshes
+  els.forEach(el => {
+    el.style.opacity = fromOpacity;
+    el.style.transform = `translate(${x}px, ${y}px)`;
+    el.style.willChange = 'opacity, transform';
+  });
+  ScrollTrigger.create({
+    trigger,
+    start,
+    once: true,
+    onEnter: () => {
+      gsap.to(els, { opacity: 1, y: 0, x: 0, duration, stagger, ease,
+        onComplete: () => { els.forEach(el => { el.style.willChange = 'auto'; }); }
+      });
+    }
+  });
+}
+
+/* ============ HERO HEADLINE — fade out + parallax on scroll ============ */
+gsap.to('.hero-headline, .hero-bottom, .hero-vertical, .hero-ticker, .scroll-cue', {
+  opacity: 0,
+  y: -40,
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 0.5
+  }
+});
+gsap.to('.hero-video', {
+  scale: 1.15,
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 0.5
+  }
+});
+
+
+/* ============ MEET — card video (plays on viewport enter via IntersectionObserver) ============ */
+reveal('.meet-time', { trigger: '#meet-pin-wrap', start: 'top 65%', y: 80, duration: 1.0 });
+reveal('.meet-name', { trigger: '#meet-pin-wrap', start: 'top 55%', y: 40, duration: 0.85 });
+reveal('.meet-rule', { trigger: '#meet-pin-wrap', start: 'top 60%', y: 0, duration: 0.7 });
+reveal('.meet-desc, .meet-list-item', { trigger: '#meet-pin-wrap', start: 'top 50%', y: 24, duration: 0.7, stagger: 0.08 });
+reveal('.meet-right', { trigger: '#meet-pin-wrap', start: 'top 60%', y: 0, x: 60, duration: 1.0 });
+
+/* ============ IMAGE SEQUENCE SCRUBS — shared setup ============ */
+function setupImageScrub({ wrapper, imgId, framesDir, frameCount, fillId, counterId }) {
+  const img = document.getElementById(imgId);
+  if (!img) return;
+  const fill    = fillId    ? document.getElementById(fillId)    : null;
+  const counter = counterId ? document.getElementById(counterId) : null;
+
+  const frames = Array.from({ length: frameCount }, (_, i) =>
+    `${framesDir}/${String(i + 1).padStart(3, '0')}.jpg`
+  );
+  const cached = new Set();
+
+  function preload(from, count) {
+    for (let i = from; i < Math.min(from + count, frameCount); i++) {
+      if (!cached.has(i)) { cached.add(i); new Image().src = frames[i]; }
+    }
+  }
+
+  preload(0, 12);
+  img.src = frames[0];
+
+  ScrollTrigger.create({
+    trigger: wrapper,
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate(self) {
+      const idx = Math.min(Math.floor(self.progress * frameCount), frameCount - 1);
+      const src = frames[idx];
+      if (img.getAttribute('src') !== src) img.src = src;
+      if (fill) fill.style.width = (self.progress * 100) + '%';
+      if (counter) counter.textContent = `FRAME ${String(idx + 1).padStart(3, '0')} / ${frameCount}`;
+      preload(idx + 1, 8);
+    }
+  });
+}
+
+setupImageScrub({ wrapper: '#move-pin-wrap', imgId: 'moveScrubImg', framesDir: 'assets/frames-move', frameCount: 72, fillId: 'moveProgressFill', counterId: 'moveFrameCounter' });
+reveal('.move-meta-pill', { trigger: '#move-pin-wrap', start: 'top 60%', y: 30, duration: 0.7 });
+reveal('.move-headline', { trigger: '#move-pin-wrap', start: 'top 55%', y: 60, duration: 1.0 });
+reveal('.move-sub', { trigger: '#move-pin-wrap', start: 'top 50%', y: 30, duration: 0.85 });
+
+/* ============ MORE — card video (plays on viewport enter via IntersectionObserver) ============ */
+
+const eqBars = document.getElementById('eqBars');
+const barCount = 28;
+const bars = [];
+for (let i = 0; i < barCount; i++) {
+  const b = document.createElement('div');
+  b.className = 'eq-bar';
+  b.style.height = '12px';
+  eqBars.appendChild(b);
+  bars.push(b);
+}
+reveal('.more-time', { trigger: '#more-pin-wrap', start: 'top 65%', y: 80, duration: 1.0 });
+reveal('.more-name', { trigger: '#more-pin-wrap', start: 'top 55%', y: 40, duration: 0.85 });
+reveal('.more-rule', { trigger: '#more-pin-wrap', start: 'top 60%', y: 0, duration: 0.7 });
+reveal('.more-desc, .more-actions', { trigger: '#more-pin-wrap', start: 'top 50%', y: 24, duration: 0.7, stagger: 0.08 });
+reveal('.more-right', { trigger: '#more-pin-wrap', start: 'top 60%', y: 0, x: 60, duration: 1.0 });
+
+// EQ bars animate to varied heights when visible, then keep pulsing
+ScrollTrigger.create({
+  trigger: '#more-pin-wrap',
+  start: 'top 70%',
+  onEnter: () => {
+    bars.forEach((b, i) => {
+      gsap.to(b, { height: 40 + Math.random() * 160, duration: 0.4 + Math.random() * 0.6, ease: 'power2.out', delay: i * 0.025 });
+    });
+    bars.forEach((b, i) => {
+      gsap.to(b, {
+        height: 40 + Math.random() * 160,
+        duration: 0.6 + Math.random() * 0.8,
+        ease: 'sine.inOut',
+        delay: 1.5 + i * 0.03,
+        repeat: -1,
+        yoyo: true
+      });
+    });
+  }
+});
+
+/* ============ UPCOMING EVENTS — fade in ============ */
+reveal('.upcoming-head > *', { trigger: '.upcoming', start: 'top 75%', y: 30, duration: 0.85, stagger: 0.08 });
+reveal('.next-event-card', { trigger: '.upcoming-grid', start: 'top 80%', y: 40, duration: 0.9 });
+reveal('.upcoming-grid > *:not(.next-event-card)', { trigger: '.upcoming-grid', start: 'top 75%', y: 30, duration: 0.8, stagger: 0.1 });
+
+/* ============ BRANDS TICKER — fade in ============ */
+reveal('.brands-strip-header > *', { trigger: '.brands-strip', start: 'top 80%', y: 20, duration: 0.7, stagger: 0.08 });
+reveal('.brands-ticker-wrap', { trigger: '.brands-strip', start: 'top 75%', y: 20, duration: 0.7 });
+
+/* ============ RSVP SECTION — fade in ============ */
+reveal('.rsvp-layout > *', { trigger: '.rsvp-section', start: 'top 75%', y: 40, duration: 0.9, stagger: 0.12 });
+
+/* ============ NEXT — doors stagger in ============ */
+reveal('.next-h, .next-meta', { trigger: '.next', start: 'top 75%', y: 40, duration: 0.85, stagger: 0.1 });
+reveal('.door', { trigger: '.next-doors', start: 'top 80%', y: 60, duration: 0.8, stagger: 0.12 });
+
+/* ============ FOOTER ============ */
+reveal('.footer-top, .footer-cta-row', { trigger: '.footer', start: 'top 80%', y: 30, duration: 0.85, stagger: 0.1 });
+
+setupImageScrub({ wrapper: '#meet-pin-wrap', imgId: 'meetScrubImg', framesDir: 'assets/frames-meet', frameCount: 72, fillId: 'meetProgressFill', counterId: 'meetFrameCounter' });
+setupImageScrub({ wrapper: '#more-pin-wrap', imgId: 'moreScrubImg', framesDir: 'assets/frames-more', frameCount: 104, fillId: 'moreProgressFill', counterId: 'moreFrameCounter' });
+
+/* ============ REFRESH ScrollTrigger after layout settles ============ */
+window.addEventListener('load', () => {
+  setTimeout(() => ScrollTrigger.refresh(), 200);
+});
+
+/* Events dropdown */
+(function() {
+  const wrap = document.getElementById('navEventsWrap');
+  const btn  = document.getElementById('navEventsBtn');
+  if (!wrap || !btn) return;
+  function open()   { wrap.classList.add('open');    btn.setAttribute('aria-expanded', 'true'); }
+  function close()  { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle() { wrap.classList.contains('open') ? close() : open(); }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+</body>
+</html>

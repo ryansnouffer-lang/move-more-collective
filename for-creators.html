@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Creators — Move More Collective</title>
+<meta name="description" content="Plug into the Move More creator network. Get matched with wellness brands, exclusive event access, coaching, and a community of wellness-native creators.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-BlackItalic.otf') format('opentype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+:root {
+  --black: #050505; --ink: #0a0a0e; --midnight: #04111c; --deep-blue: #051826;
+  --blue: #3d8ecf; --blue-glow: #6cb3e8; --blue-deep: #2a6ea5;
+  --white: #ffffff; --paper: #f5f3ed;
+  --muted: rgba(255,255,255,0.6); --line: rgba(255,255,255,0.08);
+  --gutter: clamp(24px, 4vw, 64px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html { background: var(--black); }
+body { background: var(--black); color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; line-height: 1.5; overflow-x: clip; }
+.display { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; }
+.display .blue { color: var(--blue); }
+.display .stroke { color: transparent; -webkit-text-stroke: 2px var(--white); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 22px var(--gutter); display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, backdrop-filter 0.3s; }
+.nav.scrolled { background: rgba(5,5,5,0.78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.nav-brand { display: inline-flex; align-items: center; gap: 10px; height: 40px; text-decoration: none; color: var(--white); }
+.nav-brand img { height: 38px; width: auto; display: block; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-link { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-link:hover, .nav-link.active { color: var(--blue-glow); }
+.nav-link.active { font-weight: 700; }
+.nav-cta { background: var(--white); color: var(--black); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-cta:hover { background: var(--blue); color: var(--white); }
+@media (max-width: 900px) { .nav-links .nav-link { display: none; } }
+
+/* Events dropdown */
+@keyframes pulse { 50% { opacity: 0.3; transform: scale(1.5); } }
+.nav-events-wrap { position: relative; }
+.nav-events-btn { background: none; border: none; font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-events-btn:hover, .nav-events-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-chevron { font-size: 11px; display: inline-block; transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); line-height: 1; margin-top: 1px; }
+.nav-events-wrap.open .nav-chevron { transform: rotate(180deg); }
+.nav-events-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.events-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 460px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(108,179,232,0.06) inset; z-index: 200; }
+.nav-events-wrap:hover .events-dropdown, .nav-events-wrap.open .events-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.events-dropdown-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(108,179,232,0.55); padding: 0 6px; margin-bottom: 10px; }
+.event-card { display: grid; grid-template-columns: 148px 1fr; gap: 0; border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--white); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); transition: border-color 0.2s, background 0.2s; }
+.event-card:hover { border-color: rgba(108,179,232,0.45); background: rgba(61,142,207,0.07); }
+.event-card-photo { position: relative; overflow: hidden; }
+.event-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; filter: brightness(0.88); transition: filter 0.3s, transform 0.4s; }
+.event-card:hover .event-card-photo img { filter: brightness(1); transform: scale(1.04); }
+.event-card-photo-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(6,8,12,0.5) 100%); }
+.event-card-info { padding: 20px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.event-card-series { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.event-card-series::before { content: ""; width: 5px; height: 5px; background: var(--blue-glow); border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s ease-in-out infinite; }
+.event-card-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 8px; }
+.event-card-desc { font-size: 11.5px; line-height: 1.55; opacity: 0.62; margin-bottom: 14px; flex: 1; }
+.event-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--blue-glow); text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: gap 0.2s; }
+.event-card:hover .event-card-cta { gap: 12px; }
+.events-more { margin-top: 10px; padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+.events-more-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+.events-more-cities { display: flex; gap: 6px; flex-wrap: wrap; }
+.events-more-city { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(108,179,232,0.45); padding: 3px 8px; border: 1px solid rgba(108,179,232,0.18); border-radius: 99px; }
+
+/* Partnerships dropdown */
+.nav-partner-wrap { position: relative; }
+.nav-partner-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.nav-partner-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-partner-wrap.open .nav-chevron { transform: rotate(180deg); }
+.partner-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 290px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 200; }
+.nav-partner-wrap:hover .partner-dropdown, .nav-partner-wrap.open .partner-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.partner-link { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; border-radius: 10px; text-decoration: none; color: var(--white); transition: background 0.15s; }
+.partner-link:hover { background: rgba(108,179,232,0.09); }
+.partner-link.active .partner-link-name { color: var(--blue-glow); }
+.partner-link-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.partner-link-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+
+
+/* CTA */
+.cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
+.cta-primary { background: var(--blue); color: var(--white); }
+.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-white { background: var(--white); color: var(--midnight); }
+.cta-white:hover { background: var(--blue-glow); }
+.cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
+.cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+
+/* Section base */
+.section { padding: 120px var(--gutter); position: relative; overflow: hidden; }
+.section-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; gap: 32px; flex-wrap: wrap; }
+.section-eyebrow { font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 14px; letter-spacing: 0.02em; }
+.section-h2 { font-size: clamp(40px, 5.5vw, 80px); }
+.section-sub { font-size: 16px; line-height: 1.55; opacity: 0.72; max-width: 480px; }
+
+/* ============================================ PAGE HERO ============================================ */
+.page-hero { position: relative; min-height: 88vh; padding: 140px var(--gutter) 80px; display: flex; align-items: center; overflow: hidden; background: var(--black); }
+.page-hero::before { content: ""; position: absolute; right: -10%; top: 0; width: 70%; height: 100%; background: url('assets/bg-creators-hero.jpg') center 30%/cover no-repeat; opacity: 0.42; filter: brightness(0.7); mask-image: linear-gradient(90deg, transparent 0%, black 30%, black 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 30%, black 100%); }
+.page-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(61,142,207,0.20), transparent 70%); pointer-events: none; }
+.page-hero-content { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; width: 100%; }
+.page-hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 18px; }
+.page-hero-h1 { font-size: clamp(72px, 12vw, 200px); margin-bottom: 28px; }
+.page-hero-sub { font-size: 18px; line-height: 1.55; opacity: 0.85; max-width: 600px; margin-bottom: 36px; }
+.page-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ============================================ WAYS TO WORK TOGETHER ============================================ */
+.ways { background: var(--black); padding: 120px var(--gutter); }
+.ways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 56px; }
+@media (max-width: 768px) { .ways-grid { grid-template-columns: 1fr; } }
+.way-card { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--line); border-radius: 18px; padding: 0; overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; min-height: 340px; transition: all 0.22s; }
+.way-card:hover { border-color: rgba(108,179,232,0.4); }
+.way-card.featured { background: linear-gradient(180deg, rgba(61,142,207,0.10) 0%, rgba(61,142,207,0.02) 100%); border-color: rgba(108,179,232,0.32); grid-column: 1 / -1; grid-template-columns: 1.4fr 1fr; min-height: 380px; }
+.way-text { padding: 36px 36px 32px; display: flex; flex-direction: column; gap: 14px; justify-content: space-between; }
+.way-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 0.22em; text-transform: uppercase; }
+.way-tag.core { color: var(--blue-glow); }
+.way-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.4vw, 44px); text-transform: uppercase; line-height: 0.95; }
+.way-h .accent { color: var(--blue); }
+.way-desc { font-size: 14.5px; line-height: 1.6; opacity: 0.78; max-width: 460px; }
+.way-cta { font-size: 13px; color: var(--blue-glow); font-weight: 600; display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; }
+.way-img { background: linear-gradient(135deg, #1a1a24 0%, #050714 100%); position: relative; overflow: hidden; }
+.way-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+.way-img-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, transparent 30%, rgba(0,0,0,0.5) 100%); pointer-events: none; }
+.way-img-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; padding: 24px; text-align: center; }
+
+/* ============================================ MMC DIFFERENCE ============================================ */
+.difference { background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); }
+.difference-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+@media (max-width: 1024px) { .difference-grid { grid-template-columns: 1fr; gap: 40px; } }
+.difference-callouts { display: flex; flex-direction: column; gap: 36px; }
+.callout { display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: start; }
+.callout-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(61,142,207,0.12); border: 1px solid rgba(61,142,207,0.32); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 20px; }
+.callout-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.callout-desc { font-size: 14.5px; line-height: 1.55; opacity: 0.7; max-width: 440px; }
+.difference-visual { position: relative; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, #1a1a24 0%, #050714 100%); }
+.difference-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.difference-visual-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+.difference-stat-pill { position: absolute; left: 20px; bottom: 20px; background: var(--blue); color: var(--white); padding: 10px 16px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+.difference-stat-pill .num { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 32px; line-height: 1; margin-right: 4px; }
+.difference-stat-pill .lab { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.95; vertical-align: middle; }
+
+/* ============================================ BRAND PARTNERS STRIP ============================================ */
+.brands-strip { background: var(--deep-blue); padding: 72px 0; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.brands-strip::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 70%; height: 200%; background: radial-gradient(ellipse, rgba(61,142,207,0.08) 0%, transparent 65%); pointer-events: none; }
+.brands-strip-header { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: baseline; gap: 24px; margin-bottom: 44px; }
+.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); }
+.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; color: var(--white); }
+.brands-ticker-wrap { position: relative; overflow: hidden; }
+.brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
+.brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
+.brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 36s linear infinite; width: max-content; padding: 8px 0; }
+.brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
+.brands-ticker-track img:hover { filter: none; opacity: 1; }
+.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================================ CTA SECTION ============================================ */
+.cta-section { padding: 140px var(--gutter); background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); position: relative; overflow: hidden; text-align: center; }
+.cta-section::before { content: ""; position: absolute; left: 50%; top: 20%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.32) 0%, transparent 65%); filter: blur(100px); pointer-events: none; }
+.cta-section-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+.cta-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue-glow); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 18px; }
+.cta-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 7vw, 104px); text-transform: uppercase; line-height: 0.95; margin-bottom: 24px; }
+.cta-h .blue { color: var(--blue-glow); }
+.cta-sub { font-size: 17px; line-height: 1.55; opacity: 0.78; margin-bottom: 36px; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ============================================ FOOTER ============================================ */
+.footer { padding: 96px var(--gutter) 48px; background: linear-gradient(180deg, var(--midnight) 0%, var(--deep-blue) 100%); position: relative; overflow: hidden; }
+.footer-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.footer-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 6vw, 88px); text-transform: uppercase; line-height: 0.95; max-width: 800px; margin-bottom: 28px; }
+.footer-h .blue { color: var(--blue-glow); }
+.footer-cta-row { display: flex; gap: 12px; margin-bottom: 56px; flex-wrap: wrap; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.1); }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; font-weight: 500; }
+.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; padding: 6px 0; transition: color 0.15s; }
+.footer-col a:hover { color: var(--blue-glow); }
+.footer-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.4; margin-top: 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; letter-spacing: 0.05em; }
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="index.html" aria-label="Move More Collective"><img src="assets/logos/mmc-logo-horizontal-white.png" alt="Move More Collective"></a>
+  <div class="nav-links">
+    <div class="nav-events-wrap" id="navEventsWrap">
+      <button class="nav-events-btn" id="navEventsBtn" aria-expanded="false" aria-haspopup="true">
+        Events <span class="nav-chevron">▾</span>
+      </button>
+      <div class="events-dropdown" id="eventsDropdown" role="menu">
+        <div class="events-dropdown-label">Current Events</div>
+        <a class="event-card" href="midnight-moves.html" role="menuitem">
+          <div class="event-card-photo">
+            <img src="assets/bg-midnight-hero.jpg" alt="Midnight Moves">
+            <div class="event-card-photo-overlay"></div>
+          </div>
+          <div class="event-card-info">
+            <div>
+              <div class="event-card-series">Flagship Series · South Florida</div>
+              <div class="event-card-name">Midnight<br>Moves.</div>
+              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required. Next: May 15, West Palm Beach.</p>
+            </div>
+            <span class="event-card-cta">See the Series →</span>
+          </div>
+        </a>
+        <div class="events-more">
+          <div class="events-more-text">Expanding to</div>
+          <div class="events-more-cities">
+            <span class="events-more-city">NYC</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Boston</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-partner-wrap" id="navPartnerWrap">
+      <button class="nav-events-btn" id="navPartnerBtn" aria-expanded="false" aria-haspopup="true">
+        Partnerships <span class="nav-chevron">&#9662;</span>
+      </button>
+      <div class="partner-dropdown" id="partnerDropdown" role="menu">
+        <a class="partner-link" href="for-brands.html" role="menuitem">
+          <span class="partner-link-name">For Brands</span>
+          <span class="partner-link-desc">Activate through events &amp; media</span>
+        </a>
+        <a class="partner-link" href="for-communities.html" role="menuitem">
+          <span class="partner-link-name">For Communities</span>
+          <span class="partner-link-desc">Co-host and scale your club</span>
+        </a>
+        <a class="partner-link active" href="for-creators.html" role="menuitem">
+          <span class="partner-link-name">For Creators</span>
+          <span class="partner-link-desc">Get paid to create</span>
+        </a>
+      </div>
+    </div>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-cta" href="#work-with-us">Work With Us</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">The Creator Lane — For Creators</div>
+    <h1 class="display page-hero-h1">For <span class="blue">creators.</span></h1>
+    <p class="page-hero-sub">Plug into the Move More creator network. Get paid for brand deployments, press passes for our signature events, coaching from creators who've done it, and access to brands actively seeking wellness-native talent.</p>
+    <div class="page-hero-actions">
+      <a class="cta cta-primary" href="#work-with-us">Apply to the Network &rarr;</a>
+      <a class="cta cta-ghost" href="#ways">Explore Programs</a>
+    </div>
+  </div>
+</section>
+
+<!-- WAYS TO WORK TOGETHER -->
+<section class="ways" id="ways">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Ways to Work Together</div>
+        <h2 class="display section-h2">Ways to work <span class="blue">together.</span></h2>
+      </div>
+      <p class="section-sub">Four lanes for the creators building the visual culture of the new wellness era.</p>
+    </div>
+    <div class="ways-grid">
+
+      <!-- Featured / Core -->
+      <div class="way-card featured">
+        <div class="way-text">
+          <div>
+            <div class="way-tag core">Core Offering</div>
+            <h3 class="way-h">Paid Brand<br>Deployments.</h3>
+          </div>
+          <p class="way-desc">Get matched with wellness brands actively seeking creator content via MMC. We handle the matching, briefing, and payment — you focus on creating. Multi-viral UGC portfolios have already generated 20M+ impressions for a single brand through our network.</p>
+          <a class="way-cta" href="#work-with-us">Apply to Get Matched &rarr;</a>
+        </div>
+        <div class="way-img">
+          <img src="assets/creators-group.jpg" alt="MMC creator network">
+          <div class="way-img-overlay"></div>
+        </div>
+      </div>
+
+      <!-- Event Access -->
+      <div class="way-card">
+        <div class="way-text">
+          <div>
+            <div class="way-tag">Access</div>
+            <h3 class="way-h">Press Pass<br>&amp; Access.</h3>
+          </div>
+          <p class="way-desc">Comp access to Midnight Moves and signature events. First look at upcoming activations. Press passes for content capture, BTS, and exclusive interviews with brand partners on the night.</p>
+          <a class="way-cta" href="#work-with-us">Get Pressed &rarr;</a>
+        </div>
+        <div class="way-img">
+          <img src="assets/bg-midnight-hero.jpg" alt="Creator at MMC event" style="object-position: center 30%;">
+          <div class="way-img-overlay"></div>
+        </div>
+      </div>
+
+      <!-- Coaching -->
+      <div class="way-card">
+        <div class="way-text">
+          <div>
+            <div class="way-tag">Community</div>
+            <h3 class="way-h">Coaching<br>&amp; Network.</h3>
+          </div>
+          <p class="way-desc">Plug into a community of wellness-native creators. Mentorship from creators who've cracked the virality code, content frameworks, and direct intros to brands when you're ready.</p>
+          <a class="way-cta" href="#work-with-us">Join the Network &rarr;</a>
+        </div>
+        <div class="way-img">
+          <img src="assets/bg-motion.jpg" alt="MMC creator community" style="object-position: center 40%;">
+          <div class="way-img-overlay"></div>
+        </div>
+      </div>
+
+      <!-- UGC Studio -->
+      <div class="way-card" style="grid-column: 1 / -1;">
+        <div class="way-text">
+          <div>
+            <div class="way-tag">Studio</div>
+            <h3 class="way-h">UGC studio &amp; <span class="accent">co-creation.</span></h3>
+          </div>
+          <p class="way-desc">Studio access, content collabs, and co-creation with brands and other creators. Whether you're just finding your lane or a verified name growing your catalog, we've built the space for both.</p>
+          <a class="way-cta" href="#work-with-us">Co-Create with Us &rarr;</a>
+        </div>
+        <div class="way-img">
+          <img src="assets/neon-outdoor.jpg" alt="UGC studio at MMC event">
+          <div class="way-img-overlay"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- THE MMC DIFFERENCE -->
+<section class="section difference">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">The MMC Difference</div>
+        <h2 class="display section-h2">The <span class="blue">MMC</span><br>difference.</h2>
+      </div>
+      <p class="section-sub">Why creators choose MMC as their plug into the wellness brand economy.</p>
+    </div>
+    <div class="difference-grid">
+      <div class="difference-callouts">
+        <div class="callout">
+          <div class="callout-icon">◑</div>
+          <div>
+            <div class="callout-h">Leaders in Wellness Culture</div>
+            <p class="callout-desc">Consultants and operators — our signature events drive immediate brand value while serving as ecosystem-building engines for ethos-aligned brands, creators, and communities.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">⊕</div>
+          <div>
+            <div class="callout-h">Multidisciplinary Operating Team</div>
+            <p class="callout-desc">Former investment bankers, corporate strategists, event producers, wellness practice owners, and viral content strategists — with wellness now central to everything we do.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">↗</div>
+          <div>
+            <div class="callout-h">High-Caliber Relationships</div>
+            <p class="callout-desc">From online personalities to celebrity content production teams; from local run clubs to national wellness festivals; from emerging startups to category leaders — we maintain a premium network.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">◎</div>
+          <div>
+            <div class="callout-h">Multi-City Expansion — Coming Soon</div>
+            <p class="callout-desc">South Florida flagship offering is active now. Strategic roadmap includes near-term expansion to wellness hubs across NYC, Austin, Atlanta, and Boston.</p>
+          </div>
+        </div>
+      </div>
+      <div class="difference-visual">
+        <img src="assets/neon-outdoor.jpg" alt="Move More Collective neon signage" loading="lazy">
+        <div class="difference-visual-overlay"></div>
+        <div class="difference-stat-pill"><span class="num">100+</span><span class="lab">Attendees Per Event</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND PARTNERS TICKER -->
+<section class="brands-strip">
+  <div class="brands-strip-header">
+    <div class="brands-strip-label">Partners</div>
+    <h3 class="brands-strip-h">Brands that move.</h3>
+  </div>
+  <div class="brands-ticker-wrap">
+    <div class="brands-ticker-track">
+      <img src="assets/partner-athletic.png" alt="Athletic Brewing">
+      <img src="assets/partner-brez.png" alt="Brez">
+      <img src="assets/partner-chaser.png" alt="Chaser">
+      <img src="assets/partner-hiyo.png" alt="Hiyo">
+      <img src="assets/partner-kenetik.png" alt="Kenetik">
+      <img src="assets/partner-koia.png" alt="Koia">
+      <img src="assets/partner-offfield.png" alt="Offfield">
+      <img src="assets/partner-wip.png" alt="Wip">
+      <img src="assets/partner-bang.png" alt="Bang">
+      <img src="assets/partner-athletic.png" alt="" aria-hidden="true">
+      <img src="assets/partner-brez.png" alt="" aria-hidden="true">
+      <img src="assets/partner-chaser.png" alt="" aria-hidden="true">
+      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true">
+      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true">
+      <img src="assets/partner-koia.png" alt="" aria-hidden="true">
+      <img src="assets/partner-offfield.png" alt="" aria-hidden="true">
+      <img src="assets/partner-wip.png" alt="" aria-hidden="true">
+      <img src="assets/partner-bang.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="work-with-us">
+  <div class="cta-section-inner">
+    <div class="cta-eyebrow">Ready to Plug In?</div>
+    <h2 class="cta-h">Get paid to<br><span class="blue">create.</span></h2>
+    <p class="cta-sub">Apply to the Move More creator network. We'll match you with brands, give you access, and coach you through the lanes that actually convert.</p>
+    <div class="cta-actions">
+      <a class="cta cta-primary" href="mailto:info@movemorecollective.com">Apply Now &rarr;</a>
+      <a class="cta cta-ghost" href="midnight-moves.html">See Events First</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
+    <div class="footer-cta-row">
+      <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
+      <a class="cta cta-ghost" href="mailto:info@movemorecollective.com">info@movemorecollective.com</a>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Move More Collective</h4>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.55;">A mission-driven experiential wellness &amp; media platform. West Palm Beach, FL — expanding nationally.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="midnight-moves.html">Midnight Moves</a>
+        <a href="for-brands.html">For Brands</a>
+        <a href="for-communities.html">For Communities</a>
+        <a href="for-creators.html">For Creators</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/movemorecollective" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@movemorecollective" target="_blank" rel="noopener">TikTok</a>
+        <a href="mailto:info@movemorecollective.com">Email</a>
+      </div>
+      <div class="footer-col">
+        <h4>Work With Us</h4>
+        <a href="for-brands.html">Partner</a>
+        <a href="for-communities.html">Co-Host</a>
+        <a href="for-creators.html">Create</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 MOVE MORE COLLECTIVE — WEST PALM BEACH, FL</span>
+      <span>WELLNESS × CULTURE</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.create({ start: 50, end: 99999, toggleClass: { className: 'scrolled', targets: '#nav' } });
+
+function reveal(selector, opts = {}) {
+  const { trigger = selector, start = 'top 80%', y = 30, duration = 0.85, stagger = 0.08, ease = 'power3.out' } = opts;
+  const els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  els.forEach(el => { el.style.opacity = 0; el.style.transform = `translate(0, ${y}px)`; el.style.willChange = 'opacity, transform'; });
+  ScrollTrigger.create({ trigger, start, once: true,
+    onEnter: () => gsap.to(els, { opacity: 1, y: 0, duration, stagger, ease, onComplete: () => els.forEach(el => { el.style.willChange = 'auto'; }) })
+  });
+}
+reveal('.page-hero-eyebrow, .page-hero-h1, .page-hero-sub, .page-hero-actions', { trigger: '.page-hero', start: 'top 90%', stagger: 0.1 });
+reveal('.ways .section-head > *', { trigger: '.ways', stagger: 0.1 });
+reveal('.way-card', { trigger: '.ways-grid', stagger: 0.12, y: 40 });
+reveal('.difference .section-head > *', { trigger: '.difference', stagger: 0.1 });
+reveal('.callout', { trigger: '.difference-callouts', stagger: 0.1 });
+reveal('.difference-visual', { trigger: '.difference-grid', y: 40 });
+reveal('.brands-strip-inner > *', { trigger: '.brands-strip', stagger: 0.1 });
+reveal('.cta-section-inner > *', { trigger: '.cta-section', stagger: 0.1 });
+reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
+window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
+
+/* Events dropdown */
+(function() {
+  const wrap = document.getElementById('navEventsWrap');
+  const btn  = document.getElementById('navEventsBtn');
+  if (!wrap || !btn) return;
+  function open()   { wrap.classList.add('open');    btn.setAttribute('aria-expanded', 'true'); }
+  function close()  { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle() { wrap.classList.contains('open') ? close() : open(); }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* Partnerships dropdown */
+(function() {
+  const wrap = document.getElementById('navPartnerWrap');
+  const btn  = document.getElementById('navPartnerBtn');
+  if (!wrap || !btn) return;
+  function open()   { wrap.classList.add('open');    btn.setAttribute('aria-expanded', 'true'); }
+  function close()  { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle() { wrap.classList.contains('open') ? close() : open(); }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>

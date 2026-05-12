@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Move More Collective — Where Wellness Meets Culture</title>
+<meta name="description" content="A mission-driven experiential wellness and media platform. We bring brands, creators, and communities together to move wellness culture forward.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Satoshi self-hosted ===== */
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-BlackItalic.otf') format('opentype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+:root {
+  --black: #050505;
+  --ink: #0a0a0e;
+  --midnight: #04111c;
+  --deep-blue: #051826;
+  --blue: #3d8ecf;
+  --blue-glow: #6cb3e8;
+  --blue-deep: #2a6ea5;
+  --white: #ffffff;
+  --paper: #f5f3ed;
+  --muted: rgba(255,255,255,0.6);
+  --line: rgba(255,255,255,0.08);
+  --gutter: clamp(24px, 4vw, 64px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html { background: var(--black); }
+body { background: var(--black); color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; line-height: 1.5; overflow-x: clip; }
+
+.display { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; }
+.display .blue { color: var(--blue); }
+.display .stroke { color: transparent; -webkit-text-stroke: 2px var(--white); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ============================================ NAV ============================================ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 22px var(--gutter); display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, backdrop-filter 0.3s; }
+.nav.scrolled { background: rgba(5,5,5,0.78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.nav-brand { display: inline-flex; align-items: center; gap: 10px; height: 40px; text-decoration: none; color: var(--white); }
+.nav-brand img { height: 38px; width: auto; display: block; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-link { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; position: relative; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-link:hover { color: var(--blue-glow); }
+.nav-cta { background: var(--white); color: var(--black); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-cta:hover { background: var(--blue); color: var(--white); }
+@media (max-width: 900px) { .nav-links .nav-link { display: none; } .nav-links .nav-cta { display: inline-block; } }
+
+/* Events dropdown */
+.nav-events-wrap { position: relative; }
+.nav-events-btn { background: none; border: none; font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.15s; text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-events-btn:hover, .nav-events-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-chevron { font-size: 11px; display: inline-block; transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); line-height: 1; margin-top: 1px; }
+.nav-events-wrap.open .nav-chevron { transform: rotate(180deg); }
+.nav-events-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+
+.events-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 460px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(108,179,232,0.06) inset; }
+.nav-events-wrap:hover .events-dropdown, .nav-events-wrap.open .events-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.events-dropdown-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(108,179,232,0.55); padding: 0 6px; margin-bottom: 10px; }
+
+/* Featured event card */
+.event-card { display: grid; grid-template-columns: 148px 1fr; gap: 0; border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--white); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); transition: border-color 0.2s, background 0.2s; }
+.event-card:hover { border-color: rgba(108,179,232,0.45); background: rgba(61,142,207,0.07); }
+.event-card-photo { position: relative; overflow: hidden; }
+.event-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; filter: brightness(0.88); transition: filter 0.3s, transform 0.4s; }
+.event-card:hover .event-card-photo img { filter: brightness(1); transform: scale(1.04); }
+.event-card-photo-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(6,8,12,0.5) 100%); }
+.event-card-info { padding: 20px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.event-card-series { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.event-card-series::before { content: ""; width: 5px; height: 5px; background: var(--blue-glow); border-radius: 50%; flex-shrink: 0; animation: pulse 1.8s ease-in-out infinite; }
+.event-card-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 8px; }
+.event-card-desc { font-size: 11.5px; line-height: 1.55; opacity: 0.62; margin-bottom: 14px; flex: 1; }
+.event-card-cta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--blue-glow); text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; transition: gap 0.2s; }
+.event-card:hover .event-card-cta { gap: 12px; }
+
+/* More events row */
+.events-more { margin-top: 10px; padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+.events-more-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); }
+.events-more-cities { display: flex; gap: 6px; flex-wrap: wrap; }
+.events-more-city { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(108,179,232,0.45); padding: 3px 8px; border: 1px solid rgba(108,179,232,0.18); border-radius: 99px; }
+
+/* Partnerships dropdown */
+.nav-partner-wrap { position: relative; }
+.nav-partner-wrap::after { content: ""; position: absolute; left: -40px; right: -40px; bottom: -20px; height: 20px; }
+.nav-partner-wrap.open .nav-events-btn { color: var(--blue-glow); }
+.nav-partner-wrap.open .nav-chevron { transform: rotate(180deg); }
+.partner-dropdown { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 290px; background: rgba(6,8,12,0.94); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.13); border-radius: 18px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 200; }
+.nav-partner-wrap:hover .partner-dropdown, .nav-partner-wrap.open .partner-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.partner-link { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; border-radius: 10px; text-decoration: none; color: var(--white); transition: background 0.15s; }
+.partner-link:hover { background: rgba(108,179,232,0.09); }
+.partner-link.active .partner-link-name { color: var(--blue-glow); }
+.partner-link-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.partner-link-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
+
+
+/* ============================================ SHARED CTA ============================================ */
+.cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
+.cta-primary { background: var(--blue); color: var(--white); }
+.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-white { background: var(--white); color: var(--midnight); }
+.cta-white:hover { background: var(--blue-glow); }
+.cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
+.cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+
+/* ============================================ SECTION SHARED ============================================ */
+.section { padding: 120px var(--gutter); position: relative; overflow: hidden; }
+.section-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; gap: 32px; flex-wrap: wrap; }
+.section-eyebrow { font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 14px; letter-spacing: 0.02em; }
+.section-h2 { font-size: clamp(40px, 5.5vw, 80px); }
+.section-sub { font-size: 16px; line-height: 1.55; opacity: 0.72; max-width: 480px; }
+
+/* ============================================ HERO ============================================ */
+.hero { position: relative; height: 100vh; min-height: 720px; width: 100%; overflow: hidden; background: var(--black); }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.hero-overlay { position: absolute; inset: 0; z-index: 2; background:
+  linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.85) 100%),
+  radial-gradient(ellipse 80% 50% at 30% 60%, rgba(0,0,0,0.4), transparent 70%);
+}
+.hero-content { position: relative; z-index: 3; height: 100%; padding: 0 var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 110px; }
+.hero-headline { font-size: clamp(52px, 8.2vw, 124px); max-width: 1400px; }
+.hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 28px; gap: 32px; flex-wrap: wrap; }
+.hero-sub { max-width: 480px; font-size: 15px; line-height: 1.55; opacity: 0.82; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-ticker { position: absolute; bottom: 32px; left: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; display: flex; align-items: center; gap: 12px; z-index: 4; }
+.hero-ticker::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.3; transform: scale(1.5); } }
+.scroll-cue { position: absolute; bottom: 32px; right: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.25em; opacity: 0.6; display: flex; align-items: center; gap: 10px; z-index: 4; }
+.scroll-cue::after { content: ""; width: 1px; height: 28px; background: rgba(255,255,255,0.5); animation: slideDown 1.8s ease-in-out infinite; }
+@keyframes slideDown { 0%, 100% { opacity: 0.2; transform: scaleY(0.3); } 50% { opacity: 1; transform: scaleY(1); } }
+
+/* ============================================ THE MMC DIFFERENCE ============================================ */
+.difference { background: var(--black); }
+.difference-intro { margin-bottom: 72px; }
+.difference-intro .section-eyebrow { margin-bottom: 16px; }
+.difference-intro .display { font-size: clamp(52px, 7vw, 104px); margin-bottom: 20px; }
+.difference-intro p { font-size: 17px; line-height: 1.62; opacity: 0.66; max-width: 560px; }
+.diff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+@media (max-width: 860px) { .diff-grid { grid-template-columns: 1fr; } }
+.diff-card { background: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.018) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 48px 44px; position: relative; overflow: hidden; transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s, box-shadow 0.25s; min-height: 390px; display: flex; flex-direction: column; }
+.diff-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--blue-glow), var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1); border-radius: 20px 20px 0 0; }
+.diff-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(108,179,232,0.055) 50%, transparent 70%); transform: translateX(-120%); transition: transform 0.65s ease; pointer-events: none; }
+.diff-card:hover { transform: translateY(-10px) scale(1.015); border-color: rgba(108,179,232,0.42); box-shadow: 0 28px 80px rgba(0,0,0,0.55), 0 0 60px rgba(61,142,207,0.12); }
+.diff-card:hover::before { transform: scaleX(1); }
+.diff-card:hover::after { transform: translateX(120%); }
+.diff-card-ghost { position: absolute; bottom: -28px; right: -6px; font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 200px; line-height: 1; color: rgba(255,255,255,0.038); pointer-events: none; user-select: none; letter-spacing: -0.04em; transition: color 0.4s; }
+.diff-card:hover .diff-card-ghost { color: rgba(61,142,207,0.09); }
+.diff-card-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 24px; }
+.diff-card-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(61,142,207,0.1); border: 1px solid rgba(61,142,207,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--blue-glow); transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; flex-shrink: 0; }
+.diff-card:hover .diff-card-icon { background: rgba(61,142,207,0.2); border-color: rgba(108,179,232,0.55); box-shadow: 0 0 30px rgba(61,142,207,0.28); }
+.diff-card-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3vw, 42px); text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 18px; }
+.diff-card-desc { font-size: 15px; line-height: 1.64; opacity: 0.67; max-width: 420px; margin-top: auto; }
+
+/* ============================================ ECOSYSTEM 3-CIRCLE ============================================ */
+.ecosystem { background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); }
+.ecosystem-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+@media (max-width: 1024px) { .ecosystem-grid { grid-template-columns: 1fr; gap: 48px; } }
+.eco-left .display { font-size: clamp(40px, 5.5vw, 80px); margin-bottom: 24px; }
+.eco-desc { font-size: 16px; line-height: 1.65; opacity: 0.78; max-width: 460px; margin-bottom: 28px; }
+.eco-stat-row { display: flex; gap: 40px; margin-top: 32px; flex-wrap: wrap; }
+.eco-stat { display: flex; flex-direction: column; gap: 4px; }
+.eco-stat { position: relative; }
+.eco-stat-num { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 56px; line-height: 1; color: var(--white); text-shadow: 0 0 40px rgba(108,179,232,0.55), 0 0 80px rgba(61,142,207,0.25); }
+.eco-stat-lab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; margin-top: 6px; }
+.eco-stat::after { content: ""; display: block; width: 100%; height: 1px; margin-top: 10px; background: linear-gradient(90deg, rgba(108,179,232,0.5), transparent); }
+
+/* Ecosystem photo hero */
+.eco-hero { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+.eco-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+.eco-hero-overlay { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 50%, rgba(4,17,28,0.55) 100%); z-index: 2; }
+.eco-hero-badge { position: absolute; bottom: 20px; left: 20px; z-index: 3; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--blue-glow); text-transform: uppercase; padding: 8px 12px; background: rgba(5,5,5,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(108,179,232,0.35); border-radius: 4px; }
+
+/* 4-pillar ecosystem grid */
+.eco-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 72px; padding-top: 56px; border-top: 1px solid var(--line); }
+@media (max-width: 1024px) { .eco-pillars { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .eco-pillars { grid-template-columns: 1fr; } }
+.eco-pillar { padding: 28px 22px; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; background: rgba(255,255,255,0.02); transition: border-color 0.25s, background 0.25s; position: relative; overflow: hidden; }
+.eco-pillar::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(108,179,232,0), transparent); transition: background 0.3s; }
+.eco-pillar:hover { border-color: rgba(108,179,232,0.35); background: rgba(61,142,207,0.05); }
+.eco-pillar:hover::before { background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
+.eco-pillar-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--blue-glow); margin-bottom: 14px; }
+.eco-pillar-icon { font-size: 22px; margin-bottom: 12px; opacity: 0.85; }
+.eco-pillar-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 15px; text-transform: uppercase; line-height: 1.15; letter-spacing: 0.01em; margin-bottom: 10px; }
+.eco-pillar-desc { font-size: 12.5px; line-height: 1.65; opacity: 0.62; margin-bottom: 14px; }
+.eco-pillar-creates { display: flex; flex-direction: column; gap: 3px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; margin-top: 4px; }
+.eco-pillar-creates span { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: rgba(108,179,232,0.7); }
+.eco-pillar-creates span::before { content: "→ "; }
+
+/* ============================================ PILLARS ============================================ */
+.pillars { background: var(--black); }
+.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+@media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+.pillar { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 40px 32px; position: relative; overflow: hidden; transition: all 0.22s; }
+.pillar.focused { background: linear-gradient(180deg, rgba(61,142,207,0.20) 0%, rgba(61,142,207,0.05) 100%); border-color: rgba(108,179,232,0.65); box-shadow: 0 0 60px rgba(61,142,207,0.18), 0 8px 40px rgba(0,0,0,0.4); transform: scale(1.025); }
+.pillar.focused::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--blue) 40%, var(--blue-glow) 60%, transparent 100%); border-radius: 16px 16px 0 0; }
+.pillar.focused::after { content: "MMC FOCUS"; position: absolute; top: 20px; right: 20px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue-glow); background: rgba(61,142,207,0.22); padding: 5px 10px; border-radius: 4px; border: 1px solid rgba(108,179,232,0.35); }
+.pillar-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 56px); text-transform: uppercase; line-height: 0.95; margin-bottom: 14px; }
+.pillar.focused .pillar-h { color: var(--blue-glow); font-size: clamp(52px, 6.5vw, 86px); text-shadow: 0 0 60px rgba(108,179,232,0.45), 0 0 120px rgba(61,142,207,0.2); }
+.pillar-desc { font-size: 14.5px; line-height: 1.6; opacity: 0.72; max-width: 320px; }
+
+/* ============================================ CLUB PARTNERS ============================================ */
+.clubs { background: var(--black); }
+.clubs-directory { margin-top: 64px; display: flex; flex-direction: column; }
+.clubs-row { display: grid; grid-template-columns: 160px 1fr; gap: 0; align-items: start; padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+.clubs-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+@media (max-width: 768px) { .clubs-row { grid-template-columns: 1fr; gap: 20px; } }
+.clubs-row-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); padding-top: 6px; }
+.clubs-row-names { display: flex; flex-wrap: wrap; gap: 10px; }
+.club-tag { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 15px; padding: 10px 20px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--white); transition: background 0.2s, border-color 0.2s, color 0.2s; }
+.club-tag:hover { background: rgba(61,142,207,0.14); border-color: rgba(108,179,232,0.45); color: var(--blue-glow); }
+
+/* ============================================ TESTIMONIALS ============================================ */
+.testimonials { background: var(--black); background-image: url('assets/bg-testimonials.jpg'); background-size: cover; background-position: center 30%; background-attachment: fixed; }
+.testimonials::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,0.82) 0%, rgba(4,17,28,0.78) 50%, rgba(5,5,5,0.88) 100%); pointer-events: none; z-index: 0; }
+.testimonials .section-inner { position: relative; z-index: 1; }
+.testimonial-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; position: relative; }
+@media (max-width: 768px) { .testimonial-row { grid-template-columns: 1fr; } }
+.testimonial { background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 16px; padding: 28px 28px; position: relative; }
+.testimonial-quote { font-size: 16px; line-height: 1.6; font-style: italic; opacity: 0.92; position: relative; }
+.testimonial-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-glow); margin-top: 16px; }
+.testimonial-wide { grid-column: 1 / -1; padding: 36px 36px; background: linear-gradient(135deg, rgba(61,142,207,0.12), rgba(61,142,207,0.04)); border-color: rgba(108,179,232,0.3); }
+.testimonial-wide .testimonial-quote { font-size: 22px; line-height: 1.5; font-style: italic; }
+
+/* ============================================ ACTIVE MINDS PARTNERSHIP ============================================ */
+.partnership { background: var(--midnight); position: relative; }
+.partnership-card { max-width: 1100px; margin: 0 auto; background: linear-gradient(135deg, rgba(61,142,207,0.10), rgba(61,142,207,0.02)); border: 1px solid rgba(108,179,232,0.32); border-radius: 24px; padding: 48px 56px; display: grid; grid-template-columns: 140px 1fr auto; gap: 40px; align-items: center; }
+@media (max-width: 768px) { .partnership-card { grid-template-columns: 1fr; padding: 36px; gap: 24px; text-align: center; } }
+.partnership-mark { width: 140px; background: #ffffff; border-radius: 14px; padding: 16px 18px; display: flex; align-items: center; justify-content: center; }
+.partnership-mark img { width: 100%; height: auto; display: block; }
+.partnership-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; }
+.partnership-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(24px, 3vw, 36px); text-transform: uppercase; line-height: 1.05; margin-bottom: 8px; }
+.partnership-desc { font-size: 14.5px; line-height: 1.55; opacity: 0.72; max-width: 540px; }
+
+/* ============================================ BRAND PARTNERS STRIP ============================================ */
+.brands-strip { background: var(--midnight); padding: 72px 0; overflow: hidden; position: relative; }
+.brands-strip::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%; height: 200%; background: radial-gradient(ellipse, rgba(61,142,207,0.08) 0%, transparent 65%); pointer-events: none; }
+.brands-strip-header { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: baseline; gap: 24px; margin-bottom: 44px; }
+.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); }
+.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; color: var(--white); }
+.brands-ticker-wrap { position: relative; overflow: hidden; }
+.brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
+.brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--midnight), transparent); }
+.brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--midnight), transparent); }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 36s linear infinite; width: max-content; padding: 8px 0; }
+.brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
+.brands-ticker-track img:hover { filter: none; opacity: 1; }
+.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================================ TEAM ============================================ */
+.team { background: var(--midnight); position: relative; overflow: hidden; }
+.team::before { content: ""; position: absolute; left: 50%; top: 0; width: 90%; height: 100%; transform: translateX(-50%); background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(61,142,207,0.08) 0%, transparent 70%); pointer-events: none; }
+.team-intro { margin-bottom: 64px; }
+.team-intro .display { font-size: clamp(48px, 6.5vw, 96px); }
+/* Founder featured row */
+.team-founder { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: center; margin-bottom: 40px; padding: 40px 44px; background: linear-gradient(135deg, rgba(61,142,207,0.10), rgba(61,142,207,0.03)); border: 1px solid rgba(108,179,232,0.28); border-radius: 16px; cursor: default; }
+@media (max-width: 768px) { .team-founder { grid-template-columns: 1fr; gap: 24px; padding: 28px; } }
+.team-founder .team-photo-wrap { aspect-ratio: 3/4; max-width: 280px; }
+.team-founder:hover .team-photo-wrap img { filter: grayscale(0); transform: scale(1.04); }
+.team-founder-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue-glow); padding: 5px 10px; border: 1px solid rgba(108,179,232,0.4); border-radius: 99px; display: inline-block; margin-bottom: 14px; }
+.team-founder-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 8px; }
+.team-founder-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--blue-glow); text-transform: uppercase; margin-bottom: 16px; }
+.team-founder-bio { font-size: 14.5px; line-height: 1.65; opacity: 0.88; max-width: 540px; margin-bottom: 18px; color: var(--white); }
+.team-founder-quote { font-family: 'Satoshi', system-ui, sans-serif; font-style: italic; font-size: 17px; line-height: 1.5; color: rgba(108,179,232,0.95); border-left: 2px solid var(--blue); padding-left: 16px; }
+/* Directors grid */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1100px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .team-grid { grid-template-columns: 1fr; } }
+.team-card { position: relative; }
+.team-photo-wrap { position: relative; aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; background: rgba(61,142,207,0.06); border: 1px solid rgba(255,255,255,0.07); margin-bottom: 20px; }
+.team-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(1) contrast(1.05); transition: filter 0.5s ease, transform 0.55s cubic-bezier(0.34,1.56,0.64,1); }
+.team-card:hover .team-photo-wrap img { filter: grayscale(0); transform: scale(1.04); }
+.team-photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(4,17,28,0.8) 100%); pointer-events: none; }
+.team-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); }
+.team-placeholder-init { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 72px; color: rgba(108,179,232,0.22); letter-spacing: -0.04em; }
+.team-role { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 8px; }
+.team-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(18px, 2vw, 24px); text-transform: uppercase; line-height: 1; letter-spacing: -0.01em; margin-bottom: 10px; }
+.team-bio { font-size: 13.5px; line-height: 1.6; opacity: 0.62; }
+.team-crew { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.team-crew-plus { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 56px; color: var(--blue-glow); line-height: 1; flex-shrink: 0; }
+.team-crew-text h4 { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
+.team-crew-text p { font-size: 14px; line-height: 1.58; opacity: 0.62; max-width: 520px; }
+
+/* ============================================ PATHS (3 doors) ============================================ */
+.paths { background: var(--black); background-image: url('assets/bg-doors.jpg'); background-size: cover; background-position: center 40%; padding: 120px var(--gutter); position: relative; }
+.paths::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.72) 50%, rgba(5,5,5,0.88) 100%); pointer-events: none; z-index: 0; }
+.paths .section-inner { position: relative; z-index: 1; }
+.paths-doors { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 18px; margin-top: 48px; }
+@media (max-width: 900px) { .paths-doors { grid-template-columns: 1fr; } }
+.door { background: linear-gradient(180deg, rgba(10,14,20,0.72) 0%, rgba(5,5,5,0.62) 100%); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; padding: 36px 32px; position: relative; cursor: pointer; transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s, border-color 0.25s, box-shadow 0.25s; overflow: hidden; display: flex; flex-direction: column; min-height: 360px; color: var(--white); text-decoration: none; }
+.door:hover { background: linear-gradient(180deg, rgba(61,142,207,0.28) 0%, rgba(10,14,20,0.75) 100%); border-color: rgba(108,179,232,0.6); transform: translateY(-10px) scale(1.015); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(61,142,207,0.15); }
+.door:active { transform: translateY(-3px) scale(0.98); transition-duration: 0.1s; }
+.door-primary { background: linear-gradient(180deg, rgba(61,142,207,0.32) 0%, rgba(10,14,20,0.72) 100%); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-color: rgba(108,179,232,0.55); }
+.door-primary:hover { background: linear-gradient(180deg, rgba(61,142,207,0.42) 0%, rgba(10,14,20,0.78) 100%); }
+.door-meta { display: flex; justify-content: space-between; align-items: flex-start; }
+.door-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.22em; text-transform: uppercase; }
+.door-arrow { width: 36px; height: 36px; border: 1px solid rgba(108,179,232,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--blue-glow); transition: all 0.2s; }
+.door:hover .door-arrow { background: var(--blue); color: var(--white); border-color: var(--blue); transform: rotate(-45deg); }
+.door-body { margin-top: auto; }
+.door-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(32px, 3.6vw, 52px); line-height: 0.95; text-transform: uppercase; margin-bottom: 14px; }
+.door-primary .door-h { font-size: clamp(40px, 4.6vw, 68px); }
+.door-desc { font-size: 14px; line-height: 1.55; opacity: 0.7; max-width: 360px; }
+.door-cta { font-size: 13px; color: var(--blue-glow); margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+
+/* ============================================ FOOTER ============================================ */
+.footer { padding: 96px var(--gutter) 48px; background: linear-gradient(180deg, var(--midnight) 0%, var(--deep-blue) 100%); color: var(--white); position: relative; overflow: hidden; }
+.footer::before { content: ""; position: absolute; left: 50%; top: -10%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.32) 0%, transparent 65%); filter: blur(100px); opacity: 0.7; pointer-events: none; }
+.footer-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.footer-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 6vw, 88px); text-transform: uppercase; line-height: 0.95; max-width: 800px; margin-bottom: 28px; }
+.footer-h .blue { color: var(--blue-glow); }
+.footer-cta-row { display: flex; gap: 12px; margin-bottom: 56px; flex-wrap: wrap; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.1); }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; font-weight: 500; }
+.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; padding: 6px 0; transition: color 0.15s; }
+.footer-col a:hover { color: var(--blue-glow); }
+.footer-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.4; margin-top: 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; letter-spacing: 0.05em; }
+
+</style>
+
+</head>
+<body>
+
+<!-- ============================================ NAV ============================================ -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="/" aria-label="Move More Collective"><img src="assets/logos/mmc-logo-horizontal-white.png" alt="Move More Collective"></a>
+  <div class="nav-links">
+    <div class="nav-events-wrap" id="navEventsWrap">
+      <button class="nav-events-btn" id="navEventsBtn" aria-expanded="false" aria-haspopup="true">
+        Events <span class="nav-chevron">▾</span>
+      </button>
+      <div class="events-dropdown" id="eventsDropdown" role="menu">
+        <div class="events-dropdown-label">Current Events</div>
+        <a class="event-card" href="midnight-moves.html" role="menuitem">
+          <div class="event-card-photo">
+            <img src="assets/bg-midnight-hero.jpg" alt="Midnight Moves">
+            <div class="event-card-photo-overlay"></div>
+          </div>
+          <div class="event-card-info">
+            <div>
+              <div class="event-card-series">Flagship Series · South Florida</div>
+              <div class="event-card-name">Midnight<br>Moves.</div>
+              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required. Next: May 15, West Palm Beach.</p>
+            </div>
+            <span class="event-card-cta">See the Series →</span>
+          </div>
+        </a>
+        <div class="events-more">
+          <div class="events-more-text">Expanding to</div>
+          <div class="events-more-cities">
+            <span class="events-more-city">NYC</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Boston</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-partner-wrap" id="navPartnerWrap">
+      <button class="nav-events-btn" id="navPartnerBtn" aria-expanded="false" aria-haspopup="true">
+        Partnerships <span class="nav-chevron">&#9662;</span>
+      </button>
+      <div class="partner-dropdown" id="partnerDropdown" role="menu">
+        <a class="partner-link" href="for-brands.html" role="menuitem">
+          <span class="partner-link-name">For Brands</span>
+          <span class="partner-link-desc">Activate through events &amp; media</span>
+        </a>
+        <a class="partner-link" href="for-communities.html" role="menuitem">
+          <span class="partner-link-name">For Communities</span>
+          <span class="partner-link-desc">Co-host and scale your club</span>
+        </a>
+        <a class="partner-link" href="for-creators.html" role="menuitem">
+          <span class="partner-link-name">For Creators</span>
+          <span class="partner-link-desc">Get paid to create</span>
+        </a>
+      </div>
+    </div>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-cta" href="#work-with-us">Work With Us</a>
+  </div>
+</nav>
+
+<!-- ============================================ HERO ============================================ -->
+<section class="hero" id="top">
+  <video class="hero-video" autoplay muted loop playsinline poster="">
+    <source src="assets/hero-loop.webm" type="video/webm">
+    <source src="assets/hero-loop.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="display hero-headline">Where <span class="blue">wellness</span><br>meets <span class="stroke">culture.</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">Move More Collective is a mission-driven experiential wellness &amp; media platform. We bring brands, creators, and communities together to move wellness culture forward — built for the rising generation choosing sweat over hangovers.</p>
+      <div class="hero-actions">
+        <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
+        <a class="cta cta-ghost" href="#work-with-us">Work With Us</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-ticker">NEXT EVENT — MIDNIGHT MOVES · JUNE 12 · WEST PALM BEACH · 10 EVENTS THIS SEASON</div>
+  <div class="scroll-cue mono">SCROLL</div>
+</section>
+
+<!-- ============================================ THE MMC DIFFERENCE ============================================ -->
+<section class="section difference" id="difference">
+  <div class="section-inner">
+    <div class="difference-intro">
+      <div class="section-eyebrow">The MMC Difference</div>
+      <h2 class="display">Why we move<br><span class="blue">different.</span></h2>
+      <p>Four reasons brands, creators, and communities choose Move More Collective as their cultural platform for wellness activation.</p>
+    </div>
+    <div class="diff-grid">
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">01</div>
+        <div class="diff-card-eyebrow">01 / Culture</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <h3 class="diff-card-h">Alternative Nightlife</h3>
+        <p class="diff-card-desc">The first experiential wellness platform built as a true alternative to conventional nightlife. No substance required — just real connection, movement, and culture that hits different.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">02</div>
+        <div class="diff-card-eyebrow">02 / Validation</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3 class="diff-card-h">Proven Traction</h3>
+        <p class="diff-card-desc">6 events. 300+ attendees. 150+ Skool members. 7 brand partnerships activated. Built and validated in South Florida — not on a pitch deck.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">03</div>
+        <div class="diff-card-eyebrow">03 / Content</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.894L15 14"/><rect x="1" y="6" width="15" height="12" rx="2"/></svg>
+        </div>
+        <h3 class="diff-card-h">Premium Content Production</h3>
+        <p class="diff-card-desc">Every event is a production. MMC deploys an aligned creator layer capturing cinematic content that extends the brand across channels — and yours too.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">04</div>
+        <div class="diff-card-eyebrow">04 / Scale</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3 class="diff-card-h">Multi-City Expansion</h3>
+        <p class="diff-card-desc">SoFla is the proof of concept. The Midnight Moves model scales city by city — NYC, Austin, Atlanta, Boston are next. Your partnership moves with us.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ ECOSYSTEM ============================================ -->
+<section class="section ecosystem" id="ecosystem">
+  <div class="section-inner">
+    <div class="ecosystem-grid">
+      <div class="eco-left">
+        <div class="section-eyebrow">The MMC Ecosystem</div>
+        <h2 class="display">Not just events.<br>A cultural <span class="blue">ecosystem.</span></h2>
+        <p class="eco-desc">MMC is the cultural home for the next generation of social experiences — where movement, music, wellness, and community exist in the same room. Four interconnected pillars. One brand.</p>
+        <div class="eco-stat-row">
+          <div class="eco-stat"><div class="eco-stat-num" data-target="6" data-suffix="">6</div><div class="eco-stat-lab">Events</div></div>
+          <div class="eco-stat"><div class="eco-stat-num" data-target="300" data-suffix="+">300+</div><div class="eco-stat-lab">Attendees</div></div>
+          <div class="eco-stat"><div class="eco-stat-num" data-target="150" data-suffix="+">150+</div><div class="eco-stat-lab">Members</div></div>
+          <div class="eco-stat"><div class="eco-stat-num" data-target="3" data-suffix="">3</div><div class="eco-stat-lab">Series</div></div>
+        </div>
+      </div>
+      <div class="eco-hero">
+        <img class="eco-hero-img" src="assets/bg-hero-wide.jpg" alt="Move More Collective — where wellness meets culture">
+        <div class="eco-hero-overlay"></div>
+        <div class="eco-hero-badge">↑ Movement · Community · Connection</div>
+      </div>
+    </div>
+
+    <!-- 4-pillar ecosystem grid -->
+    <div class="eco-pillars">
+      <div class="eco-pillar">
+        <div class="eco-pillar-num">01</div>
+        <div class="eco-pillar-icon">⚡</div>
+        <div class="eco-pillar-title">Experiences</div>
+        <p class="eco-pillar-desc">Movement-led nightlife experiences that bring together music, wellness, and community through recurring formats, destination activations, and strategic partnerships.</p>
+        <div class="eco-pillar-creates">
+          <span>Audience acquisition</span>
+          <span>Cultural visibility</span>
+          <span>Brand demand</span>
+        </div>
+      </div>
+      <div class="eco-pillar">
+        <div class="eco-pillar-num">02</div>
+        <div class="eco-pillar-icon">◎</div>
+        <div class="eco-pillar-title">Community &amp; Membership</div>
+        <p class="eco-pillar-desc">Memberships, local chapters, ambassador programs, and the Circle platform — ongoing touchpoints that keep people connected beyond the event.</p>
+        <div class="eco-pillar-creates">
+          <span>Recurring revenue</span>
+          <span>Member identity</span>
+          <span>Network effects</span>
+        </div>
+      </div>
+      <div class="eco-pillar">
+        <div class="eco-pillar-num">03</div>
+        <div class="eco-pillar-icon">▶</div>
+        <div class="eco-pillar-title">Media &amp; Content</div>
+        <p class="eco-pillar-desc">Capturing and distributing culture through storytelling, social content, partnerships, and experiential media. Every event becomes scalable digital distribution.</p>
+        <div class="eco-pillar-creates">
+          <span>Audience growth</span>
+          <span>Brand equity</span>
+          <span>Organic reach</span>
+        </div>
+      </div>
+      <div class="eco-pillar">
+        <div class="eco-pillar-num">04</div>
+        <div class="eco-pillar-icon">↗</div>
+        <div class="eco-pillar-title">Brand &amp; Partner Ecosystem</div>
+        <p class="eco-pillar-desc">Partnering with aligned wellness, hospitality, beverage, apparel, and lifestyle brands for authentic access to a culturally engaged audience.</p>
+        <div class="eco-pillar-creates">
+          <span>Sponsorship revenue</span>
+          <span>Experiential campaigns</span>
+          <span>Long-term enterprise value</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ PILLARS ============================================ -->
+<section class="section pillars" id="pillars">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Pillars of Holistic Wellness</div>
+        <h2 class="display section-h2">Mental. Social.<br><span class="blue">Both</span> understated.</h2>
+      </div>
+      <p class="section-sub">Physical wellness is everywhere. Mental and social wellness are the understated pillars of the rising era — and that's where we work.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-h">Physical</div>
+        <p class="pillar-desc">The pillar everyone talks about. Strength, cardio, nutrition. Already well-served by the existing wellness industry.</p>
+      </div>
+      <div class="pillar focused">
+        <div class="pillar-h">Mental</div>
+        <p class="pillar-desc">Nervous-system regulation, mood, mental health awareness — the half of wellness most likely to be quietly neglected. Where MMC partners with Active Minds to lead.</p>
+      </div>
+      <div class="pillar focused">
+        <div class="pillar-h">Social</div>
+        <p class="pillar-desc">Connection without compromise. Authentic gatherings that don't depend on substances or algorithms. The category we were built for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ OUR CLUB PARTNERS ============================================ -->
+<section class="section clubs" id="clubs">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Our Club Partners</div>
+        <h2 class="display section-h2">Built with the<br><span class="blue">community</span> in mind.</h2>
+      </div>
+      <p class="section-sub">Through our strong founder network, we lead by example — promoting inclusivity, community, and collaboration across the spaces that move people.</p>
+    </div>
+    <div class="clubs-directory">
+      <div class="clubs-row">
+        <div class="clubs-row-label">Gyms</div>
+        <div class="clubs-row-names">
+          <span class="club-tag">Traphouse</span>
+          <span class="club-tag">The Ave Luxe Gym</span>
+          <span class="club-tag">1401 Athletics</span>
+        </div>
+      </div>
+      <div class="clubs-row">
+        <div class="clubs-row-label">Run Clubs</div>
+        <div class="clubs-row-names">
+          <span class="club-tag">Clematis Run Club</span>
+          <span class="club-tag">YRC</span>
+          <span class="club-tag">Jupiter Run Crew</span>
+          <span class="club-tag">Boca Run Club</span>
+        </div>
+      </div>
+      <div class="clubs-row">
+        <div class="clubs-row-label">Studios</div>
+        <div class="clubs-row-names">
+          <span class="club-tag">Tremble</span>
+          <span class="club-tag">Jetset Pilates</span>
+          <span class="club-tag">Sweat440</span>
+          <span class="club-tag">YouCycling</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ TESTIMONIALS ============================================ -->
+<section class="section testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">In Their Words</div>
+        <h2 class="display section-h2">The people who<br>showed <span class="blue">up.</span></h2>
+      </div>
+      <p class="section-sub">Five quotes from real participants at recent Midnight Moves events. Unedited.</p>
+    </div>
+    <div class="testimonial-row">
+      <div class="testimonial testimonial-wide">
+        <p class="testimonial-quote">"I found community that could connect without needing a substance to do it."</p>
+        <div class="testimonial-tag">Attendee · Midnight Moves WPB</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"Running down Clematis and hearing everyone cheering us on while running was so lit. This event is next level and will be coming back."</p>
+        <div class="testimonial-tag">Attendee · 5K Glow Run</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"I love the fitness aspect and social/expressing yourself with having a good time to party in a wholesome way."</p>
+        <div class="testimonial-tag">Attendee · After Dark</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"Keep the energy comin cuz it's Fire-Ey AF — let's get LOUDER."</p>
+        <div class="testimonial-tag">Repeat Attendee · MM03</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"For someone who's already social and bubbly, I love the idea of adding others to an environment that's so wholesome and genuine. It's such a positive influence — especially in a world that's trying to divide us."</p>
+        <div class="testimonial-tag">Attendee · Brand Sample Hour</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ ACTIVE MINDS PARTNERSHIP ============================================ -->
+<section class="section partnership" id="partnership">
+  <div class="partnership-card">
+    <div class="partnership-mark">
+      <img src="assets/logo-active-minds.png" alt="Active Minds">
+    </div>
+    <div>
+      <div class="partnership-label">Strategic Nonprofit Partner</div>
+      <h3 class="partnership-h">Active Minds × MMC</h3>
+      <p class="partnership-desc">Active Minds — the largest U.S. mental health advocacy nonprofit — partners with us to amplify mental wellness conversations beyond South Florida. The forthcoming MMC × Active Minds College Tour brings Midnight Moves to campuses nationwide.</p>
+    </div>
+    <a class="cta cta-white" href="about.html">Read More &rarr;</a>
+  </div>
+</section>
+
+<!-- ============================================ BRAND PARTNERS STRIP ============================================ -->
+<section class="brands-strip">
+  <div class="brands-strip-header">
+    <div class="brands-strip-label">Trusted By</div>
+    <h3 class="brands-strip-h">Brands that move.</h3>
+  </div>
+  <div class="brands-ticker-wrap">
+    <div class="brands-ticker-track">
+      <img src="assets/partner-athletic.png" alt="Athletic Brewing">
+      <img src="assets/partner-brez.png" alt="Brez">
+      <img src="assets/partner-chaser.png" alt="Chaser">
+      <img src="assets/partner-hiyo.png" alt="Hiyo">
+      <img src="assets/partner-kenetik.png" alt="Kenetik">
+      <img src="assets/partner-koia.png" alt="Koia">
+      <img src="assets/partner-offfield.png" alt="Offfield">
+      <img src="assets/partner-wip.png" alt="Wip">
+      <img src="assets/partner-bang.png" alt="Bang">
+      <!-- duplicate for seamless loop -->
+      <img src="assets/partner-athletic.png" alt="" aria-hidden="true">
+      <img src="assets/partner-brez.png" alt="" aria-hidden="true">
+      <img src="assets/partner-chaser.png" alt="" aria-hidden="true">
+      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true">
+      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true">
+      <img src="assets/partner-koia.png" alt="" aria-hidden="true">
+      <img src="assets/partner-offfield.png" alt="" aria-hidden="true">
+      <img src="assets/partner-wip.png" alt="" aria-hidden="true">
+      <img src="assets/partner-bang.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ TEAM ============================================ -->
+<section class="section team" id="team">
+  <div class="section-inner">
+    <div class="team-intro">
+      <div class="section-eyebrow">The People Behind the Movement</div>
+      <h2 class="display">Building the movement<br>behind the <span class="blue">movement.</span></h2>
+    </div>
+
+    <!-- Founder featured row -->
+    <div class="team-founder">
+      <div class="team-photo-wrap">
+        <img src="assets/team-mike.jpg" alt="Mike Cavallaro" loading="lazy">
+        <div class="team-photo-overlay"></div>
+      </div>
+      <div class="team-founder-content">
+        <div class="team-founder-tag">Founder &amp; CEO</div>
+        <div class="team-founder-name">Mike Cavallaro</div>
+        <div class="team-founder-title">Move More Collective</div>
+        <p class="team-founder-bio">Former college athlete and investment banker with 7+ years across private equity and strategy. After his own experience with the burnout of traditional nightlife culture, Mike became obsessed with building a social environment people could feel better because of — not worse after. MMC was born from that mission.</p>
+        <p class="team-founder-quote">First we meet. Then we move. Then there's more.</p>
+      </div>
+    </div>
+
+    <!-- Directors grid -->
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="assets/team-alexis.jpg" alt="Alexis Mantei" loading="lazy">
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-role">Director, Creator Management</div>
+        <div class="team-name">Alexis Mantei</div>
+        <p class="team-bio">Generated 20M+ impressions for a single brand. Multi-viral UGC portfolio spanning multiple brands. Drives campaigns for early-stage wellness brands.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <div class="team-placeholder"><span class="team-placeholder-init">SS</span></div>
+        </div>
+        <div class="team-role">Director, Mental Wellness</div>
+        <div class="team-name">Sara Sefret</div>
+        <p class="team-bio">Mental health professional specializing in nervous system regulation. Founder of Soul Skills. Builds partnerships with nonprofits and wellness advocates.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="assets/team-emma.jpg" alt="Emma Barefoot" loading="lazy">
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-role">Director, Media</div>
+        <div class="team-name">Emma Barefoot</div>
+        <p class="team-bio">Founder of multiple communities and brands. Directed marketing programs nationwide. Connects people and builds rooms worth being in.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <div class="team-placeholder"><span class="team-placeholder-init">MM</span></div>
+        </div>
+        <div class="team-role">Director, Experience</div>
+        <div class="team-name">Madison Minelli</div>
+        <p class="team-bio">Experiential producer across fashion, hospitality, and community programming. Supported productions across international Fashion Weeks and large-scale live events.</p>
+      </div>
+
+    </div>
+    <div class="team-crew">
+      <div class="team-crew-plus">+</div>
+      <div class="team-crew-text">
+        <h4>Our Beloved Move Crew</h4>
+        <p>A growing network of operators, creators, community leaders, trainers, DJs, and wellness advocates helping shape the future of movement-led social culture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ PATHS ============================================ -->
+<section class="paths" id="work-with-us">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Choose Your Path</div>
+        <h2 class="display section-h2">Ready to move<br><span class="blue">more?</span></h2>
+      </div>
+      <p class="section-sub">Whether you're a brand looking to activate, a community ready to scale, or someone who wants to be part of the next event — there's a path for you.</p>
+    </div>
+    <div class="paths-doors">
+      <a class="door door-primary" href="for-brands.html">
+        <div class="door-meta">
+          <div class="door-tag">01 / Brands</div>
+          <div class="door-arrow">↗</div>
+        </div>
+        <div class="door-body">
+          <h3 class="door-h">Activate<br>with us.</h3>
+          <p class="door-desc">Sampling, brand integrations, creator deployment, fractional strategy. The wellness audience — ready to move.</p>
+          <span class="door-cta">Partner with Us &rarr;</span>
+        </div>
+      </a>
+      <a class="door" href="for-communities.html">
+        <div class="door-meta">
+          <div class="door-tag">02 / Communities</div>
+          <div class="door-arrow">↗</div>
+        </div>
+        <div class="door-body">
+          <h3 class="door-h">Grow with<br>us.</h3>
+          <p class="door-desc">Co-host signature events. Plug into the Skool community layer. Scale your club or studio.</p>
+          <span class="door-cta">Build with Us &rarr;</span>
+        </div>
+      </a>
+      <a class="door" href="midnight-moves.html">
+        <div class="door-meta">
+          <div class="door-tag">03 / Attend</div>
+          <div class="door-arrow">↗</div>
+        </div>
+        <div class="door-body">
+          <h3 class="door-h">Find your<br>next move.</h3>
+          <p class="door-desc">Show up. Sweat. Connect. The next Midnight Moves is closer than you think.</p>
+          <span class="door-cta">See Events &rarr;</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ FOOTER ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
+    <div class="footer-cta-row">
+      <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
+      <a class="cta cta-ghost" href="mailto:info@movemorecollective.com">info@movemorecollective.com</a>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Move More Collective</h4>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.55;">A mission-driven experiential wellness &amp; media platform. West Palm Beach, FL — expanding nationally.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="midnight-moves.html">Midnight Moves</a>
+        <a href="for-brands.html">For Brands</a>
+        <a href="for-communities.html">For Communities</a>
+        <a href="for-creators.html">For Creators</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://instagram.com/movemorecollective" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@movemorecollective" target="_blank" rel="noopener">TikTok</a>
+        <a href="mailto:info@movemorecollective.com">Email</a>
+      </div>
+      <div class="footer-col">
+        <h4>Work With Us</h4>
+        <a href="for-brands.html">Partner</a>
+        <a href="for-communities.html">Co-Host</a>
+        <a href="for-creators.html">Create</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 MOVE MORE COLLECTIVE — WEST PALM BEACH, FL</span>
+      <span>WELLNESS × CULTURE</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* Nav scroll state */
+ScrollTrigger.create({ start: 50, end: 99999, toggleClass: { className: 'scrolled', targets: '#nav' } });
+
+/* Events dropdown */
+(function() {
+  const wrap = document.getElementById('navEventsWrap');
+  const btn  = document.getElementById('navEventsBtn');
+  if (!wrap || !btn) return;
+
+  function open() { wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  function close() { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle() { wrap.classList.contains('open') ? close() : open(); }
+
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* Reveal helper — bulletproof pattern */
+function reveal(selector, opts = {}) {
+  const { trigger = selector, start = 'top 80%', y = 30, duration = 0.85, stagger = 0.08, ease = 'power3.out' } = opts;
+  const els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  els.forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = `translate(0, ${y}px)`;
+    el.style.willChange = 'opacity, transform';
+  });
+  ScrollTrigger.create({
+    trigger, start, once: true,
+    onEnter: () => {
+      gsap.to(els, { opacity: 1, y: 0, duration, stagger, ease,
+        onComplete: () => els.forEach(el => { el.style.willChange = 'auto'; })
+      });
+    }
+  });
+}
+
+/* Hero parallax + fade */
+gsap.to('.hero-headline, .hero-bottom, .hero-ticker, .scroll-cue', {
+  opacity: 0, y: -40,
+  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
+});
+gsap.to('.hero-video', {
+  scale: 1.15,
+  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
+});
+
+/* Section reveals */
+reveal('.difference-intro > *', { trigger: '.difference', stagger: 0.08 });
+reveal('.diff-card', { trigger: '.diff-grid', stagger: 0.12, y: 50 });
+
+reveal('.eco-left > *', { trigger: '.ecosystem', stagger: 0.08 });
+reveal('.eco-hero', { trigger: '.ecosystem', y: 50 });
+
+reveal('.pillars .section-head > *', { trigger: '.pillars', stagger: 0.1 });
+reveal('.pillar', { trigger: '.pillars-grid', stagger: 0.12, y: 40 });
+
+reveal('.clubs .section-head > *', { trigger: '.clubs', stagger: 0.1 });
+reveal('.clubs-row', { trigger: '.clubs-directory', stagger: 0.1, y: 20 });
+
+reveal('.testimonials .section-head > *', { trigger: '.testimonials', stagger: 0.1 });
+reveal('.testimonial', { trigger: '.testimonial-row', stagger: 0.08 });
+
+reveal('.partnership-card', { trigger: '.partnership', y: 40 });
+
+reveal('.brands-strip-header > *', { trigger: '.brands-strip', stagger: 0.1 });
+
+reveal('.team-intro > *', { trigger: '.team', stagger: 0.08 });
+reveal('.team-card', { trigger: '.team-grid', stagger: 0.12, y: 40 });
+reveal('.team-crew', { trigger: '.team-crew', y: 20 });
+
+reveal('.paths .section-head > *', { trigger: '.paths', stagger: 0.1 });
+reveal('.door', { trigger: '.paths-doors', stagger: 0.12, y: 40 });
+
+reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
+
+/* Stat counter spin-up */
+function countUp(el, target, suffix, duration) {
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+ScrollTrigger.create({
+  trigger: '.eco-stat-row', start: 'top 82%', once: true,
+  onEnter: () => {
+    document.querySelectorAll('.eco-stat-num[data-target]').forEach(el => {
+      countUp(el, +el.dataset.target, el.dataset.suffix || '', 1400);
+    });
+  }
+});
+
+/* Refresh on full load */
+window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
+</script>
+
+</body>
+</html>
