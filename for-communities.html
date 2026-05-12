@@ -221,7 +221,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .nav.mobile-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav-mobile-drawer { position: fixed; inset: 0; z-index: 299; background: rgba(4,4,6,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.22s ease; }
 .nav-mobile-drawer.open { opacity: 1; pointer-events: auto; }
-.nav-mobile-inner { padding: 88px 28px 48px; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+.nav-mobile-inner { position: relative; padding: 88px 28px 48px; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
 .nav-mobile-link { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 34px; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.05; color: var(--white); text-decoration: none; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: block; transition: color 0.15s; }
 .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--blue-glow); }
 .nav-mobile-sub { display: flex; flex-direction: column; padding: 6px 0 10px 16px; }
@@ -230,6 +230,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .nav-mobile-cta-wrap { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
 .nav-mobile-cta { display: inline-flex; background: var(--blue); color: var(--white); padding: 14px 30px; border-radius: 999px; font-weight: 700; font-size: 15px; text-transform: uppercase; text-decoration: none; letter-spacing: 0.03em; transition: background 0.15s; }
 .nav-mobile-cta:hover { background: var(--blue-glow); }
+.nav-mobile-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white); font-size: 26px; cursor: pointer; padding: 8px; line-height: 1; opacity: 0.75; transition: opacity 0.15s; z-index: 1; }
+.nav-mobile-close:hover { opacity: 1; }
 @media (max-width: 768px) {
   .nav-links { display: none !important; }
   .nav-hamburger { display: flex; }
@@ -303,6 +305,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 <div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
   <div class="nav-mobile-inner">
+  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
     <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
     <div>
       <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
@@ -663,6 +666,7 @@ window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 
   function closeNav() { nav.classList.remove('mobile-open'); drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
   btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.contains('mobile-open') ? closeNav() : openNav(); });
   drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeNav));
+  const closeBtn = document.getElementById('navMobileClose'); if (closeBtn) closeBtn.addEventListener('click', closeNav);
   document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
 </script>
