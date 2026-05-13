@@ -383,8 +383,7 @@ textarea.form-field { resize: vertical; min-height: 130px; }
           <textarea class="form-field" id="contactMessage" name="message" placeholder="Tell us who you are and what you have in mind…" rows="5" required></textarea>
         </div>
 
-        <button type="submit" class="form-submit">Send via Email &rarr;</button>
-        <p style="text-align:center;font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:12px;text-transform:uppercase;">Opens your email client</p>
+        <button type="submit" class="form-submit">Send Message &rarr;</button>
       </form>
 
       <div class="form-success" id="formSuccess">
@@ -497,21 +496,38 @@ reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger
 })();
 
 /* Contact form */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const name = document.getElementById('contactName').value.trim();
-  const email = document.getElementById('contactEmail').value.trim();
-  const message = document.getElementById('contactMessage').value.trim();
-  if (!name || !email || !message) return;
+  const name     = document.getElementById('contactName').value.trim();
+  const email    = document.getElementById('contactEmail').value.trim();
+  const message  = document.getElementById('contactMessage').value.trim();
   const interest = document.getElementById('contactInterest').value;
-  const subject = encodeURIComponent('MMC Inquiry' + (interest ? ' — ' + interest : ''));
-  const body = encodeURIComponent(
-    'Name: ' + name + '\n' +
-    'Email: ' + email + '\n' +
-    'Interest: ' + (interest || 'General') + '\n\n' +
-    'Message:\n' + message
-  );
-  window.location.href = 'mailto:info@movemorecollective.com?subject=' + subject + '&body=' + body;
+  if (!name || !email || !message) return;
+
+  const btn      = this.querySelector('.form-submit');
+  const origText = btn.textContent;
+  btn.disabled    = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name, email, interest, message })
+    });
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      btn.disabled    = false;
+      btn.textContent = origText;
+      alert('Something went wrong. Please try again.');
+    }
+  } catch (_) {
+    btn.disabled    = false;
+    btn.textContent = origText;
+    alert('Network error. Please check your connection and try again.');
+  }
 });
 </script>
 
