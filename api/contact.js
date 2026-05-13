@@ -82,6 +82,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. Opportunity
+    let oppDebug = 'skipped';
     if (contactId && PIPELINE_ID && STAGE_ID) {
       const oppName = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
       const oppRes  = await fetch('https://services.leadconnectorhq.com/opportunities/', {
@@ -96,12 +97,14 @@ module.exports = async function handler(req, res) {
           contactId
         })
       });
-      if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, await oppRes.text());
+      const oppBody = await oppRes.text();
+      oppDebug = { status: oppRes.status, body: oppBody.slice(0, 300) };
+      if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, oppBody);
     }
 
     return res.status(200).json({
-      success:    true,
-      _debug:     { hasPipeline: !!PIPELINE_ID, hasStage: !!STAGE_ID, contactId: contactId || null }
+      success: true,
+      _debug:  { hasPipeline: !!PIPELINE_ID, hasStage: !!STAGE_ID, contactId: contactId || null, opp: oppDebug }
     });
   } catch (err) {
     console.error('Contact form error:', err);
