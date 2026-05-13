@@ -68,34 +68,41 @@ module.exports = async function handler(req, res) {
     const contactData = await contactRes.json();
     const contactId   = contactData.contact?.id;
 
-    // 2. Attach message as a note
+    // 2 & 3. Note + opportunity — awaited so the function doesn't exit before they complete
+    const followUps = [];
+
     if (contactId && message) {
-      fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
-        method:  'POST',
-        headers: ghlHeaders,
-        body:    JSON.stringify({
-          body:      `Interest: ${interestTag}\n\nMessage:\n${String(message).trim()}`,
-          contactId
+      followUps.push(
+        fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+          method:  'POST',
+          headers: ghlHeaders,
+          body:    JSON.stringify({
+            body:      `Interest: ${interestTag}\n\nMessage:\n${String(message).trim()}`,
+            contactId
+          })
         })
-      }).catch(err => console.error('GHL note error:', err));
+      );
     }
 
-    // 3. Create opportunity if pipeline env vars are set
     if (contactId && PIPELINE_ID && STAGE_ID) {
       const title = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
-      fetch('https://services.leadconnectorhq.com/opportunities/', {
-        method:  'POST',
-        headers: ghlHeaders,
-        body:    JSON.stringify({
-          title,
-          pipelineId: PIPELINE_ID,
-          locationId: LOCATION_ID,
-          status:     'open',
-          stageId:    STAGE_ID,
-          contactId
+      followUps.push(
+        fetch('https://services.leadconnectorhq.com/opportunities/', {
+          method:  'POST',
+          headers: ghlHeaders,
+          body:    JSON.stringify({
+            title,
+            pipelineId: PIPELINE_ID,
+            locationId: LOCATION_ID,
+            status:     'open',
+            stageId:    STAGE_ID,
+            contactId
+          })
         })
-      }).catch(err => console.error('GHL opportunity error:', err));
+      );
     }
+
+    await Promise.allSettled(followUps);
 
     return res.status(200).json({ success: true });
   } catch (err) {
