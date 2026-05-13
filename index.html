@@ -5,18 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Move More Collective — Where Wellness Meets Culture</title>
 <meta name="description" content="A mission-driven experiential wellness and media platform. We bring brands, creators, and communities together to move wellness culture forward.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.movemorecollective.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.movemorecollective.com/">
+<meta property="og:title" content="Move More Collective — Where Wellness Meets Culture">
+<meta property="og:description" content="A mission-driven experiential wellness and media platform. We bring brands, creators, and communities together to move wellness culture forward.">
+<meta property="og:image" content="https://www.movemorecollective.com/assets/images/og-home.jpg">
+<meta property="og:site_name" content="Move More Collective">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Move More Collective — Where Wellness Meets Culture">
+<meta name="twitter:description" content="A mission-driven experiential wellness and media platform. We bring brands, creators, and communities together to move wellness culture forward.">
+<meta name="twitter:image" content="https://www.movemorecollective.com/assets/images/og-home.jpg">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Move More Collective",
+  "url": "https://www.movemorecollective.com",
+  "logo": "https://www.movemorecollective.com/assets/images/logo.png",
+  "description": "A mission-driven experiential wellness and media platform bringing brands, creators, and communities together to move wellness culture forward.",
+  "sameAs": [
+    "https://www.instagram.com/movemorecollective"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "General Inquiry",
+    "url": "https://www.movemorecollective.com/contact"
+  }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="assets/fonts/Satoshi-Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
 
 <style>
 /* ===== Satoshi self-hosted ===== */
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.woff2') format('woff2'), url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.woff2') format('woff2'), url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.woff2') format('woff2'), url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.woff2') format('woff2'), url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.woff2') format('woff2'), url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
   --black: #050505;
@@ -102,8 +141,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* ============================================ SHARED CTA ============================================ */
 .cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
-.cta-primary { background: var(--blue); color: var(--white); }
-.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-primary { background: #1d6faa; color: var(--white); }
+.cta-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 .cta-white { background: var(--white); color: var(--midnight); }
 .cta-white:hover { background: var(--blue-glow); }
 .cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
@@ -195,6 +234,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .eco-pillar-creates span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(108,179,232,0.95); font-weight: 500; }
 .eco-pillar-creates span::before { content: "→ "; opacity: 0.6; }
 
+
 /* ============================================ PILLARS ============================================ */
 .pillars { background: var(--black); }
 .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
@@ -250,10 +290,9 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
 .brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--midnight), transparent); }
 .brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--midnight), transparent); }
-.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 28s linear infinite -14s; width: max-content; min-width: max-content; padding: 8px 0; will-change: transform; animation-fill-mode: none; }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; width: max-content; min-width: max-content; padding: 8px 0; }
 .brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
 .brands-ticker-track img:hover { filter: none; opacity: 1; }
-.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ============================================ TEAM ============================================ */
@@ -288,7 +327,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .team-bio { font-size: 13.5px; line-height: 1.6; opacity: 0.62; }
 .team-crew { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
 .team-crew-plus { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 56px; color: var(--blue-glow); line-height: 1; flex-shrink: 0; }
-.team-crew-text h4 { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
+.team-crew-text h3 { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
 .team-crew-text p { font-size: 14px; line-height: 1.58; opacity: 0.62; max-width: 520px; }
 
 /* ============================================ PATHS (3 doors) ============================================ */
@@ -366,7 +405,21 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </button>
       <div class="events-dropdown" id="eventsDropdown" role="menu">
         <div class="events-dropdown-label">Current Events</div>
-        <a class="event-card" href="midnight-moves.html" role="menuitem">
+        <a class="event-card" href="community-open-house.html" role="menuitem">
+          <div class="event-card-photo">
+            <img src="assets/bg-midnight-hero.jpg" alt="Community Open House">
+            <div class="event-card-photo-overlay"></div>
+          </div>
+          <div class="event-card-info">
+            <div>
+              <div class="event-card-series">Next Event · South Florida</div>
+              <div class="event-card-name">Community<br>Open House.</div>
+              <p class="event-card-desc">Meet the collective. Move together. No expectations — just good people and good energy. May 15, West Palm Beach.</p>
+            </div>
+            <span class="event-card-cta">See Details →</span>
+          </div>
+        </a>
+        <a class="event-card" href="midnight-moves.html" role="menuitem" style="margin-top:8px">
           <div class="event-card-photo">
             <img src="assets/bg-midnight-hero.jpg" alt="Midnight Moves">
             <div class="event-card-photo-overlay"></div>
@@ -375,7 +428,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
             <div>
               <div class="event-card-series">Flagship Series · South Florida</div>
               <div class="event-card-name">Midnight<br>Moves.</div>
-              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required. Next: May 15, West Palm Beach.</p>
+              <p class="event-card-desc">Movement-driven nightlife. Run. Dance. Connect — no substances required.</p>
             </div>
             <span class="event-card-cta">See the Series →</span>
           </div>
@@ -383,10 +436,10 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="events-more">
           <div class="events-more-text">Expanding to</div>
           <div class="events-more-cities">
-            <span class="events-more-city">NYC</span>
-            <span class="events-more-city">Austin</span>
-            <span class="events-more-city">Atlanta</span>
             <span class="events-more-city">Boston</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">NYC</span>
           </div>
         </div>
       </div>
@@ -454,63 +507,10 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
     </div>
   </div>
-  <div class="hero-ticker">NEXT EVENT — MIDNIGHT MOVES · MAY 15 · WEST PALM BEACH · 10 EVENTS THIS SEASON</div>
+  <div class="hero-ticker">NEXT EVENT — COMMUNITY OPEN HOUSE · MAY 15 · WEST PALM BEACH · 10 EVENTS THIS SEASON</div>
   <div class="scroll-cue mono">SCROLL</div>
 </section>
 
-<!-- ============================================ THE MMC DIFFERENCE ============================================ -->
-<section class="section difference" id="difference">
-  <div class="section-inner">
-    <div class="difference-intro">
-      <div class="section-eyebrow">The MMC Difference</div>
-      <h2 class="display">Why we move<br><span class="blue">different.</span></h2>
-      <p>Four reasons brands, creators, and communities choose Move More Collective as their cultural platform for wellness activation.</p>
-    </div>
-    <div class="diff-grid">
-
-      <div class="diff-card">
-        <div class="diff-card-ghost">01</div>
-        <div class="diff-card-eyebrow">01 / Culture</div>
-        <div class="diff-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </div>
-        <h3 class="diff-card-h">Alternative Nightlife</h3>
-        <p class="diff-card-desc">The first experiential wellness platform built as a true alternative to conventional nightlife. No substance required — just real connection, movement, and culture that hits different.</p>
-      </div>
-
-      <div class="diff-card">
-        <div class="diff-card-ghost">02</div>
-        <div class="diff-card-eyebrow">02 / Validation</div>
-        <div class="diff-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-        </div>
-        <h3 class="diff-card-h">Proven Traction</h3>
-        <p class="diff-card-desc">6 events. 300+ attendees. 150+ Skool members. 7 brand partnerships activated. Built and validated in South Florida — not on a pitch deck.</p>
-      </div>
-
-      <div class="diff-card">
-        <div class="diff-card-ghost">03</div>
-        <div class="diff-card-eyebrow">03 / Content</div>
-        <div class="diff-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.894L15 14"/><rect x="1" y="6" width="15" height="12" rx="2"/></svg>
-        </div>
-        <h3 class="diff-card-h">Premium Content Production</h3>
-        <p class="diff-card-desc">Every event is a production. MMC deploys an aligned creator layer capturing cinematic content that extends the brand across channels — and yours too.</p>
-      </div>
-
-      <div class="diff-card">
-        <div class="diff-card-ghost">04</div>
-        <div class="diff-card-eyebrow">04 / Scale</div>
-        <div class="diff-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        </div>
-        <h3 class="diff-card-h">Multi-City Expansion</h3>
-        <p class="diff-card-desc">SoFla is the proof of concept. The Midnight Moves model scales city by city — NYC, Austin, Atlanta, Boston are next. Your partnership moves with us.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <!-- ============================================ ECOSYSTEM ============================================ -->
 <section class="section ecosystem" id="ecosystem">
@@ -552,7 +552,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="eco-pillar-title">Experiences</div>
         <p class="eco-pillar-desc">Movement-led nightlife experiences that bring together music, wellness, and community through recurring formats, destination activations, and strategic partnerships.</p>
         <div class="eco-pillar-creates">
-          <span>Audience acquisition</span>
+          <span>Audience building</span>
           <span>Cultural visibility</span>
           <span>Brand demand</span>
         </div>
@@ -570,9 +570,9 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
           </svg>
         </div>
         <div class="eco-pillar-title">Community &amp; Membership</div>
-        <p class="eco-pillar-desc">Memberships, local chapters, ambassador programs, and the Circle platform — ongoing touchpoints that keep people connected beyond the event.</p>
+        <p class="eco-pillar-desc">Memberships, local chapters, ambassador programs, and a private community platform — ongoing touchpoints that keep people connected beyond the event.</p>
         <div class="eco-pillar-creates">
-          <span>Recurring revenue</span>
+          <span>Deepen connection</span>
           <span>Member identity</span>
           <span>Network effects</span>
         </div>
@@ -613,7 +613,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="eco-pillar-title">Brand &amp; Partner Ecosystem</div>
         <p class="eco-pillar-desc">Partnering with aligned wellness, hospitality, beverage, apparel, and lifestyle brands for authentic access to a culturally engaged audience.</p>
         <div class="eco-pillar-creates">
-          <span>Sponsorship revenue</span>
+          <span>Progressive marketing</span>
           <span>Experiential campaigns</span>
           <span>Long-term enterprise value</span>
         </div>
@@ -622,29 +622,87 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   </div>
 </section>
 
-<!-- ============================================ PILLARS ============================================ -->
-<section class="section pillars" id="pillars">
-  <div class="section-inner">
-    <div class="section-head">
-      <div>
-        <div class="section-eyebrow">Pillars of Holistic Wellness</div>
-        <h2 class="display section-h2">Mental. Social.<br><span class="blue">Both</span> understated.</h2>
-      </div>
-      <p class="section-sub">Physical wellness is everywhere. Mental and social wellness are the understated pillars of the rising era — and that's where we work.</p>
+<!-- ============================================ BRAND PARTNERS STRIP ============================================ -->
+<section class="brands-strip">
+  <div class="brands-strip-header">
+    <div class="brands-strip-label">Partners</div>
+    <h3 class="brands-strip-h">Already moving with us.</h3>
+  </div>
+  <div class="brands-ticker-wrap">
+    <div class="brands-ticker-track">
+      <img src="assets/partner-athletic.png" alt="Athletic Brewing" loading="lazy">
+      <img src="assets/partner-brez.png" alt="Brez" loading="lazy">
+      <img src="assets/partner-chaser.png" alt="Chaser" loading="lazy">
+      <img src="assets/partner-hiyo.png" alt="Hiyo" loading="lazy">
+      <img src="assets/partner-kenetik.png" alt="Kenetik" loading="lazy">
+      <img src="assets/partner-koia.png" alt="Koia" loading="lazy">
+      <img src="assets/partner-offfield.png" alt="Offfield" loading="lazy">
+      <img src="assets/partner-wip.png" alt="Wip" loading="lazy">
+      <img src="assets/partner-bang.png" alt="Bang" loading="lazy">
+      <!-- duplicate for seamless loop -->
+      <img src="assets/partner-athletic.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-brez.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-chaser.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-koia.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-offfield.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-wip.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="assets/partner-bang.png" alt="" aria-hidden="true" loading="lazy">
     </div>
-    <div class="pillars-grid">
-      <div class="pillar">
-        <div class="pillar-h">Physical</div>
-        <p class="pillar-desc">The pillar everyone talks about. Strength, cardio, nutrition. Already well-served by the existing wellness industry.</p>
+  </div>
+</section>
+
+<!-- ============================================ THE MMC DIFFERENCE ============================================ -->
+<section class="section difference" id="difference">
+  <div class="section-inner">
+    <div class="difference-intro">
+      <div class="section-eyebrow">The MMC Difference</div>
+      <h2 class="display">Why we move<br><span class="blue">different.</span></h2>
+      <p>Four reasons brands, creators, and communities choose Move More Collective as their cultural platform for wellness activation.</p>
+    </div>
+    <div class="diff-grid">
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">01</div>
+        <div class="diff-card-eyebrow">01 / Culture</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <h3 class="diff-card-h">Alternative Nightlife</h3>
+        <p class="diff-card-desc">The first experiential wellness platform built as a true alternative to conventional nightlife. No substance required — just real connection, movement, and culture that hits different.</p>
       </div>
-      <div class="pillar focused">
-        <div class="pillar-h">Mental</div>
-        <p class="pillar-desc">Nervous-system regulation, mood, mental health awareness — the half of wellness most likely to be quietly neglected. Where MMC partners with Active Minds to lead.</p>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">02</div>
+        <div class="diff-card-eyebrow">02 / Validation</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3 class="diff-card-h">Proven Traction</h3>
+        <p class="diff-card-desc">6 events. 300+ attendees. 150+ hybrid community members. 7 brand partnerships activated. Built and validated in South Florida — not on a pitch deck.</p>
       </div>
-      <div class="pillar focused">
-        <div class="pillar-h">Social</div>
-        <p class="pillar-desc">Connection without compromise. Authentic gatherings that don't depend on substances or algorithms. The category we were built for.</p>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">03</div>
+        <div class="diff-card-eyebrow">03 / Content</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.894L15 14"/><rect x="1" y="6" width="15" height="12" rx="2"/></svg>
+        </div>
+        <h3 class="diff-card-h">Premium Content Production</h3>
+        <p class="diff-card-desc">Every event is a production. MMC deploys an aligned creator layer capturing cinematic content that extends the brand across channels — and yours too.</p>
       </div>
+
+      <div class="diff-card">
+        <div class="diff-card-ghost">04</div>
+        <div class="diff-card-eyebrow">04 / Scale</div>
+        <div class="diff-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3 class="diff-card-h">Multi-City Expansion</h3>
+        <p class="diff-card-desc">SoFla is the proof of concept. The Midnight Moves model scales city by city — Boston, Atlanta, Austin, NYC are next. Your partnership moves with us.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -661,30 +719,42 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     </div>
     <div class="clubs-directory">
       <div class="clubs-row">
-        <div class="clubs-row-label">Gyms</div>
-        <div class="clubs-row-names">
-          <span class="club-tag">Traphouse</span>
-          <span class="club-tag">The Ave Luxe Gym</span>
-          <span class="club-tag">1401 Athletics</span>
-        </div>
-      </div>
-      <div class="clubs-row">
         <div class="clubs-row-label">Run Clubs</div>
         <div class="clubs-row-names">
-          <span class="club-tag">Clematis Run Club</span>
-          <span class="club-tag">YRC</span>
-          <span class="club-tag">Jupiter Run Crew</span>
-          <span class="club-tag">Boca Run Club</span>
+          <span class="club-tag">YouRunCrew</span>
         </div>
       </div>
-      <div class="clubs-row">
-        <div class="clubs-row-label">Studios</div>
-        <div class="clubs-row-names">
-          <span class="club-tag">Tremble</span>
-          <span class="club-tag">Jetset Pilates</span>
-          <span class="club-tag">Sweat440</span>
-          <span class="club-tag">YouCycling</span>
-        </div>
+    </div>
+    <p class="section-sub" style="margin-top:24px;font-size:13px;opacity:0.45;">More partners loading in.</p>
+  </div>
+</section>
+
+<!-- ============================================ PILLARS ============================================ -->
+<section class="section pillars" id="pillars">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Pillars of Holistic Wellness</div>
+        <h2 class="display section-h2">Mental. Social. Spiritual.<br><span class="blue">All</span> understated.</h2>
+      </div>
+      <p class="section-sub">Physical wellness is everywhere. Mental, social, and spiritual wellness are the understated pillars of the rising era — and that's where we work.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-h">Physical</div>
+        <p class="pillar-desc">The pillar everyone talks about. Strength, cardio, nutrition. Already well-served by the existing wellness industry.</p>
+      </div>
+      <div class="pillar focused">
+        <div class="pillar-h">Mental</div>
+        <p class="pillar-desc">Nervous-system regulation, mood, mental health awareness — the half of wellness most likely to be quietly neglected. Where MMC partners with Active Minds to lead.</p>
+      </div>
+      <div class="pillar focused">
+        <div class="pillar-h">Social</div>
+        <p class="pillar-desc">Connection without compromise. Authentic gatherings that don't depend on substances or algorithms. The category we were built for.</p>
+      </div>
+      <div class="pillar focused">
+        <div class="pillar-h">Spiritual</div>
+        <p class="pillar-desc">Not religious. Not prescriptive. We sit agnostic to what this means for you — and hold space for it. Mindfulness, meaning, and inner clarity are part of how you move through the world.</p>
       </div>
     </div>
   </div>
@@ -734,42 +804,12 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <div>
       <div class="partnership-label">Strategic Nonprofit Partner</div>
       <h3 class="partnership-h">Active Minds × MMC</h3>
-      <p class="partnership-desc">Active Minds — the largest U.S. mental health advocacy nonprofit — partners with us to amplify mental wellness conversations beyond South Florida. The forthcoming MMC × Active Minds College Tour brings Midnight Moves to campuses nationwide.</p>
+      <p class="partnership-desc">Active Minds — the largest U.S. mental health advocacy nonprofit — partners with MMC to amplify mental wellness conversations at a national scale. Together, we're building a path to bring the MMC experience to college communities across the country.</p>
     </div>
     <a class="cta cta-white" href="about.html">Read More &rarr;</a>
   </div>
 </section>
 
-<!-- ============================================ BRAND PARTNERS STRIP ============================================ -->
-<section class="brands-strip">
-  <div class="brands-strip-header">
-    <div class="brands-strip-label">Trusted By</div>
-    <h3 class="brands-strip-h">Brands that move.</h3>
-  </div>
-  <div class="brands-ticker-wrap">
-    <div class="brands-ticker-track">
-      <img src="assets/partner-athletic.png" alt="Athletic Brewing" loading="lazy">
-      <img src="assets/partner-brez.png" alt="Brez" loading="lazy">
-      <img src="assets/partner-chaser.png" alt="Chaser" loading="lazy">
-      <img src="assets/partner-hiyo.png" alt="Hiyo" loading="lazy">
-      <img src="assets/partner-kenetik.png" alt="Kenetik" loading="lazy">
-      <img src="assets/partner-koia.png" alt="Koia" loading="lazy">
-      <img src="assets/partner-offfield.png" alt="Offfield" loading="lazy">
-      <img src="assets/partner-wip.png" alt="Wip" loading="lazy">
-      <img src="assets/partner-bang.png" alt="Bang" loading="lazy">
-      <!-- duplicate for seamless loop -->
-      <img src="assets/partner-athletic.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-brez.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-chaser.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-koia.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-offfield.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-wip.png" alt="" aria-hidden="true" loading="lazy">
-      <img src="assets/partner-bang.png" alt="" aria-hidden="true" loading="lazy">
-    </div>
-  </div>
-</section>
 
 <!-- ============================================ TEAM ============================================ -->
 <section class="section team" id="team">
@@ -789,7 +829,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="team-founder-tag">Founder &amp; CEO</div>
         <div class="team-founder-name">Mike Cavallaro</div>
         <div class="team-founder-title">Move More Collective</div>
-        <p class="team-founder-bio">Former college athlete and investment banker with 7+ years across private equity and strategy. After his own experience with the burnout of traditional nightlife culture, Mike became obsessed with building a social environment people could feel better because of — not worse after. MMC was born from that mission.</p>
+        <p class="team-founder-bio">Former college athlete and investment banker with 7+ years in finance and strategy. After his own experience with the burnout of traditional nightlife culture, Mike became obsessed with building a social environment people could feel better because of — not worse after. MMC was born from that mission.</p>
         <p class="team-founder-quote">First we meet. Then we move. Then there's more.</p>
       </div>
     </div>
@@ -809,7 +849,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
       <div class="team-card">
         <div class="team-photo-wrap">
-          <div class="team-placeholder"><span class="team-placeholder-init">SS</span></div>
+          <img src="assets/team-sara.jpg" alt="Sara Sefret" loading="lazy">
+          <div class="team-photo-overlay"></div>
         </div>
         <div class="team-role">Director, Mental Wellness</div>
         <div class="team-name">Sara Sefret</div>
@@ -828,7 +869,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
       <div class="team-card">
         <div class="team-photo-wrap">
-          <div class="team-placeholder"><span class="team-placeholder-init">MM</span></div>
+          <img src="assets/team-maddy.jpg" alt="Madison Minelli" loading="lazy">
+          <div class="team-photo-overlay"></div>
         </div>
         <div class="team-role">Director, Experience</div>
         <div class="team-name">Madison Minelli</div>
@@ -839,7 +881,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <div class="team-crew">
       <div class="team-crew-plus">+</div>
       <div class="team-crew-text">
-        <h4>Our Beloved Move Crew</h4>
+        <h3>Our Beloved Move Crew</h3>
         <p>A growing network of operators, creators, community leaders, trainers, DJs, and wellness advocates helping shape the future of movement-led social culture.</p>
       </div>
     </div>
@@ -1067,7 +1109,31 @@ window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 
   const closeBtn = document.getElementById('navMobileClose'); if (closeBtn) closeBtn.addEventListener('click', closeNav);
   document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
+
+/* ============ BRANDS TICKER — RAF loop, iOS-proof ============ */
+window.addEventListener('load', function() {
+  var track = document.querySelector('.brands-ticker-track');
+  var wrap  = document.querySelector('.brands-ticker-wrap');
+  if (!track) return;
+  var halfW = track.scrollWidth / 2;
+  if (!halfW) return;
+  var dur = 28000;
+  var elapsed = dur * 0.5;
+  var lastTime = performance.now();
+  var paused = false;
+  if (wrap) {
+    wrap.addEventListener('mouseenter', function() { paused = true; });
+    wrap.addEventListener('mouseleave', function() { paused = false; });
+  }
+  (function tick(now) {
+    if (!paused) { elapsed += now - lastTime; if (elapsed >= dur) elapsed -= dur; }
+    lastTime = now;
+    track.style.transform = 'translateX(-' + ((elapsed / dur) * halfW).toFixed(1) + 'px)';
+    requestAnimationFrame(tick);
+  })(performance.now());
+});
 </script>
 
+<script src="/_editor.js"></script>
 </body>
 </html>

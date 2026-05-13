@@ -5,17 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>About — Move More Collective</title>
 <meta name="description" content="Mission-driven at our core. Meet the team behind Move More Collective and the mission to encourage more sustainable culture norms across mental, physical, and social wellness.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.movemorecollective.com/about">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.movemorecollective.com/about">
+<meta property="og:title" content="About — Move More Collective">
+<meta property="og:description" content="Mission-driven at our core. Meet the team behind Move More Collective and the mission to encourage more sustainable culture norms across mental, physical, and social wellness.">
+<meta property="og:image" content="https://www.movemorecollective.com/assets/images/og-about.jpg">
+<meta property="og:site_name" content="Move More Collective">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About — Move More Collective">
+<meta name="twitter:description" content="Mission-driven at our core. Meet the team behind Move More Collective and the mission to encourage more sustainable culture norms across mental, physical, and social wellness.">
+<meta name="twitter:image" content="https://www.movemorecollective.com/assets/images/og-about.jpg">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Move More Collective",
+  "url": "https://www.movemorecollective.com/about",
+  "description": "Mission-driven at our core. Meet the team behind Move More Collective.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Move More Collective",
+    "url": "https://www.movemorecollective.com"
+  }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="assets/fonts/Satoshi-Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
 
 <style>
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.woff2') format('woff2'), url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.woff2') format('woff2'), url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.woff2') format('woff2'), url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.woff2') format('woff2'), url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.woff2') format('woff2'), url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
   --black: #050505; --ink: #0a0a0e; --midnight: #04111c; --deep-blue: #051826;
@@ -88,8 +123,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* CTA */
 .cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
-.cta-primary { background: var(--blue); color: var(--white); }
-.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-primary { background: #1d6faa; color: var(--white); }
+.cta-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 .cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
 .cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
 
@@ -160,15 +195,15 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .partnership-card { max-width: 1100px; margin: 0 auto; background: linear-gradient(135deg, rgba(61,142,207,0.10), rgba(61,142,207,0.02)); border: 1px solid rgba(108,179,232,0.32); border-radius: 24px; padding: 56px 64px; position: relative; }
 @media (max-width: 768px) { .partnership-card { padding: 36px; } }
 .partnership-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 20px; }
-.partnership-logo { margin-bottom: 28px; }
-.partnership-logo img { height: 52px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.92; }
+.partnership-logo { margin-bottom: 28px; text-align: center; }
+.partnership-logo img { height: 52px; width: auto; display: inline-block; filter: brightness(0) invert(1); opacity: 0.92; }
 .partnership-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); text-transform: uppercase; line-height: 0.95; margin-bottom: 24px; }
 .partnership-h .blue { color: var(--blue-glow); }
 .partnership-desc { font-size: 16px; line-height: 1.65; opacity: 0.82; max-width: 720px; margin-bottom: 24px; }
 .partnership-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 28px 0 36px; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .partnership-stats { grid-template-columns: 1fr 1fr; }
-  .partnership-logo img { margin: 0 auto; }
+  .partnership-logo { display: flex; justify-content: center; }
   .partnership-actions { justify-content: center; }
 }
 .partnership-stat-num { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 4vw, 48px); color: var(--blue-glow); line-height: 1; letter-spacing: -0.02em; }
@@ -315,6 +350,10 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <div class="page-hero-eyebrow">About — Mission-driven at our core</div>
     <h1 class="display page-hero-h1">About <span class="blue">us.</span></h1>
     <p class="page-hero-sub">Move More Collective was built for the rising adult generation — a true collective connecting brands, creators, and communities around the shared mission of sustainable culture norms.</p>
+    <div class="page-hero-actions" style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+      <a class="cta cta-primary" href="contact.html">Work With Us &rarr;</a>
+      <a class="cta cta-ghost" href="midnight-moves.html">See Events</a>
+    </div>
   </div>
 </section>
 
@@ -395,7 +434,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="founder-title">Founder &amp; CEO · Move More Collective</div>
         <div class="founder-bio">
           <p>Mike has long dreamed of a world where social all-nighters, relentless fitness pursuit, and peak mental health could all coexist. A former college athlete, personal trainer, investment banker, and strategy director of a venture-backed company, he's continually sought out and embraced the opportunity to just generally do hard things.</p>
-          <p>Over 7 years in investment banking, he worked hand-in-hand with some of the most recognizable private equity and strategic minds in today's consumer economy. Having struggled to escape the flywheel of party culture post-college, he recognized the holistic need to redefine young adult social culture in America.</p>
+          <p>Over 7 years in investment banking, he worked hand-in-hand with some of the most recognizable finance and strategy minds in today's consumer economy. Having struggled to escape the flywheel of party culture post-college, he recognized the holistic need to redefine young adult social culture in America.</p>
           <p>A social butterfly and EQ savant to his core, Mike has lived in and maintains a top-tier multi-disciplinary wellness and influencer network in cities like Boston, Atlanta, NYC, Austin, and beyond.</p>
         </div>
       </div>
@@ -419,7 +458,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
 
       <div class="team-card">
-        <div class="team-photo" style="font-size:32px;font-family:'Satoshi',system-ui,sans-serif;font-weight:900;color:rgba(108,179,232,0.55);letter-spacing:0.04em;">SS</div>
+        <div class="team-photo"><img src="assets/team-sara.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Sara Sefret"></div>
         <h4 class="team-name">Sara Sefret</h4>
         <div class="team-title">Director, Mental Wellness</div>
         <div class="team-bullets">
@@ -444,7 +483,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
 
       <div class="team-card">
-        <div class="team-photo" style="font-size:32px;font-family:'Satoshi',system-ui,sans-serif;font-weight:900;color:rgba(108,179,232,0.55);letter-spacing:0.04em;">MM</div>
+        <div class="team-photo"><img src="assets/team-maddy.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Madison Minelli"></div>
         <h4 class="team-name">Madison Minelli</h4>
         <div class="team-title">Director, Events &amp; Experience</div>
         <div class="team-bullets">
@@ -466,7 +505,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       <img src="https://activeminds.org/wp-content/uploads/2025/03/active_minds-logo-stacked-single_color_WHITE.png" alt="Active Minds" loading="lazy">
     </div>
     <h2 class="partnership-h">Active Minds <span class="blue">×</span> MMC.</h2>
-    <p class="partnership-desc">Active Minds is the largest nonprofit in the United States mobilizing youth and young adults to transform mental health norms across society. Together with MMC, the forthcoming <strong>MMC × Active Minds College Tour</strong> brings Midnight Moves to campuses nationwide — meeting the next generation where they already are.</p>
+    <p class="partnership-desc">Active Minds is the largest nonprofit in the United States mobilizing youth and young adults to transform mental health norms across society. Together with MMC, we're exploring what it looks like to bring the MMC experience to college communities across the country — meeting the next generation where they already are.</p>
     <p class="partnership-desc" style="opacity: 0.65; margin-bottom: 0;">"If we as young adults speak openly about our mental health, we can save lives."</p>
 
     <div class="partnership-stats">
@@ -511,11 +550,6 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
-    <div class="footer-cta-row">
-      <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
-      <a class="cta cta-ghost" href="contact.html">info@movemorecollective.com</a>
-    </div>
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Move More Collective</h4>
@@ -572,7 +606,7 @@ reveal('.founder-block', { trigger: '.founder-block', y: 40 });
 reveal('.team-card', { trigger: '.team-grid', stagger: 0.12, y: 40 });
 reveal('.partnership-card', { trigger: '.partnership', y: 40 });
 reveal('.cta-section-inner > *', { trigger: '.cta-section', stagger: 0.1 });
-reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
+reveal('.footer-grid', { trigger: '.footer', stagger: 0.1 });
 window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
 
 /* Events dropdown */
@@ -615,5 +649,6 @@ window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 
   document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
 </script>
+<script src="/_editor.js"></script>
 </body>
 </html>

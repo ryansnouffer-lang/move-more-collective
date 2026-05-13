@@ -5,17 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>For Creators — Move More Collective</title>
 <meta name="description" content="Plug into the Move More creator network. Get matched with wellness brands, exclusive event access, coaching, and a community of wellness-native creators.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.movemorecollective.com/for-creators">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.movemorecollective.com/for-creators">
+<meta property="og:title" content="For Creators — Move More Collective">
+<meta property="og:description" content="Plug into the Move More creator network. Get matched with wellness brands, exclusive event access, coaching, and a community of wellness-native creators.">
+<meta property="og:image" content="https://www.movemorecollective.com/assets/images/og-creators.jpg">
+<meta property="og:site_name" content="Move More Collective">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="For Creators — Move More Collective">
+<meta name="twitter:description" content="Plug into the Move More creator network. Get matched with wellness brands, exclusive event access, coaching, and a community of wellness-native creators.">
+<meta name="twitter:image" content="https://www.movemorecollective.com/assets/images/og-creators.jpg">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "For Creators — Move More Collective",
+  "url": "https://www.movemorecollective.com/for-creators",
+  "description": "Plug into the Move More creator network. Get matched with wellness brands, exclusive event access, and coaching.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Move More Collective",
+    "url": "https://www.movemorecollective.com"
+  }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="assets/fonts/Satoshi-Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
 
 <style>
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Regular.woff2') format('woff2'), url('assets/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Medium.woff2') format('woff2'), url('assets/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Bold.woff2') format('woff2'), url('assets/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Black.woff2') format('woff2'), url('assets/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('assets/fonts/Satoshi-Italic.woff2') format('woff2'), url('assets/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
   --black: #050505; --ink: #0a0a0e; --midnight: #04111c; --deep-blue: #051826;
@@ -91,8 +126,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* CTA */
 .cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Satoshi', system-ui, sans-serif; }
-.cta-primary { background: var(--blue); color: var(--white); }
-.cta-primary:hover { background: var(--blue-glow); color: var(--midnight); transform: translateY(-2px); }
+.cta-primary { background: #1d6faa; color: var(--white); }
+.cta-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 .cta-white { background: var(--white); color: var(--midnight); }
 .cta-white:hover { background: var(--blue-glow); }
 .cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
@@ -136,6 +171,15 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .way-img-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; padding: 24px; text-align: center; }
 
 /* ============================================ MMC DIFFERENCE ============================================ */
+.process { background: var(--black); padding: 100px var(--gutter); border-top: 1px solid rgba(255,255,255,0.06); }
+.process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
+@media (max-width: 768px) { .process-steps { grid-template-columns: 1fr; } }
+.process-step { background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; }
+.process-step + .process-step { margin-left: 16px; }
+@media (max-width: 768px) { .process-step + .process-step { margin-left: 0; margin-top: 2px; } }
+.process-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--blue); text-transform: uppercase; }
+.process-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(22px, 2.5vw, 30px); text-transform: uppercase; line-height: 1; }
+.process-desc { font-size: 14.5px; line-height: 1.65; opacity: 0.72; }
 .difference { background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); }
 .difference-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
 @media (max-width: 1024px) { .difference-grid { grid-template-columns: 1fr; gap: 40px; } }
@@ -161,10 +205,9 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
 .brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
 .brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
-.brands-ticker-track { display: flex; align-items: center; gap: 72px; animation: ticker 28s linear infinite -14s; width: max-content; min-width: max-content; padding: 8px 0; will-change: transform; animation-fill-mode: none; }
+.brands-ticker-track { display: flex; align-items: center; gap: 72px; width: max-content; min-width: max-content; padding: 8px 0; }
 .brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
 .brands-ticker-track img:hover { filter: none; opacity: 1; }
-.brands-ticker-wrap:hover .brands-ticker-track { animation-play-state: paused; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ============================================ CTA SECTION ============================================ */
@@ -313,12 +356,32 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   </div>
 </section>
 
+<!-- CREATOR CREDIBILITY STRIP -->
+<div style="background:rgba(61,142,207,0.07);border-top:1px solid rgba(108,179,232,0.18);border-bottom:1px solid rgba(108,179,232,0.18);padding:0 var(--gutter);">
+  <div style="max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:stretch;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:24px 40px;flex:1;min-width:130px;">
+      <span style="font-family:'Satoshi',system-ui,sans-serif;font-weight:900;font-size:clamp(24px,3vw,38px);line-height:1;color:var(--blue-glow);">20M+</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Impressions, one campaign</span>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,0.08);margin:16px 0;"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:24px 40px;flex:1;min-width:130px;">
+      <span style="font-family:'Satoshi',system-ui,sans-serif;font-weight:900;font-size:clamp(24px,3vw,38px);line-height:1;color:var(--blue-glow);">Paid</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Per deployment</span>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,0.08);margin:16px 0;"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:24px 40px;flex:1;min-width:130px;">
+      <span style="font-family:'Satoshi',system-ui,sans-serif;font-weight:900;font-size:clamp(24px,3vw,38px);line-height:1;color:var(--blue-glow);">Multi-city</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Brand access</span>
+    </div>
+  </div>
+</div>
+
 <!-- WAYS TO WORK TOGETHER -->
 <section class="ways" id="ways">
   <div class="section-inner">
     <div class="section-head">
       <div>
-        <div class="section-eyebrow">Ways to Work Together</div>
+        <div class="section-eyebrow">Our Programs</div>
         <h2 class="display section-h2">Ways to work <span class="blue">together.</span></h2>
       </div>
       <p class="section-sub">Four lanes for the creators building the visual culture of the new wellness era.</p>
@@ -393,6 +456,36 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section class="process">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">The Process</div>
+        <h2 class="display section-h2">How it <span class="blue">works.</span></h2>
+      </div>
+      <p class="section-sub">Three steps from application to first paid deployment — built for creators who are ready to move.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-num">Step 01</div>
+        <div class="process-h">Apply.</div>
+        <p class="process-desc">Tell us about your audience, your niche, and the content you make. We review every application and match based on fit, not follower count.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">Step 02</div>
+        <div class="process-h">Get Matched.</div>
+        <p class="process-desc">We pair you with brand campaigns and MMC events that align with your voice and community — then brief you directly. No cold pitching required.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">Step 03</div>
+        <div class="process-h">Get Paid.</div>
+        <p class="process-desc">Create content for wellness brands and at MMC events. Earn per deployment. Build the portfolio. Our network has generated 20M+ impressions for a single brand in one campaign.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- THE MMC DIFFERENCE -->
 <section class="section difference">
   <div class="section-inner">
@@ -430,7 +523,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
           <div class="callout-icon">◎</div>
           <div>
             <div class="callout-h">Multi-City Expansion — Coming Soon</div>
-            <p class="callout-desc">South Florida flagship offering is active now. Strategic roadmap includes near-term expansion to wellness hubs across NYC, Austin, Atlanta, and Boston.</p>
+            <p class="callout-desc">South Florida flagship offering is active now. Strategic roadmap includes near-term expansion to wellness hubs across Boston, Atlanta, Austin, and NYC.</p>
           </div>
         </div>
       </div>
@@ -489,11 +582,6 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
-    <div class="footer-cta-row">
-      <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
-      <a class="cta cta-ghost" href="contact.html">info@movemorecollective.com</a>
-    </div>
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Move More Collective</h4>
@@ -551,7 +639,7 @@ reveal('.callout', { trigger: '.difference-callouts', stagger: 0.1 });
 reveal('.difference-visual', { trigger: '.difference-grid', y: 40 });
 reveal('.brands-strip-inner > *', { trigger: '.brands-strip', stagger: 0.1 });
 reveal('.cta-section-inner > *', { trigger: '.cta-section', stagger: 0.1 });
-reveal('.footer-h, .footer-cta-row, .footer-grid', { trigger: '.footer', stagger: 0.1 });
+reveal('.footer-grid', { trigger: '.footer', stagger: 0.1 });
 window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
 
 /* Events dropdown */
@@ -593,6 +681,30 @@ window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 
   const closeBtn = document.getElementById('navMobileClose'); if (closeBtn) closeBtn.addEventListener('click', closeNav);
   document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
+
+/* ============ BRANDS TICKER — RAF loop, iOS-proof ============ */
+window.addEventListener('load', function() {
+  var track = document.querySelector('.brands-ticker-track');
+  var wrap  = document.querySelector('.brands-ticker-wrap');
+  if (!track) return;
+  var halfW = track.scrollWidth / 2;
+  if (!halfW) return;
+  var dur = 28000;
+  var elapsed = dur * 0.5;
+  var lastTime = performance.now();
+  var paused = false;
+  if (wrap) {
+    wrap.addEventListener('mouseenter', function() { paused = true; });
+    wrap.addEventListener('mouseleave', function() { paused = false; });
+  }
+  (function tick(now) {
+    if (!paused) { elapsed += now - lastTime; if (elapsed >= dur) elapsed -= dur; }
+    lastTime = now;
+    track.style.transform = 'translateX(-' + ((elapsed / dur) * halfW).toFixed(1) + 'px)';
+    requestAnimationFrame(tick);
+  })(performance.now());
+});
 </script>
+<script src="/_editor.js"></script>
 </body>
 </html>
