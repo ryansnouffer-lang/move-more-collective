@@ -154,10 +154,11 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .mission-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.4vw, 44px); text-transform: uppercase; line-height: 0.95; }
 .mission-desc { font-size: 15px; line-height: 1.6; opacity: 0.8; margin-top: auto; }
 
-/* PILLARS — Physical/Mental/Social */
+/* PILLARS — Physical/Mental/Social/Spiritual */
 .pillars { background: linear-gradient(180deg, var(--black) 0%, var(--midnight) 100%); }
-.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-@media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+.pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+@media (max-width: 1100px) { .pillars-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .pillars-grid { grid-template-columns: 1fr; } }
 .pillar { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 36px 32px; position: relative; overflow: hidden; }
 .pillar.focused { background: linear-gradient(180deg, rgba(61,142,207,0.16) 0%, rgba(61,142,207,0.04) 100%); border-color: rgba(108,179,232,0.5); }
 .pillar.focused::after { content: "MMC FOCUS"; position: absolute; top: 18px; right: 18px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue-glow); background: rgba(61,142,207,0.18); padding: 4px 8px; border-radius: 4px; }
@@ -182,7 +183,11 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 @media (max-width: 900px) { .team-grid { grid-template-columns: 1fr; } }
 .team-card { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 32px 28px; transition: all 0.22s; }
 .team-card:hover { border-color: rgba(108,179,232,0.4); background: linear-gradient(180deg, rgba(61,142,207,0.08) 0%, rgba(61,142,207,0.02) 100%); }
-.team-photo { aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #1a1a24 0%, #050714 100%); margin-bottom: 24px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; }
+.team-photo { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: rgba(61,142,207,0.06); border: 1px solid rgba(255,255,255,0.07); margin-bottom: 20px; position: relative; }
+.team-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(1) contrast(1.05); transition: filter 0.65s ease, transform 0.55s cubic-bezier(0.34,1.56,0.64,1); display: block; }
+.team-photo.revealed img { filter: grayscale(0) contrast(1.05); }
+.team-card:hover .team-photo img { filter: grayscale(0); transform: scale(1.04); }
+.team-photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(4,17,28,0.8) 100%); pointer-events: none; }
 .team-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(24px, 2.6vw, 32px); text-transform: uppercase; line-height: 0.95; margin-bottom: 4px; }
 .team-title { font-size: 13px; color: var(--blue-glow); font-weight: 500; letter-spacing: 0.05em; margin-bottom: 18px; }
 .team-bullets { display: flex; flex-direction: column; gap: 8px; }
@@ -393,9 +398,9 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <div class="section-head">
       <div>
         <div class="section-eyebrow">Pillars of Holistic Wellness</div>
-        <h2 class="display section-h2">Mental. Social.<br><span class="blue">Both</span> understated.</h2>
+        <h2 class="display section-h2">Four pillars.<br><span class="blue">Most</span> understated.</h2>
       </div>
-      <p class="section-sub">Physical wellness is everywhere. Mental and social wellness are the understated pillars of the rising era — and that's where we work.</p>
+      <p class="section-sub">Physical wellness gets all the attention. Mental, social, and spiritual wellness are the understated pillars of the rising era — and that's where we work.</p>
     </div>
     <div class="pillars-grid">
       <div class="pillar">
@@ -410,6 +415,10 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="pillar-h">Social</div>
         <p class="pillar-desc">Connection without compromise. Authentic gatherings that don't depend on substances or algorithms. The category we were built for.</p>
       </div>
+      <div class="pillar">
+        <div class="pillar-h">Spiritual</div>
+        <p class="pillar-desc">Mindfulness, purpose, and meaning. The dimension of wellness that connects individual growth to something larger than oneself.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -422,7 +431,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="section-eyebrow">The Team</div>
         <h2 class="display section-h2">Mission-driven<br>at our <span class="blue">core.</span></h2>
       </div>
-      <p class="section-sub">Former investment bankers, event producers, wellness practitioners, and viral content strategists — all with wellness now central to everything they do.</p>
+      <p class="section-sub">Former athletes, event producers, wellness practitioners, and viral content strategists — all with wellness now central to everything they do.</p>
     </div>
 
     <!-- Founder -->
@@ -433,8 +442,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <h3 class="founder-name">Mike Cavallaro</h3>
         <div class="founder-title">Founder &amp; CEO · Move More Collective</div>
         <div class="founder-bio">
-          <p>Mike has long dreamed of a world where social all-nighters, relentless fitness pursuit, and peak mental health could all coexist. A former college athlete, personal trainer, investment banker, and strategy director of a venture-backed company, he's continually sought out and embraced the opportunity to just generally do hard things.</p>
-          <p>Over 7 years in investment banking, he worked hand-in-hand with some of the most recognizable finance and strategy minds in today's consumer economy. Having struggled to escape the flywheel of party culture post-college, he recognized the holistic need to redefine young adult social culture in America.</p>
+          <p>Mike has long dreamed of a world where social all-nighters, relentless fitness pursuit, and peak mental health could all coexist. A former college athlete, personal trainer, and strategy director of a venture-backed company, he's continually sought out and embraced the opportunity to just generally do hard things.</p>
+          <p>With 7 years in finance and strategy, he worked hand-in-hand with some of the most recognizable minds in today's consumer economy. Having struggled to escape the flywheel of party culture post-college, he recognized the holistic need to redefine young adult social culture in America.</p>
           <p>A social butterfly and EQ savant to his core, Mike has lived in and maintains a top-tier multi-disciplinary wellness and influencer network in cities like Boston, Atlanta, NYC, Austin, and beyond.</p>
         </div>
       </div>
@@ -443,7 +452,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
     <!-- Operations Team -->
     <div class="team-grid">
       <div class="team-card">
-        <div class="team-photo"><img src="assets/team-alexis.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Lexi Mantei"></div>
+        <div class="team-photo"><img src="assets/team-alexis.jpg" alt="Lexi Mantei"><div class="team-photo-overlay"></div></div>
         <h4 class="team-name">Lexi Mantei</h4>
         <div class="team-title">Director, Creator Management</div>
         <div class="team-bullets">
@@ -458,7 +467,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
 
       <div class="team-card">
-        <div class="team-photo"><img src="assets/team-sara.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Sara Sefret"></div>
+        <div class="team-photo"><img src="assets/team-sara.jpg" alt="Sara Sefret"><div class="team-photo-overlay"></div></div>
         <h4 class="team-name">Sara Sefret</h4>
         <div class="team-title">Director, Mental Wellness</div>
         <div class="team-bullets">
@@ -470,7 +479,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
 
       <div class="team-card">
-        <div class="team-photo"><img src="assets/team-emma.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Emma Barefoot"></div>
+        <div class="team-photo"><img src="assets/team-emma.jpg" alt="Emma Barefoot"><div class="team-photo-overlay"></div></div>
         <h4 class="team-name">Emma Barefoot</h4>
         <div class="team-title">Director, Media</div>
         <div class="team-bullets">
@@ -483,14 +492,15 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
       </div>
 
       <div class="team-card">
-        <div class="team-photo"><img src="assets/team-maddy.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;" alt="Madison Minelli"></div>
+        <div class="team-photo"><img src="assets/team-maddy.jpg" alt="Madison Minelli"><div class="team-photo-overlay"></div></div>
         <h4 class="team-name">Madison Minelli</h4>
-        <div class="team-title">Director, Events &amp; Experience</div>
+        <div class="team-title">Director, Experiences</div>
         <div class="team-bullets">
-          <div class="team-bullet">Brings the energy that makes a room feel alive</div>
-          <div class="team-bullet">Runs the on-ground experience at every Midnight Moves event</div>
-          <div class="team-bullet">Built and scaled multiple community-driven event series</div>
-          <div class="team-bullet">The person who makes sure no one stands alone at the door</div>
+          <div class="team-bullet">Experiential producer with roots in fashion, hospitality, and community programming</div>
+          <div class="team-bullet">Specializes in guest experience, logistics, vendor coordination, and on-site execution</div>
+          <div class="team-bullet">Has supported productions across international Fashion Weeks and large-scale live events</div>
+          <div class="team-bullet">NYU Event Management graduate passionate about building thoughtful, high-energy spaces</div>
+          <div class="team-bullet">Believes the outfit should match the energy of the event</div>
         </div>
       </div>
     </div>
@@ -608,6 +618,12 @@ reveal('.partnership-card', { trigger: '.partnership', y: 40 });
 reveal('.cta-section-inner > *', { trigger: '.cta-section', stagger: 0.1 });
 reveal('.footer-grid', { trigger: '.footer', stagger: 0.1 });
 window.addEventListener('load', () => setTimeout(() => ScrollTrigger.refresh(), 200));
+
+/* Grayscale-to-color reveal on team photos */
+const photoObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); photoObs.unobserve(e.target); } });
+}, { threshold: 0.3 });
+document.querySelectorAll('.team-photo').forEach(el => photoObs.observe(el));
 
 /* Events dropdown */
 (function() {

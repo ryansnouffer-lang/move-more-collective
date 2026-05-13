@@ -4,32 +4,34 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Community Open House — Move More Collective</title>
-<meta name="description" content="Come meet the collective. The MMC Community Open House is a low-stakes, no-expectations introduction to who we are and what we're building. West Palm Beach, May 15.">
+<meta name="description" content="Meet the collective. MMC Community Open House — May 15, 2026. Presented by HARVI. Free with RSVP.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.movemorecollective.com/midnight-moves">
+<link rel="canonical" href="https://www.movemorecollective.com/community-open-house">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.movemorecollective.com/midnight-moves">
-<meta property="og:title" content="Midnight Moves — Move More Collective">
-<meta property="og:description" content="Midnight Moves is the nightlife wellness experience by Move More Collective. Where the night has a purpose — movement, community, and culture in West Palm Beach.">
-<meta property="og:image" content="https://www.movemorecollective.com/assets/images/og-midnight-moves.jpg">
+<meta property="og:url" content="https://www.movemorecollective.com/community-open-house">
+<meta property="og:title" content="Community Open House — Move More Collective">
+<meta property="og:description" content="Meet the collective. MMC Community Open House — May 15, 2026. Presented by HARVI. Free with RSVP.">
+<meta property="og:image" content="https://www.movemorecollective.com/assets/images/og-community-open-house.jpg">
 <meta property="og:site_name" content="Move More Collective">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Midnight Moves — Move More Collective">
-<meta name="twitter:description" content="Midnight Moves is the nightlife wellness experience by Move More Collective. Where the night has a purpose — movement, community, and culture in West Palm Beach.">
-<meta name="twitter:image" content="https://www.movemorecollective.com/assets/images/og-midnight-moves.jpg">
+<meta name="twitter:title" content="Community Open House — Move More Collective">
+<meta name="twitter:description" content="Meet the collective. MMC Community Open House — May 15, 2026. Presented by HARVI. Free with RSVP.">
+<meta name="twitter:image" content="https://www.movemorecollective.com/assets/images/og-community-open-house.jpg">
 
 <!-- JSON-LD -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Midnight Moves",
-  "description": "A nightlife wellness experience by Move More Collective. Where the night has a purpose — movement, community, and culture.",
-  "url": "https://www.movemorecollective.com/midnight-moves",
+  "name": "MMC Community Open House",
+  "description": "Meet the collective. MMC Community Open House presented by HARVI. Free with RSVP.",
+  "url": "https://www.movemorecollective.com/community-open-house",
+  "startDate": "2026-05-15T20:00",
+  "endDate": "2026-05-15T22:00",
   "organizer": {
     "@type": "Organization",
     "name": "Move More Collective",
@@ -37,14 +39,15 @@
   },
   "location": {
     "@type": "Place",
-    "name": "West Palm Beach",
+    "name": "Caroline Station",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "West Palm Beach",
       "addressRegion": "FL",
       "addressCountry": "US"
     }
-  }
+  },
+  "isAccessibleForFree": true
 }
 </script>
 
@@ -68,9 +71,9 @@
   --ink: #0a0a0e;
   --midnight: #04111c;
   --deep-blue: #051826;
-  --blue: #3d8ecf;        /* canonical brand blue per founder */
-  --blue-glow: #6cb3e8;   /* lighter highlight for atmospheres + text-shadow glow */
-  --blue-deep: #2a6ea5;   /* deeper variant for hover/pressed states */
+  --blue: #3d8ecf;
+  --blue-glow: #6cb3e8;
+  --blue-deep: #2a6ea5;
   --white: #ffffff;
   --paper: #f5f3ed;
   --gutter: clamp(24px, 4vw, 64px);
@@ -78,12 +81,9 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 html { background: var(--black); }
-/* IMPORTANT: never use overflow-x: hidden on html/body — it breaks position: sticky.
-   Use overflow-x: clip instead (clipping without creating a scroll container). */
 body { background: var(--black); color: var(--white); font-family: 'Satoshi', system-ui, sans-serif; line-height: 1.5; overflow-x: clip; }
 
 .anton { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; line-height: 0.86; letter-spacing: -0.005em; text-transform: uppercase; }
-.anton .stroke { color: transparent; -webkit-text-stroke: 2.5px currentColor; }
 .mono { font-family: 'JetBrains Mono', monospace; }
 
 /* ============================================ NAV ============================================ */
@@ -138,30 +138,26 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .partner-link-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
 .partner-link-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
 
-
 /* ============================================ HERO ============================================ */
 .hero { position: relative; height: 100vh; min-height: 720px; width: 100%; overflow: hidden; background: var(--black); }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; background: #04111c; }
+.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
 .hero-overlay { position: absolute; inset: 0; z-index: 2; background:
-  linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.75) 100%),
+  linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.78) 100%),
   radial-gradient(ellipse 80% 50% at 30% 60%, rgba(0,0,0,0.4), transparent 70%);
 }
 .hero-content { position: relative; z-index: 3; height: 100%; padding: 0 var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 110px; }
 .hero-headline { font-size: clamp(52px, 8.2vw, 124px); max-width: 1400px; }
 .hero-headline .blue { color: var(--blue-glow); }
-.hero-headline .stroke { color: transparent; -webkit-text-stroke: 2.5px #fff; }
 .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 28px; gap: 32px; flex-wrap: wrap; }
-.hero-sub { max-width: 460px; font-size: 14px; line-height: 1.55; opacity: 0.82; }
+.hero-sub { max-width: 480px; font-size: 14px; line-height: 1.6; opacity: 0.82; }
 .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .cta { display: inline-flex; align-items: center; gap: 10px; font-family: 'Satoshi', system-ui, sans-serif; font-size: 14px; font-weight: 600; padding: 14px 24px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; }
 .cta-primary { background: #1d6faa; color: var(--white); }
 .cta-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 .cta-ghost { color: var(--white); border: 1px solid rgba(255,255,255,0.3); background: transparent; }
 .cta-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
-.cta-white { background: var(--white); color: var(--midnight); }
-.cta-white:hover { background: var(--blue-glow); }
 
-/* Vertical brand mark up the right side */
+/* Vertical brand mark */
 .hero-vertical { position: absolute; right: 24px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5em; color: rgba(255,255,255,0.5); white-space: nowrap; z-index: 3; }
 .hero-vertical::before, .hero-vertical::after { content: ""; display: inline-block; width: 32px; height: 1px; background: rgba(255,255,255,0.5); vertical-align: middle; }
 .hero-vertical::before { margin-right: 12px; }
@@ -183,212 +179,49 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .scroll-cue::after { content: ""; width: 1px; height: 28px; background: rgba(255,255,255,0.5); animation: slideDown 1.8s ease-in-out infinite; }
 @keyframes slideDown { 0%, 100% { opacity: 0.2; transform: scaleY(0.3); } 50% { opacity: 1; transform: scaleY(1); } }
 
-/* ============================================ CHAPTER SHARED ============================================ */
-.chapter { position: relative; min-height: 100vh; padding: 100px var(--gutter); overflow: hidden; }
+/* ============================================ EVENT DETAILS ============================================ */
+.details { background: var(--ink); padding: 120px var(--gutter); position: relative; overflow: hidden; }
+.details::before { content: ""; position: absolute; left: 50%; top: 0; width: 70%; height: 100%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 50%, rgba(61,142,207,0.08), transparent 65%); pointer-events: none; }
+.details-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.details-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 20px; }
+.details-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 5.5vw, 80px); text-transform: uppercase; line-height: 0.92; margin-bottom: 64px; }
+.details-h .blue { color: var(--blue-glow); }
 
-/* Thin horizontal rule at the top of each chapter — subtle section delimiter */
-.chapter-divider { position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: rgba(255,255,255,0.06); z-index: 5; }
-.chapter-divider.on-blue { background: rgba(108,179,232,0.18); }
-.chapter-divider.on-light { background: rgba(0,0,0,0.1); }
+.activity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .activity-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .activity-grid { grid-template-columns: 1fr; } }
 
-.chapter-tag { position: absolute; top: 24px; left: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.55; z-index: 5; display: flex; align-items: center; gap: 12px; }
-.chapter-tag::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.5; }
-.chapter-time-mark { position: absolute; top: 24px; right: var(--gutter); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; opacity: 0.45; z-index: 5; }
+.activity-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 16px; transition: border-color 0.25s, background 0.25s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.activity-card:hover { border-color: rgba(108,179,232,0.35); background: rgba(61,142,207,0.06); transform: translateY(-4px); }
+.activity-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(61,142,207,0.15); border: 1px solid rgba(108,179,232,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.activity-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 0.03em; }
+.activity-desc { font-size: 13.5px; line-height: 1.55; opacity: 0.62; }
 
-/* ============================================ ATMOSPHERE LAYER ============================================ */
-/* This layer covers the whole scrolling area and gets driven by ScrollTrigger to fade between black → dusk → midnight blue */
-#atmosphere {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: var(--black);
-  transition: none;
-}
-#atmosphere-glow {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse 60% 50% at 40% 40%, var(--blue) 0%, transparent 60%);
-  opacity: 0;
-  filter: blur(60px);
-}
+/* ============================================ DATE / RSVP BLOCK ============================================ */
+.rsvp-block { background: var(--midnight); padding: 120px var(--gutter); position: relative; overflow: hidden; }
+.rsvp-block::before { content: ""; position: absolute; left: 50%; top: 5%; width: 60%; height: 80%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.22) 0%, transparent 65%); filter: blur(80px); pointer-events: none; }
+.rsvp-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; }
+.rsvp-presenter { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 32px; display: inline-flex; align-items: center; gap: 10px; }
+.rsvp-presenter::before, .rsvp-presenter::after { content: ""; width: 32px; height: 1px; background: rgba(108,179,232,0.4); }
+.rsvp-date { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(56px, 9vw, 128px); text-transform: uppercase; line-height: 0.88; letter-spacing: -0.01em; margin-bottom: 20px; }
+.rsvp-time { font-family: 'JetBrains Mono', monospace; font-size: clamp(16px, 2.2vw, 24px); letter-spacing: 0.18em; color: rgba(255,255,255,0.65); margin-bottom: 16px; }
+.rsvp-venue { font-family: 'Satoshi', system-ui, sans-serif; font-size: clamp(14px, 1.8vw, 18px); font-weight: 500; color: rgba(255,255,255,0.55); margin-bottom: 40px; }
+.rsvp-free-pill { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid rgba(108,179,232,0.5); border-radius: 999px; padding: 10px 24px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--blue-glow); text-transform: uppercase; margin-bottom: 40px; background: rgba(61,142,207,0.08); }
+.rsvp-free-pill::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
+.rsvp-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.rsvp-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: rgba(255,255,255,0.35); }
+.rsvp-sub a { color: rgba(108,179,232,0.6); text-decoration: none; transition: color 0.15s; }
+.rsvp-sub a:hover { color: var(--blue-glow); }
 
-/* ============================================ MEET (CH02) — pinned + scrub ============================================ */
-.meet-pin-wrap { height: 250vh; position: relative; z-index: 1; isolation: isolate; }
-.meet-pinned { position: sticky; top: 0; height: 100vh; padding: 120px var(--gutter); display: flex; align-items: center; }
-.meet { color: var(--white); }
-.meet-grid { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
-.meet-left { display: flex; flex-direction: column; gap: 24px; }
-.meet-time { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(96px, 13vw, 192px); line-height: 0.84; color: var(--white); letter-spacing: -0.005em; display: flex; align-items: baseline; gap: 0.04em; }
-.meet-time .colon { color: var(--blue-glow); font-size: 0.4em; line-height: 1; position: relative; top: -0.55em; letter-spacing: 0.05em; font-weight: normal; }
-.meet-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 68px); text-transform: uppercase; line-height: 0.95; opacity: 0.92; }
-.meet-name .accent { color: var(--blue-glow); }
-.meet-rule { width: 64px; height: 3px; background: var(--blue-glow); }
-.meet-desc { font-size: 15px; line-height: 1.6; max-width: 440px; opacity: 0.72; }
-.meet-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.meet-list-item { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: 0.7; letter-spacing: 0.05em; display: flex; align-items: center; gap: 12px; }
-.meet-list-item::before { content: ""; width: 8px; height: 8px; background: var(--blue-glow); border-radius: 50%; }
-.meet-right { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a24 0%, #050714 100%) url('assets/bg-nightrun.jpg') center/cover no-repeat; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid rgba(108,179,232,0.2); box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
-.meet-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.92) contrast(1.05); }
-.meet-img-tag { position: absolute; bottom: 12px; left: 12px; right: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.85); letter-spacing: 0.12em; padding: 5px 9px; background: rgba(5,7,32,0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 4px; border: 1px solid rgba(108,179,232,0.25); z-index: 2; max-width: calc(100% - 24px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meet-progress-mini { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.08); z-index: 3; }
-.meet-progress-fill { height: 100%; background: var(--blue-glow); width: 0%; }
-
-/* ============================================ MOVE (CH03) — pinned with frame-scrub, the peak ============================================ */
-.move-pin-wrap { height: 160vh; position: relative; z-index: 2; isolation: isolate; }
-.move-pin { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
-.move-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-.move-overlay { position: absolute; inset: 0; z-index: 2; background:
-  linear-gradient(to right, rgba(2,5,18,0.72) 0%, rgba(2,5,18,0.45) 45%, rgba(2,5,18,0.75) 100%),
-  radial-gradient(ellipse 80% 70% at 30% 55%, rgba(61,142,207,0.28) 0%, transparent 65%);
-}
-.move-content { position: relative; z-index: 3; height: 100%; padding: 0 var(--gutter); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-.move-meta-row { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
-.move-meta-pill { display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; background: rgba(108,179,232,0.14); border: 1px solid rgba(108,179,232,0.55); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--white); letter-spacing: 0.15em; text-transform: uppercase; }
-.move-meta-pill::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; flex-shrink: 0; }
-.move-headline { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(80px, 11.5vw, 168px); line-height: 0.84; text-transform: uppercase; letter-spacing: -0.005em; }
-.move-headline .glow { color: #ffffff; text-shadow: 0 0 80px rgba(108,179,232,1), 0 0 32px rgba(108,179,232,0.8), 0 2px 0 rgba(61,142,207,0.4); }
-.move-headline .stroke { color: transparent; -webkit-text-stroke: 3.5px rgba(255,255,255,0.92); text-shadow: 0 0 60px rgba(108,179,232,0.7); filter: drop-shadow(0 0 20px rgba(108,179,232,0.5)); }
-.move-sub { font-size: 15px; line-height: 1.6; max-width: 500px; margin-top: 28px; opacity: 1; color: rgba(255,255,255,0.9); text-shadow: 0 1px 12px rgba(0,0,0,0.8); }
-.move-progress { position: absolute; bottom: 40px; left: var(--gutter); right: var(--gutter); display: flex; align-items: center; gap: 16px; z-index: 4; }
-.move-progress-track { flex: 1; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
-.move-progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--blue-glow); width: 0%; }
-.move-frame-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.05em; min-width: 100px; text-align: right; }
-
-/* ============================================ MORE (CH04) — pinned + scrub ============================================ */
-.more-pin-wrap { height: 280vh; position: relative; z-index: 3; isolation: isolate; }
-.more-pinned { position: sticky; top: 0; height: 100vh; padding: 120px var(--gutter); display: flex; align-items: center; background: linear-gradient(180deg, var(--deep-blue) 0%, var(--black) 100%); }
-.more-pinned::before { content: ""; position: absolute; right: -10%; top: 20%; width: 50%; height: 60%; background: radial-gradient(circle, var(--blue) 0%, transparent 65%); filter: blur(100px); opacity: 0.4; pointer-events: none; }
-.more { color: var(--white); }
-.more-grid { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
-.more-left { display: flex; flex-direction: column; gap: 24px; }
-.more-time { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(96px, 13vw, 192px); line-height: 0.84; color: var(--white); letter-spacing: -0.005em; display: flex; align-items: baseline; gap: 0.04em; }
-.more-time .colon { color: var(--blue-glow); font-size: 0.4em; line-height: 1; position: relative; top: -0.55em; letter-spacing: 0.05em; font-weight: normal; }
-.more-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 68px); text-transform: uppercase; line-height: 0.95; opacity: 0.92; }
-.more-name .accent { color: var(--blue-glow); text-shadow: 0 0 50px rgba(108,179,232,0.5); }
-.more-rule { width: 64px; height: 3px; background: var(--blue-glow); }
-.more-desc { font-size: 15px; line-height: 1.6; max-width: 440px; opacity: 0.85; }
-.more-vibes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.more-vibe-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(108,179,232,0.9); border: 1px solid rgba(108,179,232,0.28); padding: 5px 11px; border-radius: 3px; background: rgba(61,142,207,0.06); }
-.more-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-
-/* EQ-bar geometric design element — sound waves */
-.eq-bars { display: flex; align-items: flex-end; gap: 6px; height: 200px; margin-top: 12px; }
-.eq-bar { width: 8px; background: var(--blue-glow); border-radius: 2px; opacity: 0.9; box-shadow: 0 0 12px rgba(108,179,232,0.4); }
-
-.more-right { aspect-ratio: 4/5; background: url('assets/bg-midnight-hero.jpg') center/cover no-repeat; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid rgba(108,179,232,0.3); box-shadow: 0 24px 80px rgba(5,7,32,0.65); display: flex; align-items: center; justify-content: center; }
-.more-scrub-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
-.more-img-overlay { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(5,7,32,0.65) 100%); z-index: 1; pointer-events: none; }
-.more-img-tag { position: absolute; bottom: 12px; left: 12px; right: auto; display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.85); letter-spacing: 0.12em; padding: 5px 9px; background: rgba(5,7,32,0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 4px; border: 1px solid rgba(108,179,232,0.3); z-index: 2; max-width: calc(100% - 24px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.more-progress-mini { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.08); z-index: 3; }
-.more-progress-fill { height: 100%; background: var(--blue-glow); width: 0%; }
-
-/* ============================================ FORMATS ============================================ */
-.formats { background: var(--midnight); padding: 120px var(--gutter); position: relative; }
-.formats::before { content: ""; position: absolute; left: 50%; top: 0; width: 60%; height: 100%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 60%, rgba(61,142,207,0.10), transparent 65%); pointer-events: none; }
-.formats-inner { max-width: 1400px; margin: 0 auto; position: relative; }
-.formats-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
-.formats-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 68px); text-transform: uppercase; line-height: 0.95; }
-.formats-h .blue { color: var(--blue-glow); }
-.formats-sub { font-size: 14px; line-height: 1.6; opacity: 0.65; max-width: 340px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-align: right; }
-.formats-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 16px; }
-@media (max-width: 900px) { .formats-grid { grid-template-columns: 1fr; } }
-.format-card { border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 36px 32px; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 340px; transition: border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-.format-card:hover { border-color: rgba(108,179,232,0.4); transform: translateY(-6px); }
-.format-card.featured { background: linear-gradient(145deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); border-color: rgba(108,179,232,0.38); }
-.format-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(108,179,232,0), transparent); transition: background 0.3s; }
-.format-card:hover::before, .format-card.featured::before { background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
-.format-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em; color: var(--blue-glow); margin-bottom: 32px; }
-.format-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(24px, 2.8vw, 36px); text-transform: uppercase; line-height: 1; margin-bottom: 16px; }
-.format-desc { font-size: 14px; line-height: 1.65; opacity: 0.7; flex: 1; }
-.format-badge { margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--blue-glow); text-transform: uppercase; }
-.format-badge::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; }
-
-/* ============================================ WHERE NEXT (CH05) ============================================ */
-.next { background: var(--black); color: var(--white); padding: 120px var(--gutter); position: relative; }
-.next-header { max-width: 1400px; margin: 0 auto 56px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
-.next-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6.8vw, 100px); text-transform: uppercase; line-height: 0.92; max-width: 760px; }
-.next-h .blue { color: var(--blue-glow); }
-.next-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.55; letter-spacing: 0.18em; text-align: right; line-height: 1.7; }
-.next-doors { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; }
-@media (max-width: 900px) { .next-doors { grid-template-columns: 1fr; } }
-.door { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 36px 32px; position: relative; cursor: pointer; transition: all 0.22s ease-out; overflow: hidden; display: flex; flex-direction: column; min-height: 380px; color: var(--white); text-decoration: none; }
-.door:hover { background: linear-gradient(180deg, rgba(61,142,207,0.10) 0%, rgba(61,142,207,0.03) 100%); border-color: rgba(108,179,232,0.55); transform: translateY(-6px); }
-.door-primary { background: linear-gradient(180deg, rgba(61,142,207,0.14) 0%, rgba(61,142,207,0.04) 100%); border-color: rgba(108,179,232,0.45); }
-.door-primary:hover { background: linear-gradient(180deg, rgba(61,142,207,0.22) 0%, rgba(61,142,207,0.08) 100%); }
-.door-meta { display: flex; justify-content: space-between; align-items: flex-start; }
-.door-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-glow); letter-spacing: 0.22em; text-transform: uppercase; }
-.door-arrow { width: 36px; height: 36px; border: 1px solid rgba(108,179,232,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--blue-glow); transition: all 0.2s; }
-.door:hover .door-arrow { background: var(--blue); color: var(--white); border-color: var(--blue); transform: rotate(-45deg); }
-.door-body { margin-top: auto; }
-.door-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(34px, 3.8vw, 56px); line-height: 0.95; text-transform: uppercase; margin-bottom: 14px; }
-.door-primary .door-h { font-size: clamp(42px, 4.8vw, 72px); }
-.door-desc { font-family: 'Satoshi', system-ui, sans-serif; font-size: 14px; line-height: 1.55; opacity: 0.7; max-width: 360px; }
-.door-cta { font-family: 'Satoshi', system-ui, sans-serif; font-size: 13px; color: var(--blue-glow); margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
-
-/* ============================================ BRAND PARTNERS TICKER ============================================ */
-.brands-strip { background: var(--deep-blue); padding: 72px 0; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
-.brands-strip::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%; height: 200%; background: radial-gradient(ellipse, rgba(61,142,207,0.08) 0%, transparent 65%); pointer-events: none; }
-.brands-strip-header { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: baseline; gap: 24px; margin-bottom: 44px; }
-.brands-strip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); }
-.brands-strip-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(28px, 3.5vw, 44px); text-transform: uppercase; line-height: 0.95; color: var(--white); }
-.brands-ticker-wrap { position: relative; overflow: hidden; opacity: 1 !important; }
-.brands-ticker-wrap::before, .brands-ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 160px; z-index: 2; pointer-events: none; }
-.brands-ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--deep-blue), transparent); }
-.brands-ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--deep-blue), transparent); }
-.brands-ticker-track { display: flex; align-items: center; gap: 72px; width: max-content; min-width: max-content; padding: 8px 0; }
-.brands-ticker-track img { height: 52px; width: auto; filter: brightness(0) invert(1); opacity: 0.55; transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
-.brands-ticker-track img:hover { filter: none; opacity: 1; }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* ============================================ UPCOMING EVENTS ============================================ */
-.upcoming { background: var(--black); padding: 120px var(--gutter); position: relative; }
-.upcoming::before { content: ""; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 60% 50% at 20% 60%, rgba(61,142,207,0.10), transparent 65%); pointer-events: none; }
-.upcoming-inner { max-width: 1400px; margin: 0 auto; position: relative; }
-.upcoming-head { margin-bottom: 56px; }
-.upcoming-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; }
-.upcoming-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 96px); text-transform: uppercase; line-height: 0.92; }
-.upcoming-h .blue { color: var(--blue-glow); }
-.upcoming-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; align-items: start; }
-@media (max-width: 960px) { .upcoming-grid { grid-template-columns: 1fr; } }
-.next-event-card { background: linear-gradient(145deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); border: 1px solid rgba(108,179,232,0.38); border-radius: 20px; padding: 44px 40px; display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden; }
-.next-event-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
-.next-event-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); background: rgba(108,179,232,0.12); border: 1px solid rgba(108,179,232,0.3); border-radius: 4px; padding: 5px 10px; width: fit-content; }
-.next-event-badge::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
-.next-event-city { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
-.next-event-title { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(40px, 4.8vw, 64px); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; }
-.next-event-details { display: flex; gap: 24px; flex-wrap: wrap; }
-.next-event-detail { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; opacity: 0.65; display: flex; align-items: center; gap: 8px; }
-.next-event-detail::before { content: ""; width: 4px; height: 4px; background: var(--blue-glow); border-radius: 50%; opacity: 0.7; }
-.city-card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s, background 0.2s; cursor: default; }
-.city-card:hover { border-color: rgba(108,179,232,0.35); background: linear-gradient(180deg, rgba(61,142,207,0.07), rgba(61,142,207,0.02)); }
-.city-dot-row { display: flex; align-items: center; gap: 10px; }
-.city-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(108,179,232,0.35); border: 1px solid rgba(108,179,232,0.5); flex-shrink: 0; }
-.city-dot.live { background: var(--blue-glow); animation: pulse 2s ease-in-out infinite; }
-.city-dot-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(108,179,232,0.55); }
-.city-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(26px, 2.8vw, 36px); text-transform: uppercase; line-height: 0.95; }
-.city-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-.upcoming-cities-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
-@media (max-width: 960px) { .upcoming-cities-row { grid-template-columns: repeat(2, 1fr); } }
-
-/* ============================================ RSVP / SWEATPALS ============================================ */
-.rsvp-section { background: var(--midnight); padding: 120px var(--gutter); position: relative; overflow: hidden; }
-.rsvp-section::before { content: ""; position: absolute; left: 50%; top: 10%; width: 60%; height: 60%; transform: translateX(-50%); background: radial-gradient(circle, rgba(61,142,207,0.25) 0%, transparent 65%); filter: blur(80px); pointer-events: none; }
-.rsvp-inner { max-width: 1100px; margin: 0 auto; position: relative; }
-.rsvp-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
-@media (max-width: 900px) { .rsvp-layout { grid-template-columns: 1fr; gap: 40px; } }
-.rsvp-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 16px; }
-.rsvp-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 6vw, 80px); text-transform: uppercase; line-height: 0.92; margin-bottom: 20px; }
-.rsvp-h .blue { color: var(--blue-glow); }
-.rsvp-sub { font-size: 15px; line-height: 1.65; opacity: 0.72; margin-bottom: 32px; max-width: 380px; }
-.rsvp-direct { display: flex; gap: 10px; flex-wrap: wrap; }
-.rsvp-embed-wrap { background: rgba(4,17,28,0.8); border: 1px solid rgba(108,179,232,0.25); border-radius: 20px; overflow: hidden; }
-.rsvp-embed-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(108,179,232,0.15); background: rgba(61,142,207,0.06); }
-.rsvp-embed-brand { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-glow); }
-.rsvp-embed-brand::before { content: ""; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 1.8s ease-in-out infinite; }
-.rsvp-embed-open { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
-.rsvp-embed-open:hover { color: var(--blue-glow); }
-.rsvp-embed-frame { position: relative; min-height: 480px; background: rgba(5,5,5,0.6); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
-.rsvp-embed-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; border-radius: 0 0 20px 20px; }
-.rsvp-embed-placeholder { text-align: center; opacity: 0.4; pointer-events: none; }
-.rsvp-embed-placeholder .ph-icon { font-size: 32px; margin-bottom: 10px; }
-.rsvp-embed-placeholder p { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.8; }
+/* ============================================ ACTIVE MINDS CALLOUT ============================================ */
+.am-callout { background: var(--black); padding: 64px var(--gutter); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.am-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.am-logo { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: 0.7; flex-shrink: 0; transition: opacity 0.2s; }
+.am-inner:hover .am-logo { opacity: 1; }
+.am-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); flex-shrink: 0; }
+@media (max-width: 600px) { .am-divider { display: none; } }
+.am-text { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.7); max-width: 600px; }
+.am-text strong { color: rgba(255,255,255,0.9); font-weight: 600; }
 
 /* ============================================ FOOTER ============================================ */
 .footer { padding: 64px var(--gutter); background: var(--deep-blue); color: var(--white); position: relative; overflow: hidden; }
@@ -397,37 +230,8 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .footer-top { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(48px, 7vw, 96px); text-transform: uppercase; line-height: 0.92; max-width: 800px; margin-bottom: 32px; }
 .footer-top .glow { color: var(--blue-glow); }
 .footer-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 56px; font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.65; letter-spacing: 0.05em; }
-.footer-cta-row { display: flex; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
 
-/* ============================================ MOBILE ============================================ */
-@media (max-width: 768px) {
-  .hero-vertical { display: none; }
-  .scroll-cue { display: none; }
-
-  .meet-grid { grid-template-columns: 1fr; gap: 24px; }
-  .meet-pinned { padding: 112px var(--gutter) 32px; align-items: flex-start; }
-  .meet-right { height: 240px; aspect-ratio: unset; max-width: 100%; }
-  .meet-pin-wrap { height: 280vh; }
-
-  .move-pin-wrap { height: 220vh; }
-  .move-pin { height: 100vh; }
-  .move-headline { font-size: clamp(56px, 15vw, 88px); }
-  .move-frame-counter { min-width: 60px; font-size: 10px; }
-
-  .more-grid { grid-template-columns: 1fr; gap: 24px; }
-  .more-pinned { padding: 112px var(--gutter) 32px; align-items: flex-start; }
-  .more-right { height: 280px; aspect-ratio: unset; max-width: 100%; order: -1; }
-  .more-pin-wrap { height: 320vh; }
-
-  .eq-bars { display: none; }
-  .more-actions { flex-direction: row; }
-  .more-desc { opacity: 1; text-shadow: 0 1px 16px rgba(4,17,28,0.95), 0 0 40px rgba(4,17,28,0.8); }
-  .more-name { text-shadow: 0 2px 20px rgba(4,17,28,0.9); }
-  .more-left { background: rgba(4,17,28,0.45); padding: 20px 18px; border-radius: 14px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-}
-
-
-/* ============ MOBILE NAV ============ */
+/* ============================================ MOBILE NAV ============================================ */
 .nav-hamburger { display: none; flex-direction: column; justify-content: space-between; width: 24px; height: 16px; background: none; border: none; cursor: pointer; padding: 0; z-index: 310; flex-shrink: 0; }
 .nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.28s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
 .nav.mobile-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -446,17 +250,19 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .nav-mobile-cta:hover { background: var(--blue-glow); }
 .nav-mobile-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white); font-size: 26px; cursor: pointer; padding: 8px; line-height: 1; opacity: 0.75; transition: opacity 0.15s; z-index: 1; }
 .nav-mobile-close:hover { opacity: 1; }
+
 @media (max-width: 768px) {
   .nav-links { display: none !important; }
   .nav-hamburger { display: flex; }
+  .hero-vertical { display: none; }
+  .scroll-cue { display: none; }
+  .rsvp-presenter { flex-wrap: wrap; justify-content: center; }
+  .am-inner { gap: 20px; }
 }
 </style>
 
 </head>
 <body>
-
-<div id="atmosphere"></div>
-<div id="atmosphere-glow"></div>
 
 <!-- ============================================ NAV ============================================ -->
 <nav class="nav" id="nav">
@@ -485,10 +291,10 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
         <div class="events-more">
           <div class="events-more-text">Expanding to</div>
           <div class="events-more-cities">
-            <span class="events-more-city">NYC</span>
-            <span class="events-more-city">Austin</span>
-            <span class="events-more-city">Atlanta</span>
             <span class="events-more-city">Boston</span>
+            <span class="events-more-city">Atlanta</span>
+            <span class="events-more-city">Austin</span>
+            <span class="events-more-city">NYC</span>
           </div>
         </div>
       </div>
@@ -522,7 +328,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 <div class="nav-mobile-drawer" id="navMobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation">
   <div class="nav-mobile-inner">
-  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+    <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
     <a class="nav-mobile-link" href="midnight-moves.html">Midnight Moves</a>
     <div>
       <a class="nav-mobile-link" href="#" style="pointer-events:none;opacity:0.45;cursor:default;">PARTNERSHIPS</a>
@@ -541,39 +347,29 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 <!-- ============================================ HERO ============================================ -->
 <section class="hero" id="top">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="assets/hero-mm-loop.mp4" type="video/mp4">
-  </video>
+  <img class="hero-bg" src="assets/bg-midnight-hero.jpg" alt="Community Open House background">
   <div class="hero-overlay"></div>
 
-  <div class="hero-vertical mono">COMMUNITY OPEN HOUSE · MAY 15 · WPB</div>
+  <div class="hero-vertical mono">COMMUNITY OPEN HOUSE · MAY 15 · 8PM–10PM · CAROLINE STATION WPB</div>
 
-  <div class="hero-events-ticker" aria-label="Upcoming events">
+  <div class="hero-events-ticker" aria-label="Event info">
     <div class="hero-events-track" id="eventsTrack">
-      <div class="hero-event-item live"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>May 15<span class="evt-sep">·</span>West Palm Beach, FL<span class="evt-sep">·</span>Doors 8PM</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>Jun 19<span class="evt-sep">·</span>West Palm Beach, FL</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>Jul 17<span class="evt-sep">·</span>West Palm Beach, FL</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Miami, FL</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Austin, TX</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>New York City, NY</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Atlanta, GA</div>
-      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Boston, MA</div>
+      <div class="hero-event-item live"><span class="evt-dot"></span><span class="evt-name">Community Open House</span><span class="evt-sep">·</span>May 15<span class="evt-sep">·</span>8PM–10PM<span class="evt-sep">·</span>Caroline Station · West Palm Beach</div>
+      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Presented by HARVI</span><span class="evt-sep">·</span>Free with RSVP</div>
+      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Social Games</span><span class="evt-sep">·</span>Optional 5K Run<span class="evt-sep">·</span>Summer Preview<span class="evt-sep">·</span>Early Access Tickets</div>
+      <div class="hero-event-item"><span class="evt-dot"></span><span class="evt-name">Co-presented with Active Minds</span><span class="evt-sep">·</span>Youth Mental Health Advocacy</div>
       <!-- duplicate for seamless loop -->
-      <div class="hero-event-item live" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>May 15<span class="evt-sep">·</span>West Palm Beach, FL<span class="evt-sep">·</span>Doors 8PM</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>Jun 19<span class="evt-sep">·</span>West Palm Beach, FL</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Midnight Moves</span><span class="evt-sep">·</span>Jul 17<span class="evt-sep">·</span>West Palm Beach, FL</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Miami, FL</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Austin, TX</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>New York City, NY</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Atlanta, GA</div>
-      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Coming Soon</span><span class="evt-sep">·</span>Boston, MA</div>
+      <div class="hero-event-item live" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Community Open House</span><span class="evt-sep">·</span>May 15<span class="evt-sep">·</span>8PM–10PM<span class="evt-sep">·</span>Caroline Station · West Palm Beach</div>
+      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Presented by HARVI</span><span class="evt-sep">·</span>Free with RSVP</div>
+      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Social Games</span><span class="evt-sep">·</span>Optional 5K Run<span class="evt-sep">·</span>Summer Preview<span class="evt-sep">·</span>Early Access Tickets</div>
+      <div class="hero-event-item" aria-hidden="true"><span class="evt-dot"></span><span class="evt-name">Co-presented with Active Minds</span><span class="evt-sep">·</span>Youth Mental Health Advocacy</div>
     </div>
   </div>
 
   <div class="hero-content">
-    <h1 class="anton hero-headline">Come<br><span class="blue">meet</span><br><span class="stroke">us.</span></h1>
+    <h1 class="anton hero-headline">Community<br>Open<br><span class="blue">House.</span></h1>
     <div class="hero-bottom">
-      <p class="hero-sub">No expectations. No agenda. Just the people behind Move More Collective opening the doors — meet the team, connect with the community, and see what we're building. May 15 · West Palm Beach.</p>
+      <p class="hero-sub">Presented by HARVI — no cover, no agenda. Meet the people behind Move More Collective, connect with the community, and get a first look at what's coming this summer.</p>
       <div class="hero-actions">
         <a class="cta cta-primary" href="#rsvp">Reserve Your Spot &rarr;</a>
         <a class="cta cta-ghost" href="midnight-moves.html">See Midnight Moves</a>
@@ -584,287 +380,76 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
   <div class="scroll-cue mono">SCROLL</div>
 </section>
 
-<!-- ============================================ MEET (8:00) — pinned + frame-scrub ============================================ -->
-<div class="meet-pin-wrap" id="meet-pin-wrap">
-  <section class="chapter meet meet-pinned" id="meet" data-atmosphere="dusk">
-    <div class="chapter-tag">Chapter 01 / Meet</div>
-    <div class="chapter-time-mark">8:00pm · the arrival</div>
+<!-- ============================================ EVENT DETAILS ============================================ -->
+<section class="details" id="details">
+  <div class="details-inner">
+    <div class="details-eyebrow">What's Happening</div>
+    <h2 class="details-h anton">Six reasons<br>to <span class="blue">show up.</span></h2>
 
-    <div class="meet-grid">
-      <div class="meet-left">
-        <h2 class="meet-time anton"><span>8</span><span class="colon">:</span><span>00</span></h2>
-        <div class="meet-rule" data-rule></div>
-        <h3 class="meet-name anton">Meet<span class="accent">.</span></h3>
-        <p class="meet-desc">Doors open. Samples flow. The first faces arrive — runners stretching, partners setting up, the night still bright at the edges.</p>
-        <div class="meet-list">
-          <div class="meet-list-item">Brand sampling &amp; warm-up</div>
-          <div class="meet-list-item">Pre-movement social hour</div>
-          <div class="meet-list-item">Coaches + community greeters on deck</div>
-        </div>
+    <div class="activity-grid">
+      <div class="activity-card">
+        <div class="activity-icon">🎯</div>
+        <div class="activity-title">Social Games</div>
+        <p class="activity-desc">Good competition, better company.</p>
       </div>
-      <div class="meet-right">
-        <img class="meet-scrub-video" id="meetScrubImg" src="assets/frames-meet/001.jpg" alt="">
-        <div class="meet-img-tag">▌ Live frame · West Palm Beach · <span id="meetFrameCounter">FRAME 001 / 072</span></div>
-        <div class="meet-progress-mini"><div class="meet-progress-fill" id="meetProgressFill"></div></div>
+      <div class="activity-card">
+        <div class="activity-icon">🏃</div>
+        <div class="activity-title">Optional 5K Run</div>
+        <p class="activity-desc">Warm up or show up — entirely your call.</p>
       </div>
-    </div>
-  </section>
-</div>
-
-<!-- ============================================ MOVE (8:30) — pinned + frame-scrub ============================================ -->
-<div class="move-pin-wrap" id="move-pin-wrap">
-  <section class="chapter move-pin" id="move" data-atmosphere="midnight">
-    <img class="move-scrub-video" id="moveScrubImg" src="assets/frames-move/001.jpg" alt="">
-    <div class="move-overlay"></div>
-
-    <div class="chapter-tag" style="color: rgba(108,179,232,0.7);">Chapter 02 / Move</div>
-    <div class="chapter-time-mark" style="color: rgba(108,179,232,0.6);">8:30pm · the run</div>
-
-    <div class="move-content">
-      <div class="move-meta-row">
-        <span class="move-meta-pill">5K glow run · guided workout · walking group</span>
+      <div class="activity-card">
+        <div class="activity-icon">🎟</div>
+        <div class="activity-title">Early Access Tickets</div>
+        <p class="activity-desc">First look at summer event passes before they go public.</p>
       </div>
-      <h2 class="move-headline">
-        <span class="glow">Move</span><span class="stroke">.</span>
-      </h2>
-      <p class="move-sub">The horn sounds. Three hundred lights take off down Clematis Street. Some sprint. Some stroll. Everyone moves. As you scroll, the video tracks the run — frame by frame.</p>
-    </div>
-
-    <div class="move-progress">
-      <span class="mono" style="font-size: 11px; color: var(--blue-glow); letter-spacing: 0.18em;">▌ SCRUB</span>
-      <div class="move-progress-track"><div class="move-progress-fill" id="moveProgressFill"></div></div>
-      <span class="move-frame-counter mono" id="moveFrameCounter">FRAME 001 / 072</span>
-    </div>
-  </section>
-</div>
-
-<!-- ============================================ MORE (9:30) — pinned + frame-scrub ============================================ -->
-<div class="more-pin-wrap" id="more-pin-wrap">
-  <section class="chapter more more-pinned" id="more" data-atmosphere="deep">
-    <div class="chapter-tag" style="color: rgba(108,179,232,0.7);">Chapter 03 / More</div>
-    <div class="chapter-time-mark" style="color: rgba(108,179,232,0.6);">9:30pm · the afterparty</div>
-
-    <div class="more-grid">
-      <div class="more-left">
-        <h2 class="more-time anton"><span>9</span><span class="colon">:</span><span>30</span></h2>
-        <div class="more-rule"></div>
-        <h3 class="more-name anton">More<span class="accent">.</span></h3>
-        <p class="more-desc">Boilerroom-style DJ set. Zero-proof bar. The people who just ran 5K together, dancing, talking, finding each other for real.</p>
-        <div class="more-vibes">
-          <span class="more-vibe-tag">Zero Proof</span>
-          <span class="more-vibe-tag">DJ Set</span>
-          <span class="more-vibe-tag">5K Run</span>
-          <span class="more-vibe-tag">Community</span>
-        </div>
-        <div class="more-actions">
-          <a class="cta cta-primary" href="#rsvp" style="font-size:13px;padding:10px 22px;">RSVP Free &rarr;</a>
-        </div>
-        <div class="eq-bars" id="eqBars"></div>
+      <div class="activity-card">
+        <div class="activity-icon">☀️</div>
+        <div class="activity-title">Summer Events Preview</div>
+        <p class="activity-desc">See what we're building for the season ahead.</p>
       </div>
-      <div class="more-right">
-        <img class="more-scrub-video" id="moreScrubImg" src="assets/frames-more/001.jpg" alt="">
-        <div class="more-img-overlay"></div>
-        <div class="more-img-tag">
-          <span>▌ ZERO PROOF · DOPAMINE · CONNECTION · <span id="moreFrameCounter">FRAME 001 / 104</span></span>
-          <span>↗</span>
-        </div>
-        <div class="more-progress-mini"><div class="more-progress-fill" id="moreProgressFill"></div></div>
+      <div class="activity-card">
+        <div class="activity-icon">🎁</div>
+        <div class="activity-title">Surprises &amp; Giveaways</div>
+        <p class="activity-desc">Come see for yourself.</p>
       </div>
-    </div>
-  </section>
-</div>
-
-<!-- ============================================ UPCOMING EVENTS ============================================ -->
-<section class="upcoming" id="upcoming">
-  <div class="upcoming-inner">
-    <div class="upcoming-head">
-      <div class="upcoming-eyebrow">What's Next</div>
-      <h2 class="upcoming-h">The movement,<br>coming to <span class="blue">you.</span></h2>
-    </div>
-
-    <div class="upcoming-grid">
-      <!-- Featured next event -->
-      <div class="next-event-card">
-        <div class="next-event-badge">This Friday</div>
-        <div class="next-event-city">West Palm Beach, FL</div>
-        <h3 class="next-event-title">Midnight<br>Moves.</h3>
-        <div class="next-event-details">
-          <span class="next-event-detail">Friday, May 15</span>
-          <span class="next-event-detail">Doors 8PM</span>
-          <span class="next-event-detail">Zero-proof bar · DJ set · 5K run</span>
-        </div>
-        <div style="margin-top:8px;">
-          <a class="cta cta-primary" href="#rsvp">RSVP on SweatPals &rarr;</a>
-        </div>
-      </div>
-
-      <!-- College tour teaser -->
-      <div class="city-card" style="justify-content: space-between; min-height: 280px;">
-        <div>
-          <div class="city-dot-row">
-            <div class="city-dot"></div>
-            <div class="city-dot-label">Coming Soon</div>
-          </div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-glow);margin-top:20px;margin-bottom:10px;">Active Minds × MMC</div>
-          <div class="city-name" style="font-size:clamp(22px,2.4vw,30px);">College<br>Tour.</div>
-        </div>
-        <p style="font-size:13px;line-height:1.6;opacity:0.6;margin-top:16px;">Movement-led nightlife coming to campuses nationwide. Get your school on the list.</p>
-        <a href="about.html" class="cta cta-ghost" style="margin-top:20px;font-size:13px;padding:10px 18px;">Learn More &rarr;</a>
-      </div>
-
-      <!-- Expanding cities -->
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(108,179,232,0.45);margin-bottom:4px;">Expanding To</div>
-        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
-          <div class="city-dot"></div>
-          <div>
-            <div class="city-name" style="font-size:22px;">New York</div>
-            <div class="city-status">Interest list open</div>
-          </div>
-        </div>
-        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
-          <div class="city-dot"></div>
-          <div>
-            <div class="city-name" style="font-size:22px;">Austin</div>
-            <div class="city-status">Coming 2026</div>
-          </div>
-        </div>
-        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
-          <div class="city-dot"></div>
-          <div>
-            <div class="city-name" style="font-size:22px;">Atlanta</div>
-            <div class="city-status">Coming 2026</div>
-          </div>
-        </div>
-        <div class="city-card" style="flex-direction:row;align-items:center;gap:16px;min-height:auto;padding:20px 24px;">
-          <div class="city-dot"></div>
-          <div>
-            <div class="city-name" style="font-size:22px;">Boston</div>
-            <div class="city-status">Coming 2026</div>
-          </div>
-        </div>
+      <div class="activity-card">
+        <div class="activity-icon">🤝</div>
+        <div class="activity-title">Community Networking</div>
+        <p class="activity-desc">This is the room you've been looking for.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ BRAND PARTNERS TICKER ============================================ -->
-<section class="brands-strip">
-  <div class="brands-strip-header">
-    <div class="brands-strip-label">Trusted By</div>
-    <h3 class="brands-strip-h">Brands that move.</h3>
-  </div>
-  <div class="brands-ticker-wrap">
-    <div class="brands-ticker-track">
-      <img src="assets/partner-athletic.png" alt="Athletic Brewing">
-      <img src="assets/partner-brez.png" alt="Brez">
-      <img src="assets/partner-chaser.png" alt="Chaser">
-      <img src="assets/partner-hiyo.png" alt="Hiyo">
-      <img src="assets/partner-kenetik.png" alt="Kenetik">
-      <img src="assets/partner-koia.png" alt="Koia">
-      <img src="assets/partner-offfield.png" alt="Offfield">
-      <img src="assets/partner-wip.png" alt="Wip">
-      <img src="assets/partner-bang.png" alt="Bang">
-      <!-- duplicate for seamless loop -->
-      <img src="assets/partner-athletic.png" alt="" aria-hidden="true">
-      <img src="assets/partner-brez.png" alt="" aria-hidden="true">
-      <img src="assets/partner-chaser.png" alt="" aria-hidden="true">
-      <img src="assets/partner-hiyo.png" alt="" aria-hidden="true">
-      <img src="assets/partner-kenetik.png" alt="" aria-hidden="true">
-      <img src="assets/partner-koia.png" alt="" aria-hidden="true">
-      <img src="assets/partner-offfield.png" alt="" aria-hidden="true">
-      <img src="assets/partner-wip.png" alt="" aria-hidden="true">
-      <img src="assets/partner-bang.png" alt="" aria-hidden="true">
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ RSVP / SWEATPALS ============================================ -->
-<section class="rsvp-section" id="rsvp">
+<!-- ============================================ DATE / RSVP ============================================ -->
+<section class="rsvp-block" id="rsvp">
   <div class="rsvp-inner">
-    <div class="rsvp-layout">
-      <div>
-        <div class="rsvp-eyebrow">Reserve Your Spot</div>
-        <h2 class="rsvp-h">Get on<br>the <span class="blue">list.</span></h2>
-        <p class="rsvp-sub">Midnight Moves runs through SweatPals — the community app for people who show up. Find the event, RSVP, and get ready to move.</p>
-        <div class="rsvp-direct">
-          <a class="cta cta-primary" href="https://sweatpals.com" target="_blank" rel="noopener">Open SweatPals &rarr;</a>
-          <a class="cta cta-ghost" href="contact.html">Ask a Question</a>
-        </div>
-      </div>
-      <div class="rsvp-embed-wrap">
-        <div class="rsvp-embed-topbar">
-          <span class="rsvp-embed-brand">SweatPals · Midnight Moves</span>
-          <a class="rsvp-embed-open" href="https://sweatpals.com" target="_blank" rel="noopener">Open in app ↗</a>
-        </div>
-        <div class="rsvp-embed-frame">
-          <!-- Replace src with actual SweatPals embed URL -->
-          <!-- <iframe src="https://sweatpals.com/embed/midnight-moves" title="RSVP for Midnight Moves on SweatPals" loading="lazy"></iframe> -->
-          <div class="rsvp-embed-placeholder">
-            <div class="ph-icon">🏃</div>
-            <p>SweatPals event embed<br>goes here</p>
-          </div>
-        </div>
-      </div>
+    <div class="rsvp-presenter">Presented by HARVI</div>
+    <h2 class="rsvp-date anton">May 15th,<br>2026</h2>
+    <div class="rsvp-time mono">8 PM — 10 PM</div>
+    <div class="rsvp-venue">Caroline Station · West Palm Beach, FL</div>
+    <div class="rsvp-free-pill">Free with RSVP</div>
+    <div class="rsvp-cta-wrap">
+      <a class="cta cta-primary" href="https://www.instagram.com/movemorecollective" target="_blank" rel="noopener" style="font-size: 15px; padding: 16px 32px;">RSVP Now &rarr;</a>
+      <p class="rsvp-sub">Link also in our Instagram bio <a href="https://www.instagram.com/movemorecollective" target="_blank" rel="noopener">@movemorecollective</a></p>
     </div>
   </div>
 </section>
 
-<!-- ============================================ WHERE NEXT ============================================ -->
-<section class="next" id="next">
-  <div class="chapter-tag">Chapter 04 / Choose your path</div>
-
-  <div class="next-header">
-    <h2 class="next-h">Ready to<br>move <span class="blue">more?</span></h2>
-    <div class="next-meta">
-      Three paths<br>
-      One movement<br>
-      Pick a door
-    </div>
+<!-- ============================================ ACTIVE MINDS CALLOUT ============================================ -->
+<div class="am-callout">
+  <div class="am-inner">
+    <img class="am-logo" src="assets/logo-active-minds.png" alt="Active Minds">
+    <div class="am-divider"></div>
+    <p class="am-text">Co-presented with <strong>Active Minds</strong> — the largest youth mental health advocacy nonprofit in the US.</p>
   </div>
-
-  <div class="next-doors">
-    <a class="door door-primary" href="#rsvp">
-      <div class="door-meta">
-        <div class="door-tag">01 / Attend</div>
-        <div class="door-arrow">↗</div>
-      </div>
-      <div class="door-body">
-        <h3 class="door-h anton">Find your<br>next move.</h3>
-        <p class="door-desc">Show up. Sweat. Connect. The next Midnight Moves is closer than you think — RSVP through SweatPals.</p>
-        <span class="door-cta">RSVP now &rarr;</span>
-      </div>
-    </a>
-    <a class="door" href="for-communities.html">
-      <div class="door-meta">
-        <div class="door-tag">02 / Communities</div>
-        <div class="door-arrow">↗</div>
-      </div>
-      <div class="door-body">
-        <h3 class="door-h anton">Grow with<br>us.</h3>
-        <p class="door-desc">Co-host events, plug into the MMC community, scale your club or studio.</p>
-        <span class="door-cta">Build &rarr;</span>
-      </div>
-    </a>
-    <a class="door" href="about.html">
-      <div class="door-meta">
-        <div class="door-tag">03 / About</div>
-        <div class="door-arrow">↗</div>
-      </div>
-      <div class="door-body">
-        <h3 class="door-h anton">Meet the<br>collective.</h3>
-        <p class="door-desc">Mission, team, and the Active Minds partnership behind every event.</p>
-        <span class="door-cta">About Us &rarr;</span>
-      </div>
-    </a>
-  </div>
-</section>
+</div>
 
 <!-- ============================================ FOOTER ============================================ -->
 <footer class="footer">
   <div class="footer-inner">
     <h3 class="footer-top anton">See you<br><span class="glow">Friday.</span></h3>
-<div class="footer-row">
+    <div class="footer-row">
       <span>© 2026 MOVE MORE COLLECTIVE — WEST PALM BEACH, FL</span>
       <span>BUILT BY LYFEWORK · PROTOTYPE v0.1</span>
     </div>
@@ -878,61 +463,13 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 gsap.registerPlugin(ScrollTrigger);
 
 /* ============ NAV scroll state ============ */
-const nav = document.getElementById('nav');
 ScrollTrigger.create({
   start: 50, end: 99999,
   toggleClass: { className: 'scrolled', targets: '#nav' }
 });
 
-/* ============ ATMOSPHERE — color of the world shifts with scroll ============
- * Hero (black) → Meet (dusk: deep ink) → Move (midnight blue) → More (deep blue) → Next (black)
- */
-const atmosphere = document.getElementById('atmosphere');
-const atmosphereGlow = document.getElementById('atmosphere-glow');
-
-// Define color stops along scroll — recalibrated for 3 pinned chapters
-const stops = [
-  { at: 0.00, bg: '#050505', glow: 0 },       // Hero (pure black)
-  { at: 0.09, bg: '#070712', glow: 0.10 },    // Entering Meet (dusk begins)
-  { at: 0.20, bg: '#0a0e22', glow: 0.28 },    // Mid Meet
-  { at: 0.29, bg: '#0a1230', glow: 0.42 },    // Entering Move
-  { at: 0.43, bg: '#050928', glow: 0.72 },    // Move peak (deepest immersion)
-  { at: 0.57, bg: '#070b25', glow: 0.55 },    // Entering More
-  { at: 0.72, bg: '#080d28', glow: 0.50 },    // Mid More
-  { at: 0.83, bg: '#0a0a18', glow: 0.25 },    // After More (partners)
-  { at: 0.88, bg: '#050505', glow: 0.10 },    // Next (back to black)
-  { at: 0.96, bg: '#050505', glow: 0.05 },    // End of Next
-  { at: 1.00, bg: '#02030d', glow: 0.30 }     // Footer (deep midnight close)
-];
-
-function lerpColor(a, b, t) {
-  const ah = parseInt(a.slice(1), 16), bh = parseInt(b.slice(1), 16);
-  const ar = ah >> 16, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
-  const br = bh >> 16, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
-  const rr = Math.round(ar + (br - ar) * t);
-  const rg = Math.round(ag + (bg - ag) * t);
-  const rb = Math.round(ab + (bb - ab) * t);
-  return `rgb(${rr}, ${rg}, ${rb})`;
-}
-
-ScrollTrigger.create({
-  trigger: 'body',
-  start: 'top top',
-  end: 'bottom bottom',
-  onUpdate: (self) => {
-    const p = self.progress;
-    let i = 0;
-    while (i < stops.length - 1 && stops[i + 1].at < p) i++;
-    const a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
-    const span = b.at - a.at || 1;
-    const t = (p - a.at) / span;
-    atmosphere.style.background = lerpColor(a.bg, b.bg, t);
-    atmosphereGlow.style.opacity = a.glow + (b.glow - a.glow) * t;
-  }
-});
-
 /* ============================================
-   REVEAL HELPER — explicit onEnter pattern (avoids gsap.from + stagger + scrollTrigger bugs)
+   REVEAL HELPER
    ============================================ */
 function reveal(selector, opts = {}) {
   const {
@@ -940,14 +477,13 @@ function reveal(selector, opts = {}) {
     start = 'top 78%',
     y = 30,
     x = 0,
-    duration = 0.85,
+    duration = 0.6,
     stagger = 0.08,
     ease = 'power3.out',
     fromOpacity = 0
   } = opts;
   const els = document.querySelectorAll(selector);
   if (!els.length) return;
-  // Set initial state via inline style — no gsap.set so we don't fight ScrollTrigger refreshes
   els.forEach(el => {
     el.style.opacity = fromOpacity;
     el.style.transform = `translate(${x}px, ${y}px)`;
@@ -965,7 +501,7 @@ function reveal(selector, opts = {}) {
   });
 }
 
-/* ============ HERO HEADLINE — fade out + parallax on scroll ============ */
+/* ============ HERO — parallax fade on scroll ============ */
 gsap.to('.hero-headline, .hero-bottom, .hero-vertical, .scroll-cue', {
   opacity: 0,
   y: -40,
@@ -973,167 +509,44 @@ gsap.to('.hero-headline, .hero-bottom, .hero-vertical, .scroll-cue', {
     trigger: '.hero',
     start: 'top top',
     end: 'bottom top',
-    scrub: 0.5
+    scrub: 0.3
   }
 });
-gsap.to('.hero-video', {
-  scale: 1.15,
+gsap.to('.hero-bg', {
+  scale: 1.12,
   scrollTrigger: {
     trigger: '.hero',
     start: 'top top',
     end: 'bottom top',
-    scrub: 0.5
+    scrub: 0.3
   }
 });
 
+/* ============ DETAILS ============ */
+reveal('.details-eyebrow', { trigger: '.details', start: 'top 80%', y: 20, duration: 0.5 });
+reveal('.details-h', { trigger: '.details', start: 'top 75%', y: 30, duration: 0.6 });
+reveal('.activity-card', { trigger: '.activity-grid', start: 'top 80%', y: 30, duration: 0.6, stagger: 0.07 });
 
-/* ============ MEET — card video (plays on viewport enter via IntersectionObserver) ============ */
-reveal('.meet-time', { trigger: '#meet-pin-wrap', start: 'top 65%', y: 80, duration: 1.0 });
-reveal('.meet-name', { trigger: '#meet-pin-wrap', start: 'top 55%', y: 40, duration: 0.85 });
-reveal('.meet-rule', { trigger: '#meet-pin-wrap', start: 'top 60%', y: 0, duration: 0.7 });
-reveal('.meet-desc, .meet-list-item', { trigger: '#meet-pin-wrap', start: 'top 50%', y: 24, duration: 0.7, stagger: 0.08 });
-reveal('.meet-right', { trigger: '#meet-pin-wrap', start: 'top 60%', y: 0, x: 60, duration: 1.0 });
+/* ============ RSVP BLOCK ============ */
+reveal('.rsvp-presenter', { trigger: '.rsvp-block', start: 'top 80%', y: 20, duration: 0.5 });
+reveal('.rsvp-date', { trigger: '.rsvp-block', start: 'top 75%', y: 40, duration: 0.7 });
+reveal('.rsvp-time, .rsvp-venue', { trigger: '.rsvp-block', start: 'top 70%', y: 20, duration: 0.55, stagger: 0.08 });
+reveal('.rsvp-free-pill, .rsvp-cta-wrap', { trigger: '.rsvp-block', start: 'top 65%', y: 20, duration: 0.55, stagger: 0.1 });
 
-/* ============ IMAGE SEQUENCE SCRUBS — canvas-based for instant frame switching ============ */
-function setupImageScrub({ wrapper, imgId, framesDir, frameCount, fillId, counterId, yAnchor = 0 }) {
-  const origImg = document.getElementById(imgId);
-  if (!origImg) return;
-  const fill    = fillId    ? document.getElementById(fillId)    : null;
-  const counter = counterId ? document.getElementById(counterId) : null;
-
-  /* Replace <img> with <canvas> so drawImage() is synchronous — no decode lag */
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
-  origImg.parentNode.insertBefore(canvas, origImg);
-  origImg.style.display = 'none';
-  const ctx = canvas.getContext('2d');
-  let cw = 0, ch = 0;
-
-  function syncSize() {
-    const p = canvas.parentElement;
-    if (!p) return;
-    const nw = p.offsetWidth, nh = p.offsetHeight;
-    if (nw === cw && nh === ch) return;
-    cw = canvas.width = nw;
-    ch = canvas.height = nh;
-    if (images[curIdx] && images[curIdx].complete && images[curIdx].naturalWidth) paint(images[curIdx]);
-  }
-  window.addEventListener('resize', syncSize);
-
-  /* Cover-fit draw with configurable vertical anchor (0=top, 0.5=center, 1=bottom) */
-  function paint(im) {
-    if (!cw || !ch || !im.naturalWidth) return;
-    const ia = im.naturalWidth / im.naturalHeight, ca = cw / ch;
-    let sx, sy, sw, sh;
-    if (ia > ca) { sh = im.naturalHeight; sw = sh * ca; sy = 0; sx = (im.naturalWidth - sw) / 2; }
-    else         { sw = im.naturalWidth;  sh = sw / ca; sx = 0; sy = (im.naturalHeight - sh) * yAnchor; }
-    ctx.drawImage(im, sx, sy, sw, sh, 0, 0, cw, ch);
-  }
-
-  /* Load ALL frames upfront — browser queues/parallelises automatically */
-  const images = Array.from({ length: frameCount }, (_, i) => {
-    const im = new Image();
-    im.onload = () => {
-      if (i === 0) { syncSize(); paint(im); }
-      if (i === targetIdx && i !== curIdx) { paint(im); curIdx = i; }
-    };
-    im.src = `${framesDir}/${String(i + 1).padStart(3, '0')}.jpg`;
-    return im;
-  });
-
-  let curIdx = 0, targetIdx = 0;
-
-  ScrollTrigger.create({
-    trigger: wrapper,
-    start: 'top top',
-    end: 'bottom bottom',
-    onUpdate(self) {
-      const idx = Math.min(Math.floor(self.progress * frameCount), frameCount - 1);
-      targetIdx = idx;
-      if (fill)    fill.style.width = (self.progress * 100) + '%';
-      if (counter) counter.textContent = `FRAME ${String(idx + 1).padStart(3, '0')} / ${frameCount}`;
-      if (idx === curIdx) return;
-      const im = images[idx];
-      if (im.complete && im.naturalWidth) { paint(im); curIdx = idx; }
-      /* else im.onload will fire and paint it */
-    }
-  });
-}
-
-setupImageScrub({ wrapper: '#move-pin-wrap', imgId: 'moveScrubImg', framesDir: 'assets/frames-move', frameCount: 72, fillId: 'moveProgressFill', counterId: 'moveFrameCounter', yAnchor: 0.5 });
-reveal('.move-meta-pill', { trigger: '#move-pin-wrap', start: 'top 60%', y: 30, duration: 0.7 });
-reveal('.move-headline', { trigger: '#move-pin-wrap', start: 'top 55%', y: 60, duration: 1.0 });
-reveal('.move-sub', { trigger: '#move-pin-wrap', start: 'top 50%', y: 30, duration: 0.85 });
-
-/* ============ MORE — card video (plays on viewport enter via IntersectionObserver) ============ */
-
-const eqBars = document.getElementById('eqBars');
-const barCount = 28;
-const bars = [];
-for (let i = 0; i < barCount; i++) {
-  const b = document.createElement('div');
-  b.className = 'eq-bar';
-  b.style.height = '12px';
-  eqBars.appendChild(b);
-  bars.push(b);
-}
-reveal('.more-time', { trigger: '#more-pin-wrap', start: 'top 65%', y: 80, duration: 1.0 });
-reveal('.more-name', { trigger: '#more-pin-wrap', start: 'top 55%', y: 40, duration: 0.85 });
-reveal('.more-rule', { trigger: '#more-pin-wrap', start: 'top 60%', y: 0, duration: 0.7 });
-reveal('.more-desc, .more-actions', { trigger: '#more-pin-wrap', start: 'top 50%', y: 24, duration: 0.7, stagger: 0.08 });
-reveal('.more-right', { trigger: '#more-pin-wrap', start: 'top 60%', y: 0, x: 60, duration: 1.0 });
-
-// EQ bars animate to varied heights when visible, then keep pulsing
-ScrollTrigger.create({
-  trigger: '#more-pin-wrap',
-  start: 'top 70%',
-  onEnter: () => {
-    bars.forEach((b, i) => {
-      gsap.to(b, { height: 40 + Math.random() * 160, duration: 0.4 + Math.random() * 0.6, ease: 'power2.out', delay: i * 0.025 });
-    });
-    bars.forEach((b, i) => {
-      gsap.to(b, {
-        height: 40 + Math.random() * 160,
-        duration: 0.6 + Math.random() * 0.8,
-        ease: 'sine.inOut',
-        delay: 1.5 + i * 0.03,
-        repeat: -1,
-        yoyo: true
-      });
-    });
-  }
-});
-
-/* ============ UPCOMING EVENTS — fade in ============ */
-reveal('.upcoming-head > *', { trigger: '.upcoming', start: 'top 75%', y: 30, duration: 0.85, stagger: 0.08 });
-reveal('.next-event-card', { trigger: '.upcoming-grid', start: 'top 80%', y: 40, duration: 0.9 });
-reveal('.upcoming-grid > *:not(.next-event-card)', { trigger: '.upcoming-grid', start: 'top 75%', y: 30, duration: 0.8, stagger: 0.1 });
-
-/* ============ BRANDS TICKER — fade in ============ */
-reveal('.brands-strip-header > *', { trigger: '.brands-strip', start: 'top 80%', y: 20, duration: 0.7, stagger: 0.08 });
-
-
-/* ============ RSVP SECTION — fade in ============ */
-reveal('.rsvp-layout > *', { trigger: '.rsvp-section', start: 'top 75%', y: 40, duration: 0.9, stagger: 0.12 });
-
-/* ============ NEXT — doors stagger in ============ */
-reveal('.next-h, .next-meta', { trigger: '.next', start: 'top 75%', y: 40, duration: 0.85, stagger: 0.1 });
-reveal('.door', { trigger: '.next-doors', start: 'top 80%', y: 60, duration: 0.8, stagger: 0.12 });
+/* ============ ACTIVE MINDS ============ */
+reveal('.am-inner > *', { trigger: '.am-callout', start: 'top 85%', y: 20, duration: 0.5, stagger: 0.08 });
 
 /* ============ FOOTER ============ */
-reveal('.footer-top', { trigger: '.footer', start: 'top 80%', y: 30, duration: 0.85 });
+reveal('.footer-top', { trigger: '.footer', start: 'top 80%', y: 30, duration: 0.6 });
 
-setupImageScrub({ wrapper: '#meet-pin-wrap', imgId: 'meetScrubImg', framesDir: 'assets/frames-meet', frameCount: 72, fillId: 'meetProgressFill', counterId: 'meetFrameCounter', yAnchor: 0.2 });
-setupImageScrub({ wrapper: '#more-pin-wrap', imgId: 'moreScrubImg', framesDir: 'assets/frames-more', frameCount: 104, fillId: 'moreProgressFill', counterId: 'moreFrameCounter', yAnchor: 0.35 });
-
-/* ============ HERO TICKER — RAF loop, immune to iOS compositing issues ============ */
+/* ============ HERO TICKER — RAF loop ============ */
 window.addEventListener('load', function() {
   var track = document.getElementById('eventsTrack');
   if (!track) return;
   var halfW = track.scrollWidth / 2;
   if (!halfW) return;
-  var dur = 36000; // ms
-  var t0 = performance.now() - dur * 0.5; // start mid-cycle
+  var dur = 36000;
+  var t0 = performance.now() - dur * 0.5;
   (function tick(now) {
     var x = ((now - t0) % dur) / dur * halfW;
     track.style.transform = 'translateX(-' + x.toFixed(1) + 'px)';
@@ -1141,12 +554,7 @@ window.addEventListener('load', function() {
   })(performance.now());
 });
 
-/* ============ REFRESH ScrollTrigger after layout settles ============ */
-window.addEventListener('load', () => {
-  setTimeout(() => ScrollTrigger.refresh(), 200);
-});
-
-/* Events dropdown */
+/* ============ Events dropdown ============ */
 (function() {
   const wrap = document.getElementById('navEventsWrap');
   const btn  = document.getElementById('navEventsBtn');
@@ -1159,7 +567,20 @@ window.addEventListener('load', () => {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 })();
 
-/* Hamburger nav */
+/* ============ Partner dropdown ============ */
+(function() {
+  const wrap = document.getElementById('navPartnerWrap');
+  const btn  = document.getElementById('navPartnerBtn');
+  if (!wrap || !btn) return;
+  function open()   { wrap.classList.add('open');    btn.setAttribute('aria-expanded', 'true'); }
+  function close()  { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle() { wrap.classList.contains('open') ? close() : open(); }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* ============ Hamburger nav ============ */
 (function() {
   const nav = document.getElementById('nav');
   const btn = document.getElementById('navHamburger');
@@ -1173,30 +594,11 @@ window.addEventListener('load', () => {
   document.addEventListener('keydown', e => { if (e.key==='Escape') closeNav(); });
 })();
 
-/* ============ BRANDS TICKER — RAF loop, iOS-proof ============ */
-window.addEventListener('load', function() {
-  var track = document.querySelector('.brands-ticker-track');
-  var wrap  = document.querySelector('.brands-ticker-wrap');
-  if (!track) return;
-  var halfW = track.scrollWidth / 2;
-  if (!halfW) return;
-  var dur = 28000;
-  var elapsed = dur * 0.5;
-  var lastTime = performance.now();
-  var paused = false;
-  if (wrap) {
-    wrap.addEventListener('mouseenter', function() { paused = true; });
-    wrap.addEventListener('mouseleave', function() { paused = false; });
-  }
-  (function tick(now) {
-    if (!paused) { elapsed += now - lastTime; if (elapsed >= dur) elapsed -= dur; }
-    lastTime = now;
-    track.style.transform = 'translateX(-' + ((elapsed / dur) * halfW).toFixed(1) + 'px)';
-    requestAnimationFrame(tick);
-  })(performance.now());
+/* ============ REFRESH ScrollTrigger after layout settles ============ */
+window.addEventListener('load', () => {
+  setTimeout(() => ScrollTrigger.refresh(), 200);
 });
 </script>
-
 
 </body>
 </html>
