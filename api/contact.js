@@ -99,7 +99,10 @@ module.exports = async function handler(req, res) {
       if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, await oppRes.text());
     }
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({
+      success:    true,
+      _debug:     { hasPipeline: !!PIPELINE_ID, hasStage: !!STAGE_ID, contactId: contactId || null }
+    });
   } catch (err) {
     console.error('Contact form error:', err);
     return res.status(500).json({ error: 'Submission failed. Please try again.' });
