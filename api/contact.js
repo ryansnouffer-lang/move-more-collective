@@ -1,4 +1,5 @@
-const LOCATION_ID = 'fCEAxly6nz1viXs6qdHm';
+const LOCATION_ID   = 'fCEAxly6nz1viXs6qdHm';
+const ASSIGNED_TO   = 'De2PFBtQzzhXA8MmRYEo'; // mike@movemorecollective.com
 
 const TAG_MAP = {
   brand:     'brand-partnership',
@@ -53,6 +54,7 @@ module.exports = async function handler(req, res) {
       tags,
       source:       'website',
       locationId:   LOCATION_ID,
+      assignedTo:   ASSIGNED_TO,
       customFields: message
         ? [{ id: 'Qffaeplsvx7F0x46xdYR', value: String(message).trim() }]
         : []
@@ -98,7 +100,8 @@ module.exports = async function handler(req, res) {
           locationId:      LOCATION_ID,
           status:          'open',
           pipelineStageId: STAGE_ID,
-          contactId
+          contactId,
+          assignedTo:      ASSIGNED_TO
         })
       });
       if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, await oppRes.text());
