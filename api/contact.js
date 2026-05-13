@@ -46,17 +46,22 @@ module.exports = async function handler(req, res) {
 
   try {
     // 1. Upsert contact
+    const contactPayload = {
+      firstName,
+      lastName,
+      email:        String(email).trim().toLowerCase(),
+      tags,
+      source:       'website',
+      locationId:   LOCATION_ID,
+      customFields: message
+        ? [{ id: 'Qffaeplsvx7F0x46xdYR', value: String(message).trim() }]
+        : []
+    };
+
     const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
       method:  'POST',
       headers: ghlHeaders,
-      body:    JSON.stringify({
-        firstName,
-        lastName,
-        email:      String(email).trim().toLowerCase(),
-        tags,
-        source:     'website',
-        locationId: LOCATION_ID
-      })
+      body:    JSON.stringify(contactPayload)
     });
 
     if (!contactRes.ok) {
