@@ -45,7 +45,7 @@ module.exports = async function handler(req, res) {
   const lastName  = parts.slice(1).join(' ') || '';
 
   try {
-    // 1. Upsert contact (deduplicates by email)
+    // 1. Upsert contact
     const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
       method:  'POST',
       headers: ghlHeaders,
@@ -68,41 +68,36 @@ module.exports = async function handler(req, res) {
     const contactData = await contactRes.json();
     const contactId   = contactData.contact?.id;
 
-    // 2 & 3. Note + opportunity — awaited so the function doesn't exit before they complete
-    const followUps = [];
-
+    // 2. Note
     if (contactId && message) {
-      followUps.push(
-        fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
-          method:  'POST',
-          headers: ghlHeaders,
-          body:    JSON.stringify({
-            body:      `Interest: ${interestTag}\n\nMessage:\n${String(message).trim()}`,
-            contactId
-          })
+      const noteRes = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+        method:  'POST',
+        headers: ghlHeaders,
+        body:    JSON.stringify({
+          body:      `Interest: ${interestTag}\n\nMessage:\n${String(message).trim()}`,
+          contactId
         })
-      );
+      });
+      if (!noteRes.ok) console.error('GHL note failed:', noteRes.status, await noteRes.text());
     }
 
+    // 3. Opportunity
     if (contactId && PIPELINE_ID && STAGE_ID) {
-      const title = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
-      followUps.push(
-        fetch('https://services.leadconnectorhq.com/opportunities/', {
-          method:  'POST',
-          headers: ghlHeaders,
-          body:    JSON.stringify({
-            name:            title,
-            pipelineId:      PIPELINE_ID,
-            locationId:      LOCATION_ID,
-            status:          'open',
-            pipelineStageId: STAGE_ID,
-            contactId
-          })
+      const oppName = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
+      const oppRes  = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+        method:  'POST',
+        headers: ghlHeaders,
+        body:    JSON.stringify({
+          name:            oppName,
+          pipelineId:      PIPELINE_ID,
+          locationId:      LOCATION_ID,
+          status:          'open',
+          pipelineStageId: STAGE_ID,
+          contactId
         })
-      );
+      });
+      if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, await oppRes.text());
     }
-
-    await Promise.allSettled(followUps);
 
     return res.status(200).json({ success: true });
   } catch (err) {
