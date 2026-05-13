@@ -91,11 +91,11 @@ module.exports = async function handler(req, res) {
           method:  'POST',
           headers: ghlHeaders,
           body:    JSON.stringify({
-            title,
-            pipelineId: PIPELINE_ID,
-            locationId: LOCATION_ID,
-            status:     'open',
-            stageId:    STAGE_ID,
+            name:            title,
+            pipelineId:      PIPELINE_ID,
+            locationId:      LOCATION_ID,
+            status:          'open',
+            pipelineStageId: STAGE_ID,
             contactId
           })
         })
