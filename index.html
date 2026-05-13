@@ -937,11 +937,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <footer class="footer">
   <div class="footer-inner">
     <h3 class="footer-h">More than movement.<br>A <span class="blue">movement.</span></h3>
-    <div class="footer-cta-row">
-      <a class="cta cta-primary" href="midnight-moves.html">See Events &rarr;</a>
-      <a class="cta cta-ghost" href="contact.html">info@movemorecollective.com</a>
-    </div>
-    <div class="footer-grid">
+<div class="footer-grid">
       <div class="footer-col">
         <h4>Move More Collective</h4>
         <p style="font-size: 14px; color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.55;">A mission-driven experiential wellness &amp; media platform. West Palm Beach, FL — expanding nationally.</p>
@@ -1018,11 +1014,21 @@ function reveal(selector, opts = {}) {
   });
 }
 
-/* Hero parallax + fade */
-gsap.to('.hero-headline, .hero-bottom, .hero-ticker, .scroll-cue', {
-  opacity: 0, y: -40,
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
-});
+/* Hero entrance — set hidden immediately to prevent flash */
+gsap.set('.hero-headline, .hero-bottom, .hero-ticker, .scroll-cue', { autoAlpha: 0, y: 28 });
+gsap.timeline({ delay: 0.05 })
+  .to('.hero-headline', { autoAlpha: 1, y: 0, duration: 1.0, ease: 'power3.out' })
+  .to('.hero-bottom',   { autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' }, '-=0.55')
+  .to('.hero-ticker',   { autoAlpha: 1, y: 0, duration: 0.7,  ease: 'power3.out' }, '-=0.45')
+  .to('.scroll-cue',    { autoAlpha: 1, y: 0, duration: 0.6,  ease: 'power3.out' }, '-=0.5');
+
+/* Hero scroll parallax — explicit fromTo so entrance doesn't conflict */
+gsap.fromTo('.hero-headline, .hero-bottom, .hero-ticker, .scroll-cue',
+  { autoAlpha: 1, y: 0 },
+  { autoAlpha: 0, y: -40, immediateRender: false,
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 }
+  }
+);
 gsap.to('.hero-video', {
   scale: 1.15,
   scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 }

@@ -864,11 +864,7 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <footer class="footer">
   <div class="footer-inner">
     <h3 class="footer-top anton">See you<br><span class="glow">Friday.</span></h3>
-    <div class="footer-cta-row">
-      <a class="cta cta-primary" href="#rsvp">RSVP for May 15 &rarr;</a>
-      <a class="cta cta-ghost" href="contact.html">info@movemorecollective.com</a>
-    </div>
-    <div class="footer-row">
+<div class="footer-row">
       <span>© 2026 MOVE MORE COLLECTIVE — WEST PALM BEACH, FL</span>
       <span>BUILT BY LYFEWORK · PROTOTYPE v0.1</span>
     </div>
@@ -1125,7 +1121,7 @@ reveal('.next-h, .next-meta', { trigger: '.next', start: 'top 75%', y: 40, durat
 reveal('.door', { trigger: '.next-doors', start: 'top 80%', y: 60, duration: 0.8, stagger: 0.12 });
 
 /* ============ FOOTER ============ */
-reveal('.footer-top, .footer-cta-row', { trigger: '.footer', start: 'top 80%', y: 30, duration: 0.85, stagger: 0.1 });
+reveal('.footer-top', { trigger: '.footer', start: 'top 80%', y: 30, duration: 0.85 });
 
 setupImageScrub({ wrapper: '#meet-pin-wrap', imgId: 'meetScrubImg', framesDir: 'assets/frames-meet', frameCount: 72, fillId: 'meetProgressFill', counterId: 'meetFrameCounter', yAnchor: 0.2 });
 setupImageScrub({ wrapper: '#more-pin-wrap', imgId: 'moreScrubImg', framesDir: 'assets/frames-more', frameCount: 104, fillId: 'moreProgressFill', counterId: 'moreFrameCounter', yAnchor: 0.35 });
