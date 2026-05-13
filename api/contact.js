@@ -22,9 +22,9 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required' });
   }
 
-  const API_KEY     = process.env.GHL_API_KEY;
-  const PIPELINE_ID = process.env.GHL_PIPELINE_ID;
-  const STAGE_ID    = process.env.GHL_STAGE_ID;
+  const API_KEY     = process.env.GHL_API_KEY?.trim();
+  const PIPELINE_ID = process.env.GHL_PIPELINE_ID?.trim();
+  const STAGE_ID    = process.env.GHL_STAGE_ID?.trim();
 
   if (!API_KEY) {
     console.error('GHL_API_KEY not configured');
@@ -82,7 +82,6 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. Opportunity
-    let oppDebug = 'skipped';
     if (contactId && PIPELINE_ID && STAGE_ID) {
       const oppName = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
       const oppRes  = await fetch('https://services.leadconnectorhq.com/opportunities/', {
@@ -97,15 +96,10 @@ module.exports = async function handler(req, res) {
           contactId
         })
       });
-      const oppBody = await oppRes.text();
-      oppDebug = { status: oppRes.status, body: oppBody.slice(0, 300) };
-      if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, oppBody);
+      if (!oppRes.ok) console.error('GHL opportunity failed:', oppRes.status, await oppRes.text());
     }
 
-    return res.status(200).json({
-      success: true,
-      _debug:  { hasPipeline: !!PIPELINE_ID, hasStage: !!STAGE_ID, contactId: contactId || null, opp: oppDebug }
-    });
+    return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Contact form error:', err);
     return res.status(500).json({ error: 'Submission failed. Please try again.' });
