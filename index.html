@@ -250,12 +250,13 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* ============================================ CLUB PARTNERS ============================================ */
 .clubs { background: var(--black); }
-.clubs-directory { margin-top: 64px; display: flex; flex-direction: column; }
-.clubs-row { display: grid; grid-template-columns: 140px 1fr; gap: 0; align-items: start; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); }
-.clubs-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
-@media (max-width: 768px) { .clubs-row { grid-template-columns: 1fr; gap: 16px; } }
-.clubs-row-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blue-glow); padding-top: 10px; }
-.clubs-row-names { display: flex; flex-wrap: wrap; gap: 10px; }
+.clubs-layout { display: grid; grid-template-columns: 1fr 0.6fr; gap: 80px; align-items: center; }
+@media (max-width: 960px) { .clubs-layout { grid-template-columns: 1fr; gap: 48px; } }
+.clubs-text .section-eyebrow { margin-bottom: 16px; }
+.clubs-text .section-h2 { margin-bottom: 24px; }
+.clubs-img-wrap { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 3/4; }
+.clubs-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.clubs-img-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(5,5,5,0.5) 100%); pointer-events: none; }
 .club-tag { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: 16px; padding: 11px 22px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.22); color: var(--white); transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s; letter-spacing: 0.01em; }
 .club-tag:hover { background: rgba(61,142,207,0.18); border-color: rgba(108,179,232,0.6); color: var(--white); box-shadow: 0 0 24px rgba(61,142,207,0.18); }
 
@@ -711,12 +712,16 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 <!-- ============================================ OUR CLUB PARTNERS ============================================ -->
 <section class="section clubs" id="clubs">
   <div class="section-inner">
-    <div class="section-head">
-      <div>
+    <div class="clubs-layout">
+      <div class="clubs-text">
         <div class="section-eyebrow">Community Partners</div>
         <h2 class="display section-h2">Built with the<br><span class="blue">community</span> in mind.</h2>
+        <p class="section-sub">We don't operate in isolation — we grow alongside the gyms, studios, and run clubs that share our belief that movement is better together. Formal partnerships are being established now, and the network is expanding. If your community belongs here, reach out.</p>
+        <a class="cta cta-secondary" href="contact.html" style="margin-top: 32px; display: inline-flex;">Get in Touch &rarr;</a>
       </div>
-      <p class="section-sub">We don't operate in isolation — we grow alongside the gyms, studios, and run clubs that share our belief that movement is better together. Formal partnerships are being established now, and the network is expanding. If your community belongs here, reach out.</p>
+      <div class="clubs-img-wrap">
+        <img src="assets/community-partners.jpg" alt="Move More Collective community at a Midnight Moves event" loading="lazy">
+      </div>
     </div>
   </div>
 </section>
@@ -1033,8 +1038,8 @@ reveal('.eco-hero', { trigger: '.ecosystem', y: 50 });
 reveal('.pillars .section-head > *', { trigger: '.pillars', stagger: 0.1 });
 reveal('.pillar', { trigger: '.pillars-grid', stagger: 0.12, y: 40 });
 
-reveal('.clubs .section-head > *', { trigger: '.clubs', stagger: 0.1 });
-reveal('.clubs-row', { trigger: '.clubs-directory', stagger: 0.1, y: 20 });
+reveal('.clubs-text > *', { trigger: '.clubs', stagger: 0.1 });
+reveal('.clubs-img-wrap', { trigger: '.clubs', x: 40, duration: 1.0 });
 
 reveal('.testimonials .section-head > *', { trigger: '.testimonials', stagger: 0.1 });
 reveal('.testimonial', { trigger: '.testimonial-row', stagger: 0.08 });
