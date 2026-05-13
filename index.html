@@ -237,15 +237,16 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 
 /* ============================================ PILLARS ============================================ */
 .pillars { background: var(--black); }
-.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-@media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
-.pillar { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 40px 32px; position: relative; overflow: hidden; transition: all 0.22s; }
+.pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
+@media (max-width: 1000px) { .pillars-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .pillars-grid { grid-template-columns: 1fr; } }
+.pillar { background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 28px 20px; position: relative; overflow: hidden; transition: all 0.22s; }
 .pillar.focused { background: linear-gradient(180deg, rgba(61,142,207,0.20) 0%, rgba(61,142,207,0.05) 100%); border-color: rgba(108,179,232,0.65); box-shadow: 0 0 60px rgba(61,142,207,0.18), 0 8px 40px rgba(0,0,0,0.4); transform: scale(1.025); }
 .pillar.focused::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--blue) 40%, var(--blue-glow) 60%, transparent 100%); border-radius: 16px 16px 0 0; }
-.pillar.focused::after { content: "MMC FOCUS"; position: absolute; top: 20px; right: 20px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue-glow); background: rgba(61,142,207,0.22); padding: 5px 10px; border-radius: 4px; border: 1px solid rgba(108,179,232,0.35); }
-.pillar-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 56px); text-transform: uppercase; line-height: 0.95; margin-bottom: 14px; }
-.pillar.focused .pillar-h { color: var(--blue-glow); font-size: clamp(52px, 6.5vw, 86px); text-shadow: 0 0 60px rgba(108,179,232,0.45), 0 0 120px rgba(61,142,207,0.2); }
-.pillar-desc { font-size: 14.5px; line-height: 1.6; opacity: 0.72; max-width: 320px; }
+.pillar.focused::after { content: "MMC FOCUS"; position: absolute; top: 16px; right: 14px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue-glow); background: rgba(61,142,207,0.22); padding: 5px 10px; border-radius: 4px; border: 1px solid rgba(108,179,232,0.35); }
+.pillar-h { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(22px, 2.4vw, 32px); text-transform: uppercase; line-height: 0.95; margin-bottom: 12px; }
+.pillar.focused .pillar-h { color: var(--blue-glow); font-size: clamp(26px, 2.8vw, 36px); text-shadow: 0 0 60px rgba(108,179,232,0.45), 0 0 120px rgba(61,142,207,0.2); }
+.pillar-desc { font-size: 13px; line-height: 1.6; opacity: 0.72; max-width: 320px; }
 
 /* ============================================ CLUB PARTNERS ============================================ */
 .clubs { background: var(--black); }
