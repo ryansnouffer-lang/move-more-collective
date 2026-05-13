@@ -225,18 +225,18 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 .membership-intro { max-width: 680px; margin-bottom: 64px; }
 .membership-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media (max-width: 900px) { .membership-grid { grid-template-columns: 1fr; } }
-.tier-card { border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 36px 32px; position: relative; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.tier-card { border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 28px 24px; position: relative; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
 .tier-card:hover { border-color: rgba(108,179,232,0.4); transform: translateY(-6px); }
 .tier-card.tier-featured { background: linear-gradient(145deg, rgba(61,142,207,0.14), rgba(61,142,207,0.03)); border-color: rgba(108,179,232,0.42); }
 .tier-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, rgba(108,179,232,0), transparent); transition: background 0.3s; }
 .tier-card.tier-featured::before, .tier-card:hover::before { background: linear-gradient(90deg, transparent, var(--blue-glow), transparent); }
-.tier-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em; color: var(--blue-glow); margin-bottom: 10px; }
-.tier-crown { font-size: 24px; margin-bottom: 14px; }
-.tier-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(26px, 3vw, 36px); text-transform: uppercase; line-height: 1; margin-bottom: 6px; }
-.tier-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-glow); opacity: 0.8; margin-bottom: 24px; }
-.tier-perks { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 28px; }
-.tier-perk { display: flex; align-items: flex-start; gap: 12px; font-size: 13.5px; line-height: 1.5; opacity: 0.82; }
-.tier-perk::before { content: "✓"; color: var(--blue-glow); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.tier-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em; color: var(--blue-glow); margin-bottom: 8px; }
+.tier-crown { font-size: 20px; margin-bottom: 10px; }
+.tier-name { font-family: 'Satoshi', system-ui, sans-serif; font-weight: 900; font-size: clamp(22px, 2.6vw, 30px); text-transform: uppercase; line-height: 1; margin-bottom: 4px; }
+.tier-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-glow); opacity: 0.8; margin-bottom: 18px; }
+.tier-perks { display: flex; flex-direction: column; gap: 7px; flex: 1; margin-bottom: 20px; }
+.tier-perk { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; line-height: 1.45; opacity: 0.82; }
+.tier-perk::before { content: "✓"; color: var(--blue-glow); font-weight: 700; flex-shrink: 0; margin-top: 1px; font-size: 11px; }
 .tier-cta-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--blue-glow); text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: gap 0.2s; }
 .tier-cta-link:hover { gap: 14px; }
 
