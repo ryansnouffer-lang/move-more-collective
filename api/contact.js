@@ -1,5 +1,7 @@
-const LOCATION_ID   = 'fCEAxly6nz1viXs6qdHm';
-const ASSIGNED_TO   = 'De2PFBtQzzhXA8MmRYEo'; // mike@movemorecollective.com
+const ALLOWED_ORIGIN = 'https://www.movemorecollective.com';
+
+const LOCATION_ID = process.env.GHL_LOCATION_ID?.trim();
+const ASSIGNED_TO = process.env.GHL_ASSIGNED_TO?.trim();
 
 const TAG_MAP = {
   brand:     'brand-partnership',
@@ -9,26 +11,37 @@ const TAG_MAP = {
   general:   'general-inquiry'
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'false');
+  res.setHeader('Vary', 'Origin');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' });
+
+  const ct = req.headers['content-type']?.split(';')[0].trim();
+  if (ct !== 'application/json') {
+    return res.status(415).json({ error: 'Unsupported Media Type' });
+  }
 
   const { name, email, interest, message } = req.body || {};
 
-  if (!name || !email) {
-    return res.status(400).json({ error: 'Name and email are required' });
-  }
+  if (!name  || !email)                          return res.status(400).json({ error: 'Name and email are required' });
+  if (String(name).trim().length > 100)          return res.status(400).json({ error: 'Name too long' });
+  if (String(email).trim().length > 254)         return res.status(400).json({ error: 'Email too long' });
+  if (!EMAIL_RE.test(String(email).trim()))      return res.status(400).json({ error: 'Invalid email address' });
+  if (message && String(message).trim().length > 2000) return res.status(400).json({ error: 'Message too long (max 2000 characters)' });
 
   const API_KEY     = process.env.GHL_API_KEY?.trim();
   const PIPELINE_ID = process.env.GHL_PIPELINE_ID?.trim();
   const STAGE_ID    = process.env.GHL_STAGE_ID?.trim();
 
-  if (!API_KEY) {
-    console.error('GHL_API_KEY not configured');
+  if (!API_KEY || !LOCATION_ID || !ASSIGNED_TO) {
+    console.error('Missing required GHL environment variables');
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
@@ -46,7 +59,6 @@ module.exports = async function handler(req, res) {
   const lastName  = parts.slice(1).join(' ') || '';
 
   try {
-    // 1. Upsert contact
     const contactPayload = {
       firstName,
       lastName,
@@ -69,13 +81,12 @@ module.exports = async function handler(req, res) {
     if (!contactRes.ok) {
       const errText = await contactRes.text();
       console.error('GHL contact upsert failed:', contactRes.status, errText);
-      return res.status(502).json({ error: 'Failed to create contact' });
+      return res.status(500).json({ error: 'Failed to create contact' });
     }
 
     const contactData = await contactRes.json();
     const contactId   = contactData.contact?.id;
 
-    // 2. Note
     if (contactId && message) {
       const noteRes = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
         method:  'POST',
@@ -88,7 +99,6 @@ module.exports = async function handler(req, res) {
       if (!noteRes.ok) console.error('GHL note failed:', noteRes.status, await noteRes.text());
     }
 
-    // 3. Opportunity
     if (contactId && PIPELINE_ID && STAGE_ID) {
       const oppName = `${firstName}${lastName ? ' ' + lastName : ''} — ${interestTag}`;
       const oppRes  = await fetch('https://services.leadconnectorhq.com/opportunities/', {
