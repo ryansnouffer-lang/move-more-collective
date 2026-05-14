@@ -173,10 +173,11 @@ body { background: var(--black); color: var(--white); font-family: 'Satoshi', sy
 /* CONTACT BODY */
 .contact-body { background: var(--black); padding: 80px var(--gutter) 120px; }
 .contact-body-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
-@media (max-width: 900px) { .contact-body-inner { grid-template-columns: 1fr; gap: 56px; } .contact-info-col { position: static; } }
+@media (max-width: 900px) { .contact-body-inner { grid-template-columns: 1fr; gap: 56px; } }
 
 /* Info column */
 .contact-info-col { position: sticky; top: 120px; }
+@media (max-width: 900px) { .contact-info-col { position: static; } }
 .contact-info-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 12px; }
 .contact-info-email { display: inline-flex; align-items: center; gap: 10px; font-family: 'Satoshi', system-ui, sans-serif; font-weight: 700; font-size: clamp(18px, 2.2vw, 24px); color: var(--white); text-decoration: none; margin-bottom: 36px; transition: color 0.15s; }
 .contact-info-email:hover { color: var(--blue-glow); }
